@@ -16,10 +16,12 @@ CREATE TABLE items (
     price text,
     qty text,
     id_unit integer,
+    unit text,
     reference text,
+    
     is_visible integer,
     is_avaible integer,
-    
+    is_active integer,
     is_advertise integer,
     
     url_rewrite text
@@ -63,6 +65,8 @@ CREATE TABLE categories (
     image blob,
     thumb blob
 );
+
+
 DROP TABLE IF EXISTS units;
 CREATE TABLE units (
     id integer primary key,
@@ -71,3 +75,12 @@ CREATE TABLE units (
     position integer,
     is_default integer
 );
+INSERT INTO units (is_default,abbreviation,name,position) VALUES 
+    (1,   'nb','Number',    1), 
+    (null,'kg','Kilogram',  1), 
+    (null,'gr','Gram',      1), 
+    (null,'m' ,'Meter',     1), 
+    (null,'cm','Cantimeter',1),
+    (null,'km','Kilometer', 1), 
+    (null,'m2','Square meter',1), 
+    (null,'m3','Cubic meter',1);

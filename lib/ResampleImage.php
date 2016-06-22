@@ -7,6 +7,8 @@
  */
 
 function resampleimage(&$image_content, $to_width = 1024, $to_height = 960, $bgcolor = array('R'=>255,'G'=>255,'B'=>255) ){
+        if(gettype($image_content) !== 'string') return;
+        
         $img = imagecreatefromstring($image_content);
         $width  = imagesx($img);
         $height = imagesy($img);
@@ -31,15 +33,18 @@ function resampleimage(&$image_content, $to_width = 1024, $to_height = 960, $bgc
             $new_y = ($to_height - $height) /2 ;
             $x = ($width - $to_width) / 2;
         }elseif($width < $to_width && $height > $to_height){
-            $new_width = $width;
-            $new_height = $to_height;
             $new_x = ($to_width - $width)/2;
             $y = ($height - $to_height)/2;
-        }else{
+            
             $new_width = $width;
-            $new_height = $height;
-            $new_x = ($to_width - $new_width)/2;
-            $new_y = ($to_height - $new_height)/2;
+            $new_height = $to_height;
+        }else{
+           
+            $new_x = ($to_width - $width)/2;
+            $new_y = ($to_height - $height)/2;
+            
+            $new_width = $width ;
+            $new_height = $height ;
         }
         
         

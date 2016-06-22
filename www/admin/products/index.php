@@ -89,18 +89,19 @@
             		}},
             		{ data:"id", title:(lang["ID"]||"ID"), width:"1em", class:"id uk-text-center"},
             		
-            		{ data:"image", title:"", orderable:false, searchable:false,
+            		{ data:"image", title:(lang["Image"]||"Image"), orderable:false, searchable:false,
             			render: function ( d, t, r ) { var badge = r.nb_images > 0 ? '<sup class="uk-badge">'+r.nb_images+'</sup>' : '';
             				return '<a href="#modal-image-item" data-uk-modal data-get="id='+r.id+'" data-populate=\'{"id":"'+r.id+'"}\'>'
             						+'<img src="image.php/'+d+'/small/'+r.date_image+'" width="40" >'+badge+'</a>';
             		}},
-            		{ data:"title", title:"Title", render:function(d,t,r){return d+(r.reference?' <small class="uk-text-muted">/ '+r.reference+'</small>':'');}},
+            		{ data:"title", title:(lang["Name"]||"Name"), render:function(d,t,r){return d+(r.reference?' <small class="uk-text-muted">/ '+r.reference+'</small>':'');}},
             		{ data:"category", title:(lang["Category"]||"Category"),render:function(d,t,r){
             		    return r.cat_is_visible == 1 ? (d?d:"") : '<strike class="uk-text-muted">'+(d?d:"")+'</strike>';
             		}},
-            		{ data:"owner", title:(lang["Supplier"]||"Supplier")},
-            		{ data:"price", title:"Price",width:"3em", "class":"dt-right"},
-            		{ data:"qty", title:"Qty", width:"3em","class":"uk-text-right uk-text-nowrap",render:function(d,t,r){return d+' '+r.unit;}},
+            		
+            		{ data:"price", title:(lang["Price"]||"Price"), width:"3em", "class":"dt-right"},
+            		{ data:"qty", title:(lang["Qty"]||"Qty"), width:"3em","class":"uk-text-right uk-text-nowrap",render:function(d,t,r){return d;}},
+            		{ data:"unit", title:(lang["M.Unit"]||"M.Unit"), width:"3em","class":"uk-text-right uk-text-nowrap"},
             		{ data:"actions", title:"", width:"1em", orderable:false, searchable:false, "class":"uk-text-center uk-text-middle uk-text-nowrap actions",
             			render: function(d,t,r){return ''
             			+'<a href="#modal-edit-item" data-uk-modal class="uk-icon-edit" data-get="id='+r.id+'" data-populate=\'{"id":"'+r.id+'"}\' title="Edit"></a>'
@@ -128,44 +129,35 @@
                                 <label class="uk-form-label"><span data-lang>Name</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls"><input class="uk-width-1-1" type="text" name="title"></div>
                             </div>
-                            <div class="uk-form-row">
-                                <label class="uk-form-label" data-lang>Ref.</label>
+                             <div class="uk-form-row">
+                                <label class="uk-form-label" data-lang>Reference</label>
                                 <div class="uk-form-controls"><input class="uk-width-1-1" type="text" name="reference"></div>
+                            </div>
+                            <div class="uk-form-row">
+                                <label class="uk-form-label"><span data-lang>Description</span>  <span class="uk-text-danger">*</span></label>
+                                <div class="uk-form-controls"><textarea class="uk-width-1-1" name="description"></textarea></div>
                             </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Price</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls"><input class="uk-width-1-1" type="text" name="price"></div>
                             </div>
-                             <div class="uk-form-row">
-                                <label class="uk-form-label" data-lang>Quantity</label>
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" data-lang>Qty</label>
                                 <div class="uk-form-controls"><input class="uk-width-1-1" type="text" name="qty"></div>
                             </div>
-                             <div class="uk-form-row">
-                                <label class="uk-form-label" data-lang>Measure Unit</label>
-                                <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=products/units/getMeasureUnits" type="text" name="id_unit"></select></div>
-                            </div>
                             <div class="uk-form-row">
+                                <label class="uk-form-label" data-lang>M.Unit</label>
+                                <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=products/units/getUnits" type="text" name="id_unit"></select></div>
+                            </div>
+                             <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Category</span> <span class="uk-text-danger">*</span></label>
-                                <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=products/getCategories&getforselect" name="id_category"></select></div>
+                                <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=products/categories/getCategories&getforselect" name="id_category"></select></div>
                                 <script>$(document).on("categories-changed", function(e,d){
                                     var select = $("#modal-new-item [name=id_category]").html('<option value="0">-</option>');
-                                    $.each(d.data, function(r,k){select.append('<option value="'+k[0]+'" data-lang>'+k[1]+'</option>');});
+                                    $.each(d.data, function(r,k){select.append('<option value="'+k.id+'" data-lang>'+k.name+'</option>');});
                                 });</script>
-                            </div>
-                            <div class="uk-form-row">
-                                <label class="uk-form-label" data-lang>Supplier</label>
-                                <div class="uk-form-controls"><select class="uk-width-1-1 select2" style="width:100%"
-                                    name="id_owner"
-                                    data-get="<?=URL_BASE?>ajax.php?f=suppliers/getCompaniesForSelect" 
-                                    data-templateSelection='{{text}}'
-                                    data-templateResult='{{text}}'
-                                ></select></div>
-                            </div>
-                        
-                            <div class="uk-form-row">
-                                <label class="uk-form-label"><span data-lang>Description</span>  <span class="uk-text-danger">*</span></label>
-                                <div class="uk-form-controls"><textarea class="uk-width-1-1" name="description"></textarea></div>
-                            </div>
+                            </div>  
+                            
                             <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Tags</span>  <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls">
@@ -192,46 +184,41 @@
                 <div class="uk-modal-dialog"> <a class="uk-modal-close uk-close"></a>
                     <div class="uk-modal-header"> <h3><span data-lang>Edit item</span> #<span class="uk-text-muted" name="id"></span></h3> </div>
                     <form class="uk-form uk-form-horizontal" action="<?=URL_BASE?>ajax.php?f=products/postEditItem" data-trigger="item-updated">
-                        <input type="hidden" name="id">
+                            <input type="hidden" name="id">
                             
                             <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Name</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls"><input class="uk-width-1-1" type="text" name="title"></div>
                             </div>
-                            <div class="uk-form-row">
-                                <label class="uk-form-label" data-lang>Ref.</label>
+                             <div class="uk-form-row">
+                                <label class="uk-form-label" data-lang>Reference</label>
                                 <div class="uk-form-controls"><input class="uk-width-1-1" type="text" name="reference"></div>
+                            </div>
+                            <div class="uk-form-row">
+                                <label class="uk-form-label"><span data-lang>Description</span>  <span class="uk-text-danger">*</span></label>
+                                <div class="uk-form-controls"><textarea class="uk-width-1-1" name="description"></textarea></div>
                             </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Price</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls"><input class="uk-width-1-1" type="text" name="price"></div>
                             </div>
                             <div class="uk-form-row">
-                                <label class="uk-form-label" data-lang>Quantity</label>
+                                <label class="uk-form-label" data-lang>Qty</label>
                                 <div class="uk-form-controls"><input class="uk-width-1-1" type="text" name="qty"></div>
                             </div>
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" data-lang>M.Unit</label>
+                                <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=products/units/getUnits" type="text" name="id_unit"></select></div>
+                            </div>
                              <div class="uk-form-row">
-                                <label class="uk-form-label" data-lang>Measure Unit</label>
-                                <div class="uk-form-controls"><select class="uk-width-1-1" data-get="ajax.php?f=products/units/getMeasureUnits" type="text" name="id_unit"></select></div>
-                            </div>
-                            <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Category</span> <span class="uk-text-danger">*</span></label>
-                                <div class="uk-form-controls"><select class="uk-width-1-1" data-get="ajax.php?f=products/getCategories&getforselect" name="id_category"></select></div>
+                                <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=products/categories/getCategories&getforselect" name="id_category"></select></div>
+                                <script>$(document).on("categories-changed", function(e,d){
+                                    var select = $("#modal-new-item [name=id_category]").html('<option value="0">-</option>');
+                                    $.each(d.data, function(r,k){select.append('<option value="'+k.id+'" data-lang>'+k.name+'</option>');});
+                                });</script>
                             </div>
-                            <div class="uk-form-row">
-                                <label class="uk-form-label" data-lang>Supplier</label>
-                                <div class="uk-form-controls"><select class="uk-width-1-1 select2" style="width:100%"
-                                    name="id_owner"
-                                    data-get="<?=URL_BASE?>ajax.php?f=suppliers/getCompaniesForSelect" 
-                                    data-templateSelection='{{text}}'
-                                    data-templateResult='{{text}}'
-                                ></select></div>
-                            </div>
-
-                            <div class="uk-form-row">
-                                <label class="uk-form-label"><span data-lang>Description</span> <span class="uk-text-danger">*</span></label>
-                                <div class="uk-form-controls"><textarea class="uk-width-1-1" name="description"></textarea></div>
-                            </div>
+                            
                             <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Tags</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls">
@@ -347,8 +334,8 @@
                         <input type="file" id="select-product-image-files" name="images[]" multiple class="uk-hidden" onchange="$(this).closest('form').submit()">
                         <div class="uk-text-right">
                             <span class="upload-progress" data-lang>Upload:</span>
-                            <a href="#modal-tune-upload-image" data-uk-modal='{modal:false}' onclick="$('#modal-tune-upload-image [name=id]').val($('#form-product-upload-image [name=id]').val());" class="uk-button uk-button-success" ><i class="uk-icon-object-group"></i> <span data-lang>Tune upload</span></a>
-                            <button type="button" class="uk-button uk-button-primary" onclick="$('#select-product-image-files').click()"><i class="uk-icon-cloud-upload"></i> <span data-lang>Quick upload</span></button>
+                            <a href="#modal-tune-upload-image" data-uk-modal='{modal:false}' onclick="$('#modal-tune-upload-image [name=id]').val($('#form-product-upload-image [name=id]').val());" class="uk-button uk-button-primary" ><i class="uk-icon-object-group"></i> <span data-lang>Tune upload</span></a>
+                            <button type="button" class="uk-button uk-button-success" onclick="$('#select-product-image-files').click()"><i class="uk-icon-cloud-upload"></i> <span data-lang>Quick upload</span></button>
                             <button type="button" class="uk-modal-close uk-button" data-lang>Exit</button>
                         </div>
                     </form>

@@ -1,0 +1,3 @@
+RewriteEngine on
+RewriteRule ^view/(.*)$ view/index.php [NC,L]
+RewriteRule ^(.*)$ index.php [NC,L]

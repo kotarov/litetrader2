@@ -13,8 +13,8 @@ if(isset($_SERVER['PATH_INFO'])){
         $noimage = "../img/no-products-$size.jpg";
         if(!file_exists($noimage)){
             include LIB_DIR.'ResampleImage.php';
-            $s = parse_ini_file(INI_DIR.'image.ini', true);
-            $s= $s['products'];
+            $s = parse_ini_file(INI_DIR.'products/images.ini', true);
+            $s = $s['items'];
             $ii=file_get_contents('../img/no-image.png');
             file_put_contents($noimage, resampleimage($ii, $s[$size]['width'], $s[$size]['height'], $s['bgcolor']));
         }

@@ -45,7 +45,7 @@ foreach($_FILES['images']['name'] AS $n=>$name){
         'date_add'=>time(),
         'full' => $full,
         'thumb' => resampleimage($image, $s['thumb']['width'], $s['thumb']['height'], $s['bgcolor']),
-        'small' => resampleimage($image, $s['small']['width'], $s['small']['height'],$s['bgcolor'])
+        'small' => resampleimage($image, $s['small']['width'], $s['small']['height'], $s['bgcolor'])
     ));
     $_REQUEST['id'] = $id_item;
     $ret['id'] = $id_item;

@@ -8,47 +8,47 @@
         ),
         'products'=>array(
             'title'=>'Products',
-            'url'=>'products/',
+            'url'=>'products/index.php',
             'data-active'=>'page-products',
             'children'=>array(
                 'products'=>array('title'=>'Products', 'url'=>'products/index.php'),
-                'categories'=>array( 'title'=>'Categories', 'url'=>'products/categories.php'),
+                'categories'=>array( 'title'=>'Categories', 'url'=>'products/categories/index.php'),
                 '-1-'=>array(),
-                'measure-units'=>array( 'title'=>'Measure Units', 'url'=>'products/units.php')
+                'measure-units'=>array( 'title'=>'Measure Units', 'url'=>'products/units/index.php')
             )
         ),
-        /*
         'customers'=>array(
             'title'=>'Customers',
-            'url'=>'customers.php',
+            'url'=>'customers/index.php',
             'data-active'=>'page-customers',
             'children'=>array(
-                'orders'=>array('title'=>'Sales Orders','url'=>'customersorders.php'),
-                'customers'=>array('title'=>'Customers', 'url'=>'customers.php'),
-                'companies'=>array('title'=>'Companies','url'=>'customerscompanies.php'),
+                'orders'=>array('title'=>'Sales Orders','url'=>'sales/index.php'),
+                'customers'=>array('title'=>'Customers', 'url'=>'customers/index.php'),
+                'companies'=>array('title'=>'Companies','url'=>'customers/companies/index.php'),
                 '-1-'=>array(),
-                'statuses'=>array('title'=>'Order Statuses','url'=>'customersorderstatuses.php')
+                'statuses'=>array('title'=>'Order Statuses','url'=>'sales/statuses.php')
             )
         ),
         'suppliers'=>array(
             'title'=>'Suppliers',
-            'url'=>'suppliers.php',
+            'url'=>'suppliers/index.php',
             'data-active'=>'page-supplier',
             'children'=>array(
-                //'orders'=>array('title'=>'Purchase Orders','url'=>'suppliersorders.php'),
-                'customers'=>array('title'=>'Suppliers', 'url'=>'suppliers.php'),
-                'companies'=>array('title'=>'Companies','url'=>'supplierscompanies.php'),
-                //'-1-'=>array(),
-                ///'statuses'=>array('title'=>'Purchase Statuses','url'=>'suppliersorderstatuses.php')   
+                'orders'=>array('title'=>'Purchase Orders','url'=>'supplies/index.php'),
+                'customers'=>array('title'=>'Suppliers', 'url'=>'suppliers/index.php'),
+                'companies'=>array('title'=>'Companies','url'=>'suppliers/companies/index.php'),
+                '-1-'=>array(),
+                'statuses'=>array('title'=>'Purchase Statuses','url'=>'supplies/statuses.php')   
             )
         ),
-        'blogs'=>array(
+        
+        'blog'=>array(
             'title'=>"Blog",
-            'url'=>'blogs/articles.php',
-            'data-active'=>'page-blogs',
+            'url'=>'blog/index.php',
+            'data-active'=>'page-blog',
             'children'=>array(
-                'blogs'=>array('title'=>'Blog','url'=>'blogs/articles.php'),
-                'categories'=>array('title'=>'Categories','url'=>'blogs/categories.php')
+                'blog'=>array('title'=>'Blog','url'=>'blog/index.php'),
+                'categories'=>array('title'=>'Categories','url'=>'blog/categories/index.php')
             )
         ),
         'settings'=>array(
@@ -56,13 +56,17 @@
             'icon'=>'uk-icon-gear',
             'data-active'=>'page-settings',
             'children'=>array(
+                'homeslider'=>array('title'=>'<span class="uk-text-muted">Home Slider</span>', 'url'=>'settings/homeslider.php'),
+                'homeadvertize'=>array('title'=>'<span class="uk-text-muted">Home Advertize</span>', 'url'=>'settings/homeadvertize.php'),
+                'homemessage'=>array('title'=>'<span class="uk-text-muted">Home Message</span>', 'url'=>'settings/homemessage.php'),
+                '-1-'=>array(),
                 'company'=>array('title'=>'Company', 'url'=>'settings/company.php'),
-                'menus'=>array('title'=>'Menus', 'url'=>'settings/menus.php'),
-                'homeslider'=>array('title'=>'Home Slider', 'url'=>'settings/homeslider.php'),
+                'menus'=>array('title'=>'WWW Menus', 'url'=>'settings/menus.php'),
+                
                 //'update'=>array('title'=>'Git Updater','url'=>'tools-update.php')    
             )
         )
-        */
+        /**/
     );
 ?>
 <script>

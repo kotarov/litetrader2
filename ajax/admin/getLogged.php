@@ -1,5 +1,5 @@
 <?php
-if(isset($_SESSION['employee']))
-    return json_encode($_SESSION['employee']);
+if(isset($_SESSION['admin']))
+    return json_encode($_SESSION['admin']);
 else
     return json_encode(array('access_denided'=>1));
