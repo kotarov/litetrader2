@@ -19,6 +19,6 @@ if( isset($_SESSION['admin']['id'])
 
     
 }else{
-    //echo json_encode( array('access_denided'=>true) );
+    echo json_encode( array('access_denided'=>true) );
 }
 ?>

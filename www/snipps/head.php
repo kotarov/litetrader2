@@ -9,7 +9,7 @@ if($me['public']['products']) $menu = include __DIR__.'/../../ajax/www/getMenu.p
         <div class="uk-container uk-container-center uk-margin-large-bottom">
             <div class="uk-panel uk-margin-top">
                 <div class="uk-float-left"><h1><?=$_COMPANY['name']?></h1></div>
-                <div class="uk-navbar-content uk-hidden-small">
+                <div class="uk-navbar-content uk-hidden-small ">
                     <form class="uk-search no-ajax" action="<?=URL_BASE?>products/search/" data-uk-search="{source:'<?=URL_BASE?>ajax.php?f=products/search'}">
                         <input class="uk-search-field" type="search" placeholder="search..." autocomplete="off">
                     </form>
