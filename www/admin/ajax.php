@@ -6,7 +6,7 @@ define(  'DB_DIR', realpath('../../sqlite/').'/' );
 define( 'LIB_DIR', realpath('../../lib/'   ).'/' );
 define( 'INI_DIR', realpath('../../ini/'   ).'/' );
 
-if( isset($_SESSION['employee']['id']) 
+if( isset($_SESSION['admin']['id']) 
     && isset($_GET['f']) 
     && file_exists('../../ajax/admin/'.$_GET['f'].'.php') 
     && chdir(dirname('../../ajax/admin/'.$_GET['f'])) 
