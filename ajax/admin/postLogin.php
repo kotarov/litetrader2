@@ -21,7 +21,7 @@ if(!isset($ret['required'])){
         $_SESSION['admin'] = $dbh->query("SELECT id, name, family, email FROM employees WHERE id = $exists")
             ->fetch(PDO::FETCH_ASSOC);
         $dbh->query("UPDATE employees SET date_logged = ".time()." WHERE id = $exists");
-        $ret['success'] = 'Wellcom';
+        $ret['success'] = 'Welcome';
     }else{
         $ret['access'] = 'Wrong email or password';    
     }
