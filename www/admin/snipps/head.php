@@ -140,7 +140,7 @@
                     if($("body").attr("id") == "page-profile") active = ' class="uk-active"'
                     $(".customer-nav-menu").html(''
                         +'<li'+active+'><a href="<?=URL_BASE?>profile.php"> '+ d.name+' '+ d.family +' </a></li>'
-                        +'<li><a onclick="$.get(\'<?=URL_BASE?>ajax.php?f=postLogout\').done(window.location.replace(\'<?=URL_BASE?>index.php\'))"><i class="uk-icon-power-off"></i> Exit</a></li>'
+                        +'<li><a onclick="$.get(\'<?=URL_BASE?>ajax.php?f=www/login/postLogout\').done(window.location.replace(\'<?=URL_BASE?>index.php\'))"><i class="uk-icon-power-off"></i> Exit</a></li>'
                     );
                 }});
                 $("[data-active='"+$("body").attr("id")+"']").addClass("uk-active");
