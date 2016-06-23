@@ -35,7 +35,7 @@
         <div class="uk-margin-top">
             <h1><i id="theIcon" class="uk-border-circle uk-icon-large uk-panel-box uk-icon-user"></i></h1>
         </div>
-        <form id="FormLogin" action="<?=URL_BASE?>ajax.php?f=www/login/postLogin" class="uk-form" method="post">
+        <form id="FormLogin" action="<?=URL_BASE?>ajax.php?f=postLogin" class="uk-form" method="post">
 			<div class="uk-form-controls uk-form-row uk-grid">
 				<input name="email" type="text" placeholder="Email" title="Email" class="uk-width-1-1 uk-form-large">
 			</div>
