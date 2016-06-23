@@ -661,7 +661,7 @@
 
         
         
-        <?php include 'snipps/foot.php'; ?>
+        <?php include '../snipps/foot.php'; ?>
         
         <script src="<?=$_ASSETS['application.js']?>"></script>
         
