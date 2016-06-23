@@ -32,7 +32,7 @@
         'suppliers'=>array(
             'title'=>'Suppliers',
             'url'=>'suppliers/index.php',
-            'data-active'=>'page-supplier',
+            'data-active'=>'page-suppliers',
             'children'=>array(
                 'orders'=>array('title'=>'Purchase Orders','url'=>'supplies/index.php'),
                 'customers'=>array('title'=>'Suppliers', 'url'=>'suppliers/index.php'),
