@@ -13,10 +13,10 @@ if( isset($_SESSION['admin']['id'])
 ){
     echo include rtrim(basename($_GET['f'] ), '.php') . '.php' ;
     
-/*}elseif(isset($_GET['f']) && $_GET['f'] == 'postLogin'){
+}elseif(isset($_GET['f']) && $_GET['f'] == 'postLogin'){
     chdir('../../ajax/admin/');
     echo include 'postLogin.php';
-*/
+
     
 }else{
     //echo json_encode( array('access_denided'=>true) );
