@@ -37,6 +37,7 @@
             <?php include 'slider.php';?>
             <?php //include 'promo.php';?>
             <?php include 'advertise.php';?>
+            <br>
             <?php include '../snipps/featured.php';?>
             
            <?php include 'well_message.php';?>
