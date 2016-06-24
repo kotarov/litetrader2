@@ -1,5 +1,5 @@
 <!-- slider -->
-<?php $slider = parse_ini_file(INI_DIR."www/homeslider.ini",true);?>
+<?php $slider = parse_ini_file(INI_DIR."www/sliders.ini",true);?>
 <div class="uk-margin-bottom">
     <div class="uk-width-medium-1-1">
         <div class="fotorama" data-loop="true" data-autoplay="true" style="position:relative">

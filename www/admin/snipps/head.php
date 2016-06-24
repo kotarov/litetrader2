@@ -56,7 +56,7 @@
             'icon'=>'uk-icon-gear',
             'data-active'=>'page-settings',
             'children'=>array(
-                'homeslider'=>array('title'=>'<span class="uk-text-muted">Home Slider</span>', 'url'=>'settings/homeslider.php'),
+                'homeslider'=>array('title'=>'Sliders', 'url'=>'settings/sliders.php'),
                 'homeadvertize'=>array('title'=>'<span class="uk-text-muted">Home Advertize</span>', 'url'=>'settings/homeadvertize.php'),
                 'homemessage'=>array('title'=>'<span class="uk-text-muted">Home Message</span>', 'url'=>'settings/homemessage.php'),
                 '-1-'=>array(),

@@ -1,4 +1,25 @@
 <?php
+function arr2ini($arr,$depth=1){
+    $content = '';
+    foreach($arr AS $key => $vals){
+        
+        if(!is_array($vals)){
+            $content .= $key .' = "'.$vals.'"'."\n";
+        }elseif($depth == 1){
+            $content .= "[$key]\n";
+            $content .= arr2ini($vals,$depth+1)."\n";
+        }else{
+            
+            foreach($vals AS $k=>$v){
+                $content .= $key.'[] = "'.$v.'"'."\n";
+            }
+        }
+        
+        
+    }
+    return $content;
+}
+/*
 function arr2ini(array $a, array $parent = array())
 {
     $out = '';
@@ -18,3 +39,4 @@ function arr2ini(array $a, array $parent = array())
     }
     return $out;
 }
+*/

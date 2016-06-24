@@ -35,21 +35,11 @@
     <body id="page-home"> 
             <?php include '../snipps/head.php'; ?>
             <?php include 'slider.php';?>
-            <?php include 'promo.php';?>
-            <?php include 'advertize.php';?>
-            
+            <?php //include 'promo.php';?>
+            <?php include 'advertise.php';?>
             <?php include '../snipps/featured.php';?>
             
-            <!-- Well -->
-            <br>
-            <div class="uk-grid uk-margin-top" data-uk-grid-margin="">
-                <div class="uk-width-medium-1-1 uk-row-first">
-                    <div class="uk-panel uk-panel-box uk-text-center">
-                        <p><strong>Phasellus viverra nulla ut metus.</strong> Quisque rutrum etiam ultricies nisi vel augue. <a class="uk-button uk-button-primary uk-margin-left" href="#">Button</a></p>
-                    </div>
-                </div>
-            </div>
-            <!-- //well -->
+           <?php include 'well_message.php';?>
 
 
     <?php include '../snipps/foot.php';?>
