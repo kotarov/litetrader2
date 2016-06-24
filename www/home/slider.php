@@ -2,7 +2,7 @@
 <?php $slider = parse_ini_file(INI_DIR."www/sliders.ini",true);?>
 <div class="uk-margin-bottom">
     <div class="uk-width-medium-1-1">
-        <div class="fotorama" data-loop="true" data-autoplay="true" style="position:relative">
+        <div class="fotorama" data-loop="true" data-autoplay="true" style="position:relative" data-width="100%">
                 <?php $sl = 'slide1'; foreach($slider[$sl]['src'] AS $k => $src){ ?>
                     <?php if($slider[$sl]['title'][$k] || $slider[$sl]['text'][$k]) 
                             $class="uk-text-center uk-overlay-background uk-overlay-panel uk-overlay-bottom"; 

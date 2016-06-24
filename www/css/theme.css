@@ -9,3 +9,5 @@ table tfoot th { font-weight:bold; font-style:normal;font-size:1.2em;}
 .cart-sum { font-style: normal; font-weight:bold; font-size:1.7em;}
 
 input[type=search] { background-color:#f5f5f5;min-width:10em;}
+
+.uk-thumbnail-caption{ height:3em; overflow:hidden;}
