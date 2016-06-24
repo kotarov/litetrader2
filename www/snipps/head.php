@@ -1,8 +1,8 @@
 <?php 
 
 $NO_ENCODE = true;
-$me = parse_ini_file(INI_DIR.'www/menus.ini', true);
-if($me['public']['products']) $menu = include __DIR__.'/../../ajax/www/getMenu.php';
+$me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
+if($me['products']) $menu = include __DIR__.'/../../ajax/www/getMenu.php';
 ?>
 <?php /*<div class="uk-block-secondary uk-contrast"> <p class="uk-container uk-container-center "> <a>We use cookies</a></p> </div> */?>
 
@@ -59,15 +59,15 @@ if($me['public']['products']) $menu = include __DIR__.'/../../ajax/www/getMenu.p
             <!-- menu -->
             <nav class="uk-navbar main-navbar uk-margin-bottom">
                 <ul class="uk-navbar-nav uk-hidden-small">
-                    <?php if($me['public']['home']) { ?>
+                    <?php if($me['home']) { ?>
                     <li data-active="page-home">
-                        <a href="<?=URL_BASE?>home/"><i class="uk-icon-home"></i> Home</a>
+                        <a href="<?=URL_BASE?>home/"><i class="uk-icon-home"></i> <?=$me['home_title']?></a>
                     </li>
                     <?php } ?>
 
-                    <?php if($me['public']['products']) { ?>
+                    <?php if($me['products']) { ?>
                     <li data-active="page-products" data-uk-dropdown>
-                            <a href="<?=URL_BASE?>products/" class="uk-button-dropdown" aria-haspopup="true" data-uk-dropdown="" aria-expanded="false" >Products</a>
+                            <a href="<?=URL_BASE?>products/" class="uk-button-dropdown" aria-haspopup="true" data-uk-dropdown="" aria-expanded="false" ><?=$me['products_title']?></a>
                             <div class="uk-dropdown uk-dropdown-width-3 uk-dropdown-bottom" style="top: 30px; left: 0px;">
                                 <div class="uk-grid uk-dropdown-grid">
                                     <?php foreach($menu['data'] AS $r=>$m){ ?>
@@ -85,21 +85,21 @@ if($me['public']['products']) $menu = include __DIR__.'/../../ajax/www/getMenu.p
                     </li>
                     <?php } ?>
                     
-                    <?php if($me['public']['articles']) { ?>
+                    <?php if($me['articles']) { ?>
                     <li data-active="page-articles">
-                        <a href="<?=URL_BASE?>articles/">Articles</a>
+                        <a href="<?=URL_BASE?>articles/"><?=$me['articles_title']?></a>
                     </li>
                     <?php } ?>
                     
-                    <?php if($me['public']['contacts']) { ?>
+                    <?php if($me['contacts']) { ?>
                     <li data-active="page-contacts">
-                        <a href="<?=URL_BASE?>contacts/">Contacts</a>
+                        <a href="<?=URL_BASE?>contacts/"><?=$me['contacts_title']?></a>
                     </li>
                     <?php } ?>
                     
-                    <?php if($me['public']['order']) { ?>
+                    <?php if($me['order']) { ?>
                     <li data-active="page-order" class="checkout" hidden>
-                        <a href="<?=URL_BASE?>order/"> ORDER <b class="shopping-cart-badge uk-badge uk-badge-notification uk-badge-danger"></b></a>
+                        <a href="<?=URL_BASE?>order/"> <?=$me['order_title']?> <b class="shopping-cart-badge uk-badge uk-badge-notification uk-badge-danger"></b></a>
                     </li>
                     <?php } ?>
                     
@@ -108,7 +108,7 @@ if($me['public']['products']) $menu = include __DIR__.'/../../ajax/www/getMenu.p
                 
                 <div class="uk-navbar-flip">
                     <ul class="uk-navbar-nav uk-hidden-small customer-nav-menu">
-                        <li data-active="page-profile"><a href="<?=URL_BASE?>customer/"><i class="uk-icon-user"></i> Login</a></li>
+                        <li data-active="page-profile"><a href="<?=URL_BASE?>customer/"><i class="uk-icon-user"></i> <?=$me['login_title']?></a></li>
                     </ul>
                 </div>
                 <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
@@ -124,15 +124,15 @@ if($me['public']['products']) $menu = include __DIR__.'/../../ajax/www/getMenu.p
                     <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
                         <li class="uk-nav-divider"></li>
 
-                        <?php if($me['public']['home']) { ?>
+                        <?php if($me['home']) { ?>
                         <li data-active="page-home">
-                            <a href="<?=URL_BASE?>home/">Home</a>
+                            <a href="<?=URL_BASE?>home/"><?=$me['home_title']?></a>
                         </li>
                         <?php } ?>
 
-                        <?php if($me['public']['products']) { ?>
+                        <?php if($me['products']) { ?>
                         <li data-active="page-category" class="uk-parent">
-                            <a href="#">Products</a>
+                            <a href="#"><?=$me['products_title']?></a>
                             <ul class="uk-nav-sub" >
                                 <?php foreach($menu['data'] AS $k=>$m){ ?>
                                     <li class="uk-margin-left">
@@ -146,28 +146,28 @@ if($me['public']['products']) $menu = include __DIR__.'/../../ajax/www/getMenu.p
                         </li>
                         <?php } ?>
                         
-                        <?php if($me['public']['articles']) { ?>
+                        <?php if($me['articles']) { ?>
                         <li data-active="page-articles">
-                            <a href="<?=URL_BASE?>articles/">Articles</a>
+                            <a href="<?=URL_BASE?>articles/"><?=$me['articles_title']?></a>
                         </li>
                         <?php } ?>
                         
-                        <?php if($me['public']['contacts']) { ?>
+                        <?php if($me['contacts']) { ?>
                         <li data-active="page-contacts">
-                            <a href="<?=URL_BASE?>contacts/">Contacts</a>
+                            <a href="<?=URL_BASE?>contacts/"><?=$me['contacts_title']?></a>
                         </li>
                         <?php } ?>
                         
-                        <?php if($me['public']['order']) { ?>
+                        <?php if($me['order']) { ?>
                         <li data-active="page-order" class="checkout">
-                            <a href="<?=URL_BASE?>order/">Order <b class="shopping-cart-badge uk-badge uk-badge-notification uk-badge-danger"></b></a>
+                            <a href="<?=URL_BASE?>order/"><?=$me['order_title']?> <b class="shopping-cart-badge uk-badge uk-badge-notification uk-badge-danger"></b></a>
                         </li>
                         <?php } ?>
                         
                         <li class="uk-nav-divider"></li>
                         <li>
                             <ul class="uk-nav customer-nav-menu">
-                                <li><a href="<?=URL_BASE?>customer/">Login</a></li>
+                                <li><a href="<?=URL_BASE?>customer/"><?=$me['login_title']?></a></li>
                             </ul>
                         </li>
                     </ul>

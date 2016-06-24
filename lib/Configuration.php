@@ -11,7 +11,7 @@ function arr2ini($arr,$depth=1){
         }else{
             
             foreach($vals AS $k=>$v){
-                $content .= $key.'[] = "'.$v.'"'."\n";
+                $content .= $key.'['.(is_int($k)?'':$k).'] = "'.$v.'"'."\n";
             }
         }
         
