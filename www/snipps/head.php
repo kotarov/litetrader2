@@ -108,7 +108,9 @@ if($me['products']) $menu = include __DIR__.'/../../ajax/www/getMenu.php';
                 
                 <div class="uk-navbar-flip">
                     <ul class="uk-navbar-nav uk-hidden-small customer-nav-menu">
+                        <?php if($me['login']) { ?>
                         <li data-active="page-profile"><a href="<?=URL_BASE?>customer/"><i class="uk-icon-user"></i> <?=$me['login_title']?></a></li>
+                        <?php } ?>
                     </ul>
                 </div>
                 <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
@@ -165,11 +167,13 @@ if($me['products']) $menu = include __DIR__.'/../../ajax/www/getMenu.php';
                         <?php } ?>
                         
                         <li class="uk-nav-divider"></li>
+                        <?php if($me['login']) { ?>
                         <li>
                             <ul class="uk-nav customer-nav-menu">
                                 <li><a href="<?=URL_BASE?>customer/"><?=$me['login_title']?></a></li>
                             </ul>
                         </li>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>

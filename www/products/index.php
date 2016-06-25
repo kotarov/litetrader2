@@ -47,7 +47,7 @@
         function initProducts(){
             url = decodeURIComponent(window.location).split("/");
             id = parseInt(url[ url.length-2 ].split("-")[0], 10);
-            $.getJSON("<?=URL_BASE?>ajax.php?f=getCategories&id="+id).done(function(ret){
+            $.getJSON("<?=URL_BASE?>ajax.php?f=www/getCategories&id="+id).done(function(ret){
                 $(".uk-breadcrumb").html('<li><a data-live href="<?=URL_BASE.URL_PRODUCTS?>/"><i class="uk-icon-home"></i> Home</a></li>');
                 $.each(ret.parents, function(k,v){
                     $(".uk-breadcrumb").append('<li><a data-live href="<?=URL_BASE.URL_PRODUCTS?>'+v.url_rewrite+'">'+v.name+'</a></li>');
@@ -58,9 +58,15 @@
                 $.each(ret.categories, function(k,v){
                     $("#categories-list").append(''
                     +'<div class="uk-width-medium-1-2 uk-width-large-1-3">'
-                        +'<div class="uk-panel uk-panel-hover uk-panel-header">'
-                            +'<div class="uk-panel-badge uk-badge">'+v.num+'</div>'
-                            +'<h3 class="uk-panel-title"><a data-live href="<?=URL_BASE.URL_PRODUCTS?>'+v.url_rewrite+'">'+v.title+'</a></h3>'
+                        +'<div class="uk-panel uk-panel-hover1  uk-panel-header1 uk-panel-box">'
+                            +'<div class="uk-panel-teaser">'
+                                +'<img src="<?=URL_BASE?>imageCategory.php/'+v.id+'/thumb/'+v.date_image+'" alt="">'
+                            +'</div>'
+                            
+                            +'<h3 class="uk-panel-title" style="position:relative">'
+                                +'<a data-live href="<?=URL_BASE.URL_PRODUCTS?>'+v.url_rewrite+'">'+v.title+'</a>'
+                                +'<div class="uk-panel-badge uk-badge">'+v.num+'</div>'
+                            +'</h3>'
                             +'<p>'+v.description+'</p>'
                         +'</div>'
                     +'</div>'

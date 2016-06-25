@@ -35,76 +35,52 @@
                         
                         <fieldset data-uk-margin><legend>Public shop menu</legend>
                             
+                            
                             <div class="uk-form-row">
-                                <div class="uk-form-controls"><label class="uk-form-label"> 
+                                <label class="uk-form-label"> 
                                     <input  type="checkbox" name="home" value="<?=$data['public']['home']?>" <?=($data['public']['home']?"checked":"")?>>
                                     Home
-                                </label></div>
-                            </div>
-                            <div class="uk-form-row">
-                                <label class="uk-form-label">Home Title</label>
+                                </label>
                                 <div class="uk-form-controls"> 
                                     <input  type="text" name="home_title" value="<?=$data['public']['home_title']?>" >
                                 </div>
                             </div>
-                            <br>
+                            
                             
                             <div class="uk-form-row">
-                                <label class="uk-form-controls"> 
-                                    <input  type="checkbox" name="products" value="<?=$data['public']['products']?>" <?=($data['public']['products']?"checked":"")?>> 
-                                    Products
-                                </label>
-                            </div>
-                            <div class="uk-form-row">
-                                <label class="uk-form-label">Products title</label>
+                                <label class="uk-form-label"><input  type="checkbox" name="products" value="<?=$data['public']['products']?>" <?=($data['public']['products']?"checked":"")?>> 
+                                    Products</label>
                                 <div class="uk-form-controls">
                                     <input name="products_title" value="<?=$data['public']['products_title']?>">
                                 </div>
                             </div>
-                            <br>
                             
                             
                             <div class="uk-form-row">
-                                <div class="uk-form-controls">
                                 <label class="uk-form-label"> <input  type="checkbox" name="articles" value="<?=$data['public']['articles']?>" <?=($data['public']['articles']?"checked":"")?>> Articles</label>
-                                </div>
-                            </div>
-                            <div class="uk-form-row">
-                                <label class="uk-form-label">Article titles</label>
                                 <div class="uk-form-controls">
                                     <input name="articles_title" value="<?=$data['public']['articles_title']?>">
                                 </div>
                             </div>
-                            <br>
                             
                             <div class="uk-form-row">
-                                <div class="uk-form-controls">
-                                <label class="uk-form-label"> <input  type="checkbox" name="contacts" value="<?=$data['public']['contacts']?>" <?=($data['public']['contacts']?"checked":"")?>> Contacts</label>
-                                </div>
-                            </div>
-                            <div class="uk-form-row">
-                                <label class="uk-form-label">Contacts title</label>
+                                <label class="uk-form-label">
+                                    <input  type="checkbox" name="contacts" value="<?=$data['public']['contacts']?>" <?=($data['public']['contacts']?"checked":"")?>> Contacts
+                                </label>
                                 <div class="uk-form-controls">
                                     <input name="contacts_title" value="<?=$data['public']['contacts_title']?>">
                                 </div>
                             </div>
-                            <br>
                             
                             <div class="uk-form-row">
-                                <div class="uk-form-controls">
                                 <label class="uk-form-label"> <input  type="checkbox" name="order" value="<?=$data['public']['order']?>" <?=($data['public']['order']?"checked":"")?>> Order</label>
-                                </div>
-                            </div>
-                            <div class="uk-form-row">
-                                <label class="uk-form-label">Orders title</label>
                                 <div class="uk-form-controls">
                                     <input name="order_title" value="<?=$data['public']['order_title']?>">
                                 </div>
                             </div>
-                            <br>
                             
                             <div class="uk-form-row">
-                                <label class="uk-form-label">Login title</label>
+                                <label class="uk-form-label"> <input type="checkbox" name="login" value="<?=$data['public']['login']?>" <?=($data['public']['login']?"checked":"")?>> Login</label>
                                 <div class="uk-form-controls">
                                     <input name="login_title" value="<?=$data['public']['login_title']?>">
                                 </div>

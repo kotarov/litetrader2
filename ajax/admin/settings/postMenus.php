@@ -18,10 +18,11 @@ $post = filter_var_array($_POST,array(
     'order'=>FILTER_VALIDATE_BOOLEAN,
     'order_title'=>FILTER_SANITIZE_STRING,
     
+    'login'=>FILTER_VALIDATE_BOOLEAN,
     'login_title'=>FILTER_SANITIZE_STRING,
 ));
 
-$bool_fields = array('home','products','articles','contacts','order');
+$bool_fields = array('home','products','articles','contacts','order','login');
 foreach($bool_fields AS $f){
     $post[$f] = isset($_POST[$f])?"1":"0";
 }
