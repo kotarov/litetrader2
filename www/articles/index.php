@@ -12,14 +12,19 @@
         c.title category,
         b.tags,
         b.owner,
-        b.date_avaible,
+        strftime('%d.%m.%Y %H:%M',datetime(b.date_add,'unixepoch')) date_add,
         b.content,
-        b.id image
+        im.id id_image,
+        im.date_add image_date
     FROM items b
     LEFT JOIN categories c ON (c.id = b.id_category)
-    WHERE c.is_visible = 1 AND b.is_active = 1 
-    LIMIT $p,$l
+    LEFT JOIN images im ON (im.id_item = b.id AND im.is_cover = 1) 
+    WHERE b.is_active = 1 AND c.is_visible = 1  
+    ORDER BY b.date_add DESC 
+    LIMIT $p,$l 
     ")->fetchAll(PDO::FETCH_ASSOC);
+    
+    //print_r($articles);exit;
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,35 +46,69 @@
         <script src="<?=$_ASSETS['uikit.search.js']?>"></script>
         
         <link href="<?=URL_BASE?>css/theme.css" rel="stylesheet">
+        
+        <style>
+            .uk-article-title:hover{ color:#999}
+        </style>
+
     </head>
     <body id="page-articles"> 
     <?php include '../snipps/head.php'; ?>
     <br>
     
     <div class="uk-grid">
-        <div class="uk-width-medium-3-4">
-        <?php foreach($articles AS $article){ ?>
-           <article class="uk-article">
-                <h1 name="title" class="uk-width-1-1 uk-article-title editable">
-                    <?=$article['title']?>
-                </h1>
+        <div class="uk-width-medium-3-4 ">
+        <?php foreach($articles AS $article){ 
+            $article_url = URL_BASE.'articles/view/index.php/'.$article['id'].'/'.$article['title'];
+            ?>
+            
+            
+           <article class="uk-article uk-width-1-1 uk-grid">
+                <a href="<?=$article_url?>" class="uk-width-1-3">
+                    <img class="uk-thumbnail" src="<?=URL_BASE?>articles/image.php/<?=$article['id_image']?>/thumb/<?=$article['image_date']?>"> 
+                </a>
                 
-                <div class="uk-article-meta uk-panel-box1">
-                    Written by <b><?=$article['author']?></b> on <b><?=$article['date']?></b> Posted in <b><?=$article['category']?></b></select>
+                <div class="uk-width-2-3 uk-margin-bottom">
+                    <h1 name="title" class="uk-width-1-1 uk-article-title editable">
+                        <a href="<?=$article_url?>"> <?=$article['title']?> </a>
+                    </h1>
+                  
+                    <div class="uk-article-meta">
+                        <?=$article['owner']?> | 
+                        <?=$article['category']?> |  
+                        <?=str_replace(" "," | ",$article['date_add'])?>
+                    </div>
+                    
+                    
+                    
+                    <div class="uk-article-lead uk-width-1-1 editable" name="description" >
+                        <?=$article['description']?>
+                    </div>
                 </div>
-                
-                <div class="uk-article-divider"></div>
-                
-                <div class="uk-article-lead uk-width-1-1 editable" name="subtitle" >
-                    <?=$article['subtitle']?>
-                </div>
-                
-                <div><a href="<?=URL_BASE?>articles/view/index.php/<?=$article['id'].'/'.$article['title']?>">Read more <i class="uk-icon-link"></i></a></div>
+                 
             </article> 
-           <hr><br>
+           <hr class="uk-width-1-1">
         <?php }?>
         </div>
         <div class="uk-width-medium-1-4">
+            <?php 
+                $dbh=new PDO('sqlite:'.DB_DIR.'blog');
+                $categories = $dbh->query("SELECT 
+                        c.is_visible,
+                        c.id,
+                        c.depth_html || c.title title,
+                        
+                        c.position,
+                        c.tags,
+                        c.id image,c.date_image, c.image_size,
+                        c.id actions
+                    FROM categories c 
+                    ORDER BY c.list_order
+                ")->fetchAll(PDO::FETCH_ASSOC);
+                foreach($categories AS $n => $category){ 
+                    echo '<div>'.$category['title'].'</div>';    
+                }
+            ?>
             
         </div>
     </div>

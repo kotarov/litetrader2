@@ -13,6 +13,8 @@
         <link  href="<?=$_ASSETS['uikit.css']?>" rel="stylesheet"/>
         <script src="<?=$_ASSETS['uikit.js']?>"></script>
         <script src="<?=$_ASSETS['uikit.offcanvas.js']?>"></script>
+        <link  href="<?=$_ASSETS['uikit.form.css']?>" rel="stylesheet" />
+        <script src="<?=$_ASSETS['uikit.form.js']?>"></script>
         
         <link  href="<?=$_ASSETS['uikit.notify.css']?>" rel="stylesheet" />
         <script src="<?=$_ASSETS['uikit.notify.js']?>"></script>
@@ -224,7 +226,7 @@
                             </div>
                         </div>
                         <input type="hidden" name="id">
-                        <input type="file" id="select-category-image" name="images[]" class="uk-hidden" onchange="$(this).closest('form').submit()">
+                        <input type="file" id="select-category-image" name="images[]" class="uk-hidden" onchange="if($(this).val()) $(this).closest('form').submit()">
                         <br>
                         <div class="uk-text-right">
                             <span class="upload-progress" data-lang>Upload:</span>
