@@ -112,7 +112,7 @@
             $.getJSON("<?=URL_BASE?>ajax.php?f=www/getProduct&id="+window['id_product']).done(function(ret){
                 $(".uk-breadcrumb").html('<li><a href="<?=URL_BASE?>products/"><i class="uk-icon-home"></i> Home</a></li>');
                 $.each(ret.parents, function(r,c){
-                    $(".uk-breadcrumb").append('<li><a href="<?=URL_BASE.URL_PRODUCTS;?>'+c.url_rewrite+'">'+c.name+'</a></li>');
+                    $(".uk-breadcrumb").append('<li><a href="<?=URL_BASE.URL_PRODUCTS;?>'+c.url_rewrite+'">'+c.title+'</a></li>');
                 });
                 $(".uk-breadcrumb").append('<li class="uk-active"><a href="<?=URL_BASE.URL_PRODUCTS;?>'+ret.data.url_rewrite+'">'+ret.data.category+'</a></li>');
                 
