@@ -64,11 +64,11 @@
             
             
            <article class="uk-article uk-width-1-1 uk-grid">
-                <a href="<?=$article_url?>" class="uk-width-1-3">
+                <a href="<?=$article_url?>" class="uk-width-small-1-3">
                     <img class="uk-thumbnail" src="<?=URL_BASE?>articles/image.php/<?=$article['id_image']?>/thumb/<?=$article['image_date']?>"> 
                 </a>
                 
-                <div class="uk-width-2-3 uk-margin-bottom">
+                <div class="uk-width-small-2-3 uk-margin-bottom">
                     <h1 name="title" class="uk-width-1-1 uk-article-title editable">
                         <a href="<?=$article_url?>"> <?=$article['title']?> </a>
                     </h1>
