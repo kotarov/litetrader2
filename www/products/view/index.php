@@ -109,7 +109,7 @@
             /*** INIT */
             url = decodeURIComponent(window.location).split("/");
             window['id_product'] = parseInt(url[ url.length-2 ].split("-")[0], 10);
-            $.getJSON("<?=URL_BASE?>ajax.php?f=getProduct&id="+window['id_product']).done(function(ret){
+            $.getJSON("<?=URL_BASE?>ajax.php?f=www/getProduct&id="+window['id_product']).done(function(ret){
                 $(".uk-breadcrumb").html('<li><a href="<?=URL_BASE?>products/"><i class="uk-icon-home"></i> Home</a></li>');
                 $.each(ret.parents, function(r,c){
                     $(".uk-breadcrumb").append('<li><a href="<?=URL_BASE.URL_PRODUCTS;?>'+c.url_rewrite+'">'+c.name+'</a></li>');
