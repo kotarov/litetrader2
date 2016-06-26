@@ -42,7 +42,7 @@
         <div id="categories-list" class="uk-grid" data-uk-grid-margin></div>
         
         <hr>
-        <h2>Продукти</h2>
+        <h2>Продукти в тази категория</h2>
         <div id="products" class=""></div>
         
         <script>
