@@ -127,9 +127,9 @@
                 <div class="uk-width-medium-1-6"></div>
                 <div class="uk-width-medium-2-3">
                     <div class="uk-form-row">
-                        <label class="uk-form-label"><span class="uk-description uk-float-rigt uk-text-warning"> All fields are required !</span></label>
+                        <label class="uk-form-label"><span class="uk-description uk-float-rigt uk-text-warning">* <span data-lang>Всички полета са задължителни!</span></label>
                         <div class="uk-form-controls">
-                            <button class="uk-button uk-button-primary uk-button-large" id="submit-order">&nbsp;&nbsp;&nbsp; Submit &nbsp;&nbsp;&nbsp;</button>
+                            <button class="uk-button uk-button-primary uk-button-large" id="submit-order">&nbsp;&nbsp;&nbsp; <span data-lang>Поръчай</span> &nbsp;&nbsp;&nbsp;</button>
                         </div>
                     </div>
                 </div>
