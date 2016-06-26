@@ -18,15 +18,15 @@ if($post['id_product']){
         SELECT 
             p.id, 
             i.id id_image,
-            p.name, 
+            p.title, 
             p.reference, 
             p.price, 
             u.abbreviation unit,
             p.url_rewrite,
             i.date_add
-        FROM products p
+        FROM items p
         LEFT JOIN units u ON (u.id = p.id_unit) 
-        LEFT JOIN images i ON (i.id_product = p.id AND i.is_cover = 1) 
+        LEFT JOIN images i ON (i.id_item = p.id AND i.is_cover = 1) 
         WHERE p.is_avaible = 1 AND p.id = ".$post['id_product']." 
     ")->fetch(PDO::FETCH_ASSOC);
     

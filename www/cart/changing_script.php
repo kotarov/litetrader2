@@ -4,15 +4,15 @@
                     $(".checkout").show();
                     $("table.shopping-cart-detailed").html('<thead><tr>'
                     +'  <th></th>'
-                    +'  <th>Product</th>'
-                    +'  <th>Price</th>'
-                    +'  <th>MU</th>'
-                    +'  <th>Qty</th>'
-                    +'  <th>Total</th>'
+                    +'  <th data-lang>Продукт</th>'
+                    +'  <th data-lang>Цена</th>'
+                    +'  <th data-lang>МЕ</th>'
+                    +'  <th data-lang>Кол.</th>'
+                    +'  <th data-lang>Тотал</th>'
                     +'</tr></thead>'
                     +'<tbody></tbody>'
                     +'<tfoot>'
-                    +'  <tr><th colspan="5" class="uk-text-right ">Total:</th><th class="uk-text-right cart-sum"> '+cart.total.toFixed(2)+'</th></tr>'
+                    +'  <tr><th colspan="5" class="uk-text-right "><span data-lang>Всичко</span>:</th><th class="uk-text-right cart-sum"> '+cart.total.toFixed(2)+'</th></tr>'
                     +'</tfoot>');
                     $.each(cart.data, function(k,v){
                         $("table.shopping-cart-detailed").find("tbody").append('<tr>'
@@ -25,7 +25,7 @@
                         +'</tr>');
                     });
                 }else{
-                     $("table.shopping-cart-detailed").html("<tr><th class='uk-panel-box'> Cart is empty </th></tr>");
+                     $("table.shopping-cart-detailed").html("<tr><th class='uk-panel-box' data-lang>Количката е празна</th></tr>");
                      $(".checkout").hide();
                 }
             });
@@ -34,10 +34,10 @@
                 var id = $(this).closest("tr").find("[data-id]").data("id");
                 var qty = $(this).val();
                 
-                $.post("<?=URL_BASE?>ajax.php?f=cart/postAdd",{"id_product":id,"qty":qty}).done(function(cart){
+                $.post("<?=URL_BASE?>ajax.php?f=www/cart/postAdd",{"id_product":id,"qty":qty}).done(function(cart){
                     $(document).trigger("shopping-cart-changed",$.parseJSON(cart));
                 });
             });
             
-            $.getJSON("<?=URL_BASE?>ajax.php?f=cart/getCart",function(cart){ $(document).trigger("shopping-cart-changed",cart);});
+            $.getJSON("<?=URL_BASE?>ajax.php?f=www/cart/getCart",function(cart){ $(document).trigger("shopping-cart-changed",cart);});
         </script>

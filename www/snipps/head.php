@@ -26,7 +26,7 @@ if($me['products']) $menu = include __DIR__.'/../../ajax/www/getMenu.php';
                             </i></a>
                         </div>
                         <div class="uk-width-4-6 uk-text-right">
-                            <div class="uk-text-muted" data-lang>Shopping cart</div>
+                            <div class="uk-text-muted uk-text-nowrap" data-lang>Пазарска кошница</div>
                             <span class="uk-text-primary uk-text-bold uk-text-large shopping-cart-price" style="margin-top:0;display:none">0.00</span>
                         </div>
                     </div>

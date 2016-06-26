@@ -73,7 +73,7 @@
                     </div>
                     <script> 
                         $("body").on("click",".buy-product",function(e){ e.preventDefault();
-                            $.post("<?=URL_BASE?>ajax.php?f=cart/postAdd",{"id_product":window['id_product'],"add":"1"}).done(function(cart){
+                            $.post("<?=URL_BASE?>ajax.php?f=www/cart/postAdd",{"id_product":window['id_product'],"add":"1"}).done(function(cart){
                                 cart = $.parseJSON(cart);
                                 if(cart.error){ UIkit.notify(cart.error,"warning");
                                 }else{
