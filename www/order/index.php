@@ -37,16 +37,16 @@
     
     <body id="page-order"> 
         <?php include '../snipps/head.php'; ?>
-        <h1>Order details</h1>
+        <h1 data-lang>Данни за поръчката</h1>
         
         <br>
         <div class="cart-dependans-reverse">
-            <p class="uk-alert">You cannot order empty cart. </p>
+            <p class="uk-alert" data-lang>Кошницата Ви е празна. </p>
         </div>
         <div id="container">
         
         
-        <h2 name="cart-container"><b class="uk-badge uk-badge-notification">1</b> Shopping cart</h2>
+        <h2 name="cart-container"><b class="uk-badge uk-badge-notification">1</b> <span data-lang>Пазарска кошница</span></h2>
         <hr>
         <div class="uk-grid">
             <div class="uk-width-medium-1-6"></div>
@@ -55,17 +55,17 @@
         
         <br>
         <form class="uk-form uk-form-horizontal cart-depends" action="postOrder">    
-            <h2><b class="uk-badge uk-badge-notification">2</b> Address</h2>
+            <h2><b class="uk-badge uk-badge-notification">2</b> <span data-lang>Адрес</span></h2>
             <hr>
             <div class="uk-grid">
                 <div class="uk-width-medium-1-6"></div>
                 <div class="uk-width-medium-2-3" id="address">
                     <div class="uk-form-row">
-                        <label class="uk-form-label">Name <b class="uk-text-danger">*</b></label>
+                        <label class="uk-form-label"><span data-lang>Имена</span> <b class="uk-text-danger">*</b></label>
                         <div class="uk-form-controls"><input name="customer" class="uk-width-1-1"></div>
                     </div>
                     <div class="uk-form-row">
-                        <label class="uk-form-label">Phone <b class="uk-text-danger">*</b></label>
+                        <label class="uk-form-label"><span data-lang>Телефон</span> <b class="uk-text-danger">*</b></label>
                         <div class="uk-form-controls"><input name="phone" class="uk-width-1-1"></div>
                     </div>
                     
@@ -75,12 +75,12 @@
                     </div>
                     
                     <div class="uk-form-row">
-                        <label class="uk-form-label">Address <b class="uk-text-danger">*</b></label>
+                        <label class="uk-form-label"><span data-lang>Адрес</span> <b class="uk-text-danger">*</b></label>
                         <div class="uk-form-controls"><input name="address" class="uk-width-1-1"></div>
                     </div>
                     
                     <div class="uk-form-row">
-                        <label class="uk-form-label">City <b class="uk-text-danger">*</b></label>
+                        <label class="uk-form-label"><span data-lang>Град</span> <b class="uk-text-danger">*</b></label>
                         <div class="uk-form-controls"><input name="city" class="uk-width-1-1"></div>
                     </div>
                 </div>
@@ -97,23 +97,27 @@
                 });
             </script>
     
+    
+            <?php $payment_methods = parse_ini_file(INI_DIR.'www/payment_methods.ini',true); ?>
+            
             <br>
             <br>
-            <h2><b class="uk-badge uk-badge-notification">3</b> Paiment method <i class="uk-text-danger">*</i></h2>
+            <h2><b class="uk-badge uk-badge-notification">3</b> <span data-lang>Начин на плащане</span> <i class="uk-text-danger">*</i></h2>
             <hr>
             <div class="uk-grid" name="choose-method">
                 <div class="uk-width-medium-1-6"></div>
                 <div class="uk-width-medium-2-3">
+                    
+                    <?php foreach($payment_methods as $key=>$method) { ?>
                     <div class="uk-form-row">
                         <div class="">
-                            <label class="uk-text-large" style="cursor:pointer"><input type="radio" name="method" value="Cash on Delivery" class="uk-margin-right"> Cash on delivery </label>
+                            <label class="uk-text-large" style="cursor:pointer">
+                                <input type="radio" name="method" value="<?=$key?>" class="uk-margin-right"> 
+                                <?=$method['title'];?>
+                            </label>
                         </div>
                     </div>
-                    <div class="uk-form-row">
-                        <div class="">
-                            <label class="uk-text-large" style="cursor:pointer"><input type="radio" name="method" value="Pay by Bank" class="uk-margin-right"> Pay by Bank </label>
-                        </div>
-                    </div>
+                    <?php } ?>
     
                 </div>
             </div>
