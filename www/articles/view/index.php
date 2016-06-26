@@ -89,7 +89,7 @@
         
         </div>
         <div class="uk-width-medium-1-4">
-            
+            <?php include '../../snipps/article_cats.php';?>
         </div>
     </div>
     
