@@ -8,9 +8,10 @@ $get = filter_var_array($_GET,array(
 $dbh = new PDO('sqlite:'.DB_DIR.'products');
 
 $sql = "
-SELECT c.id, c.title title, c.subtitle, c.date_image, c.tags, (CASE WHEN c.url_rewrite IS NULL THEN '/' ELSE c.url_rewrite END) url_rewrite, 
-(SELECT COUNT(id) FROM items WHERE id_category = c.id AND is_visible = 1) num
-FROM categories c WHERE c.is_visible = 1 AND id_parent = ".(int)$get['id'];
+SELECT c.id, c.title title, c.subtitle, c.date_image, c.tags, 
+(CASE WHEN c.url_rewrite IS NULL THEN '/' ELSE c.url_rewrite END) url_rewrite "
+//.",(SELECT COUNT(id) FROM items WHERE id_category = c.id AND is_visible = 1) num "
+."FROM categories c WHERE c.is_visible = 1 AND id_parent = ".(int)$get['id'];
 
 $ret['categories'] = $dbh->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 if($get['id']) {

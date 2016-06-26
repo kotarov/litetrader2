@@ -38,9 +38,11 @@
             <li><a href="<?=URL_BASE?>products/"><i class="uk-icon-home"></i> Home</a></li>
         </ul>
         
-        
+
         <div id="categories-list" class="uk-grid" data-uk-grid-margin></div>
-        <br><br>
+        
+        <hr>
+        <h2>Продукти</h2>
         <div id="products" class=""></div>
         
         <script>
@@ -50,41 +52,58 @@
             $.getJSON("<?=URL_BASE?>ajax.php?f=www/getCategories&id="+id).done(function(ret){
                 $(".uk-breadcrumb").html('<li><a data-live href="<?=URL_BASE.URL_PRODUCTS?>/"><i class="uk-icon-home"></i> Home</a></li>');
                 $.each(ret.parents, function(k,v){
-                    $(".uk-breadcrumb").append('<li><a data-live href="<?=URL_BASE.URL_PRODUCTS?>'+v.url_rewrite+'">'+v.name+'</a></li>');
+                    $(".uk-breadcrumb").append('<li><a data-live href="<?=URL_BASE.URL_PRODUCTS?>'+v.url_rewrite+'">'+v.title+'</a></li>');
                 });
+                if(ret.current){
+                    $(".uk-breadcrumb").append('<li>'+ret.current.title+'</li>');
+                }
                 if(typeof ret.current.name !== "undefined") $(".uk-breadcrumb").append('<li><span>'+ret.current.name+'</span></li>');
                 
-                $("#categories-list").html("");
-                $.each(ret.categories, function(k,v){
-                    $("#categories-list").append(''
-                    +'<div class="uk-width-medium-1-2 uk-width-large-1-3">'
-                        +'<div class="uk-panel uk-panel-hover1  uk-panel-header1 uk-panel-box">'
-                            +'<div class="uk-panel-teaser">'
-                                +'<img src="<?=URL_BASE?>imageCategory.php/'+v.id+'/thumb/'+v.date_image+'" alt="">'
+                $("#categories-list").html("").hide();
+                if(ret.categories.length > 0 ){
+                    $.each(ret.categories, function(k,v){
+                        $("#categories-list").append(''
+                        +'<div class="uk-width-medium-1-2 uk-width-large-1-3">'
+                            +'<div class="uk-panel uk-panel-hover1  uk-panel-header1 uk-panel-box">'
+                                +'<div class="uk-panel-teaser">'
+                                    +'<a data-live href="<?=URL_BASE.URL_PRODUCTS?>'+v.url_rewrite+'">'
+                                    +'<img src="<?=URL_BASE?>imageCategory.php/'+v.id+'/thumb/'+v.date_image+'" alt="">'
+                                    +'</a>'
+                                +'</div>'
+                                
+                                +'<h3 class="uk-panel-title" style="position:relative;margin-bottom:0">'
+                                    +'<a data-live href="<?=URL_BASE.URL_PRODUCTS?>'+v.url_rewrite+'">'+v.title+'</a>'
+                                    //+'<div class="uk-panel-badge uk-badge">'+v.num+'</div>'
+                                +'</h3>'
+                                //+'<p>'+v.subtitle+'</p>'
                             +'</div>'
-                            
-                            +'<h3 class="uk-panel-title" style="position:relative">'
-                                +'<a data-live href="<?=URL_BASE.URL_PRODUCTS?>'+v.url_rewrite+'">'+v.title+'</a>'
-                                +'<div class="uk-panel-badge uk-badge">'+v.num+'</div>'
-                            +'</h3>'
-                            +'<p>'+v.description+'</p>'
                         +'</div>'
-                    +'</div>'
-                    );
-                });
+                        );
+                    });
+                }
+                $("#categories-list").fadeIn();
                 
-                $("#products").html("");
-                $.each(ret.data, function(r,p){
-                    $("#products").append(''
-                        +'<a class="uk-thumbnail uk-thumbnail-mini" href="<?=URL_BASE.URL_PRODUCT?>'+p.url_rewrite+''+p.id+'-'+p.name.replace(/\ /g,"-")+'/">'
-                            +'<img src="<?=URL_BASE?>image.php/'+p.id_image+'/small/'+p.date_add+'" alt="">'
-                            +'<div class="uk-thumbnail-caption">'
-                                +'<div>'+p.name+'</div>'
-                                +'<div>'+p.price+'</div>'
-                            +'</div>'
-                        +'</a>'
-                    );
-                });
+
+                
+                $("#products").html("").hide();
+                if(ret.data.length == 0){
+                    $("#products").html('<span class="uk-text-warning">В тази категория няма налични продукти</span>');
+                }else {
+                    $.each(ret.data, function(r,p){
+                        $("#products").append(''
+                            +'<a class="uk-thumbnail uk-thumbnail-mini" href="<?=URL_BASE.URL_PRODUCT?>/'+p.url_rewrite+''+p.id+'-'+p.title.replace(/\ /g,"-")+'/">'
+                                +'<img src="<?=URL_BASE?>image.php/'+p.id_image+'/small/'+p.date_add+'" alt="">'
+                                +'<div class="uk-thumbnail-caption">'
+                                    +'<div>'+p.title+'</div>'
+                                    +'<div>'+p.price+'</div>'
+                                +'</div>'
+                            +'</a>'
+                        );
+                    });
+                }
+                 $("#products").fadeIn();
+                
+                $(window).trigger('resize');
             });
         }
         initProducts();
