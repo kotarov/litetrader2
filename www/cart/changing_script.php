@@ -25,7 +25,7 @@
                         +'</tr>');
                     });
                 }else{
-                     $("table.shopping-cart-detailed").html("<tr><th class='uk-panel-box' data-lang>Количката е празна</th></tr>");
+                     $("table.shopping-cart-detailed").html("<tr><th class='uk-panel-box' data-lang>Кошницата е празна</th></tr>");
                      $(".checkout").hide();
                 }
             });
