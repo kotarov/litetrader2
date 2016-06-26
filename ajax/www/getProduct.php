@@ -29,9 +29,6 @@ if($get['id']){
     WHERE p.id = ".(int)$get['id']." AND p.is_visible = 1"
     )->fetch(PDO::FETCH_ASSOC);
     
-    
-    //$parents = $dbh->query("SELECT parents FROM categories WHERE id = ".$get['id'])->fetch(PDO::FETCH_COLUMN);
-    
     $ret['parents'] = $dbh->query("SELECT id, title, url_rewrite FROM categories WHERE id IN (".$ret['data']['parents'].")
         ORDER BY id=".(implode(" DESC , id=",explode(",",$ret['data']['parents'])))." DESC
     ")->fetchAll(PDO::FETCH_ASSOC);

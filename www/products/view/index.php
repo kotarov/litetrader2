@@ -46,7 +46,7 @@
         <ul class="uk-breadcrumb"></ul>
        
        
-        <h2 id="name" style="margin-top:0"></h2>
+        <h2 id="product_name" style="margin-top:0"></h2>
        <div class="uk-grid uk-margin-bottom" data-uk-grid-margin>
            <div class="uk-width-medium-1-2">
                 <div class="uk-overlay uk-width-1-1 uk-thumbnail">
@@ -119,7 +119,7 @@
                 var imgSRC = "<?=URL_BASE?>image.php/"+ret.data.id_image+"/"+ret.data.date_add+"/";
                 $("#main-image").attr("src",imgSRC);
                 
-                $("#crumb-product").html(ret.data.name);
+                $("#product_name").html(ret.data.title);
                 $.each(ret.data, function(id,value){ $("#"+id).html(value) });
                 
                 $("#product-images").html("");
