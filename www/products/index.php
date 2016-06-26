@@ -91,7 +91,7 @@
                 }else {
                     $.each(ret.data, function(r,p){
                         $("#products").append(''
-                            +'<a class="uk-thumbnail uk-thumbnail-mini" href="<?=URL_BASE.URL_PRODUCT?>/'+p.url_rewrite+''+p.id+'-'+p.title.replace(/\ /g,"-")+'/">'
+                            +'<a class="uk-thumbnail uk-thumbnail-mini" href="<?=URL_BASE.URL_PRODUCT?>'+p.url_rewrite+''+p.id+'-'+p.title.replace(/\ /g,"-")+'/">'
                                 +'<img src="<?=URL_BASE?>image.php/'+p.id_image+'/thumb/'+p.date_add+'" alt="">'
                                 +'<div class="uk-thumbnail-caption">'
                                     +'<div>'+p.title+'</div>'
