@@ -17,7 +17,7 @@
                     $.each(cart.data, function(k,v){
                         $("table.shopping-cart-detailed").find("tbody").append('<tr>'
                         +'  <td class="uk-text-center uk-text-middle"><a href="<?=URL_BASE?>products/view/index.php/'+v.url_rewrite+'/"><img src="<?=URL_BASE?>image.php/'+v.id_image+'/small/'+v.date_add+'"</a></td>'
-                        +'  <td class=" uk-text-middle" data-id="'+v.id+'">'+v.name+'</td>'
+                        +'  <td class=" uk-text-middle" data-id="'+v.id+'">'+v.title+'</td>'
                         +'  <td class="uk-text-right uk-text-middle">'+v.price+'</td>'
                         +'  <td class="uk-text-center uk-text-middle">'+v.unit+'</td>'
                         +'  <td class="uk-text-right uk-text-middle uk-form"><input type="number" class="quantity" value="'+v.qty+'"></td>'

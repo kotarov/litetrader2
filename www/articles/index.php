@@ -1,6 +1,6 @@
 <?php include '../snipps/init.php'; ?>
 <?php
-    $dbh = new PDO('sqlite:'.DB_DIR.'blogs');
+    $dbh = new PDO('sqlite:'.DB_DIR.'blog');
     $p = isset($_GET['p']) ? (int)$_GET['p'] : 0 ;
     $l = 15;
     
@@ -8,15 +8,14 @@
     SELECT 
         b.id,
         b.title,
-        b.subtitle,
+        b.description,
         c.title category,
         b.tags,
-        b.author,
-        b.`date`,
+        b.owner,
+        b.date_avaible,
         b.content,
-        b.id image,
-        b.is_new
-    FROM blogs b
+        b.id image
+    FROM items b
     LEFT JOIN categories c ON (c.id = b.id_category)
     WHERE c.is_visible = 1 AND b.is_active = 1 
     LIMIT $p,$l
