@@ -22,7 +22,7 @@
                        <li style="" class="uk-active"><a class="uk-thumbnail uk-overlay-hover" href="<?=URL_BASE?>products/view/index.php/<?=$f['url_rewrite']?>/">
                            <figure class="uk-overlay">  
                                <img src="<?=URL_BASE?>image.php/<?=$f['image_id'].'/thumb/'.$f['image_date']?>" alt="<?=$f['title']?>">  
-                               <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">10.0</div>
+                               <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom uk-text-bold uk-text-large"><?=number_format($f['price'],2);?> лв</div>
                             </figure>  
                             <div class="uk-thumbnail-caption"><?=$f['title']?></div>
                         </a></li>

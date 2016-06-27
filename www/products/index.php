@@ -43,7 +43,7 @@
         
         <hr>
         <h2>Продукти в тази категория</h2>
-        <div id="products" class=""></div>
+        <div id="products" class="uk-grid uk-container-center"></div>
         
         <script>
         function initProducts(){
@@ -65,7 +65,7 @@
                     $.each(ret.categories, function(k,v){
                         $("#categories-list").append(''
                         +'<div class="uk-width-medium-1-2 uk-width-large-1-3">'
-                            +'<div class="uk-panel uk-panel-hover1  uk-panel-header1 uk-panel-box">'
+                            +'<div class="uk-panel uk-panel-box">'
                                 +'<div class="uk-panel-teaser">'
                                     +'<a data-live href="<?=URL_BASE.URL_PRODUCTS?>'+v.url_rewrite+'">'
                                     +'<img src="<?=URL_BASE?>imageCategory.php/'+v.id+'/thumb/'+v.date_image+'" alt="">'
@@ -91,13 +91,15 @@
                     $.each(ret.data, function(r,p){
                         console.log(p);
                         $("#products").append(''
-                            +'<a class="uk-thumbnail uk-thumbnail-mini" href="<?=URL_BASE.URL_PRODUCT?>'+(p.url_rewrite?p.url_rewrite:'/')+p.id+'-'+p.title.replace(/\ /g,"-")+'/">'
+                            +'<div class="uk-margin uk-margin-top">'
+                            +'<a class="uk-thumbnail uk-thumbnail-medium" href="<?=URL_BASE.URL_PRODUCT?>'+(p.url_rewrite?p.url_rewrite:'/')+p.id+'-'+p.title.replace(/\ /g,"-")+'/">'
                                 +'<img src="<?=URL_BASE?>image.php/'+p.id_image+'/thumb/'+p.date_add+'" alt="">'
                                 +'<div class="uk-thumbnail-caption">'
                                     +'<div>'+p.title+'</div>'
-                                    +'<div>'+p.price+'</div>'
+                                    +'<div class="uk-text-large uk-text-bold uk-text-primary">'+(parseFloat(p.price)).toFixed(2)+' лв</div>'
                                 +'</div>'
                             +'</a>'
+                            +"</div>"
                         );
                     });
                 }
