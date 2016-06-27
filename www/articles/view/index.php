@@ -72,7 +72,7 @@
                     | 
                     <span data-lang>Публикувана в</span> <b><?=$article['category']?></b></select>
                 </div>
-                <br>
+                <br> 
                 <div class="uk-article-lead uk-width-1-1 uk-text-bold" name="description" >
                     <?=$article['description']?>
                 </div>
