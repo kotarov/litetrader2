@@ -49,8 +49,9 @@
         function initProducts(){
             url = decodeURIComponent(window.location).split("/");
             id = parseInt(url[ url.length-2 ].split("-")[0], 10);
-            $.getJSON("<?=URL_BASE?>ajax.php?f=www/getCategories&id="+id).done(function(ret){
+            $.getJSON("<?=URL_BASE?>ajax.php?f=products/getCategories&id="+id).done(function(ret){
                 $(".uk-breadcrumb").html('<li><a data-live href="<?=URL_BASE.URL_PRODUCTS?>/"><i class="uk-icon-home"></i> Home</a></li>');
+                
                 $.each(ret.parents, function(k,v){
                     $(".uk-breadcrumb").append('<li><a data-live href="<?=URL_BASE.URL_PRODUCTS?>'+v.url_rewrite+'">'+v.title+'</a></li>');
                 });
@@ -73,9 +74,7 @@
                                 
                                 +'<h3 class="uk-panel-title" style="position:relative;margin-bottom:0">'
                                     +'<a data-live href="<?=URL_BASE.URL_PRODUCTS?>'+v.url_rewrite+'">'+v.title+'</a>'
-                                    //+'<div class="uk-panel-badge uk-badge">'+v.num+'</div>'
                                 +'</h3>'
-                                //+'<p>'+v.subtitle+'</p>'
                             +'</div>'
                         +'</div>'
                         );
@@ -90,8 +89,9 @@
                     $("#products").html('<span class="uk-text-warning">В тази категория няма налични продукти</span>');
                 }else {
                     $.each(ret.data, function(r,p){
+                        console.log(p);
                         $("#products").append(''
-                            +'<a class="uk-thumbnail uk-thumbnail-mini" href="<?=URL_BASE.URL_PRODUCT?>'+p.url_rewrite+''+p.id+'-'+p.title.replace(/\ /g,"-")+'/">'
+                            +'<a class="uk-thumbnail uk-thumbnail-mini" href="<?=URL_BASE.URL_PRODUCT?>'+(p.url_rewrite?p.url_rewrite:'/')+p.id+'-'+p.title.replace(/\ /g,"-")+'/">'
                                 +'<img src="<?=URL_BASE?>image.php/'+p.id_image+'/thumb/'+p.date_add+'" alt="">'
                                 +'<div class="uk-thumbnail-caption">'
                                     +'<div>'+p.title+'</div>'

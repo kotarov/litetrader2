@@ -4,7 +4,8 @@
             a.id, a.title, a.description, a.price, a.url_rewrite, i.id image_id, i.date_add image_date
         FROM items a
         LEFT JOIN images i ON (i.id_item = a.id AND i.is_cover = 1 ) 
-        WHERE a.is_avaible=1 AND a.is_visible=1 AND a.is_advertise=1")
+        WHERE a.is_avaible=1 AND a.is_visible=1 AND a.is_advertise=1
+        ORDER BY a.id DESC LIMIT 20")
     ->fetchAll(PDO::FETCH_ASSOC);
     if(!$featured) return;
 ?>

@@ -73,7 +73,7 @@
                     </div>
                     <script> 
                         $("body").on("click",".buy-product",function(e){ e.preventDefault();
-                            $.post("<?=URL_BASE?>ajax.php?f=www/cart/postAdd",{"id_product":window['id_product'],"add":"1"}).done(function(cart){
+                            $.post("<?=URL_BASE?>ajax.php?f=cart/postAdd",{"id_product":window['id_product'],"add":"1"}).done(function(cart){
                                 cart = $.parseJSON(cart);
                                 if(cart.error){ UIkit.notify(cart.error,"warning");
                                 }else{
@@ -109,12 +109,13 @@
             /*** INIT */
             url = decodeURIComponent(window.location).split("/");
             window['id_product'] = parseInt(url[ url.length-2 ].split("-")[0], 10);
-            $.getJSON("<?=URL_BASE?>ajax.php?f=www/getProduct&id="+window['id_product']).done(function(ret){
+            $.getJSON("<?=URL_BASE?>ajax.php?f=products/getProduct&id="+window['id_product']).done(function(ret){
                 $(".uk-breadcrumb").html('<li><a href="<?=URL_BASE?>products/"><i class="uk-icon-home"></i> Home</a></li>');
                 $.each(ret.parents, function(r,c){
                     $(".uk-breadcrumb").append('<li><a href="<?=URL_BASE.URL_PRODUCTS;?>'+c.url_rewrite+'">'+c.title+'</a></li>');
                 });
-                $(".uk-breadcrumb").append('<li class="uk-active"><a href="<?=URL_BASE.URL_PRODUCTS;?>'+ret.data.url_rewrite+'">'+ret.data.category+'</a></li>');
+                if(ret.data.category)
+                    $(".uk-breadcrumb").append('<li class="uk-active"><a href="<?=URL_BASE.URL_PRODUCTS;?>'+ret.data.url_rewrite+'">'+ret.data.category+'</a></li>');
                 
                 var imgSRC = "<?=URL_BASE?>image.php/"+ret.data.id_image+"/"+ret.data.date_add+"/";
                 $("#main-image").attr("src",imgSRC);

@@ -34,10 +34,10 @@
                 var id = $(this).closest("tr").find("[data-id]").data("id");
                 var qty = $(this).val();
                 
-                $.post("<?=URL_BASE?>ajax.php?f=www/cart/postAdd",{"id_product":id,"qty":qty}).done(function(cart){
+                $.post("<?=URL_BASE?>ajax.php?f=cart/postAdd",{"id_product":id,"qty":qty}).done(function(cart){
                     $(document).trigger("shopping-cart-changed",$.parseJSON(cart));
                 });
             });
             
-            $.getJSON("<?=URL_BASE?>ajax.php?f=www/cart/getCart",function(cart){ $(document).trigger("shopping-cart-changed",cart);});
+            $.getJSON("<?=URL_BASE?>ajax.php?f=cart/getCart",function(cart){ $(document).trigger("shopping-cart-changed",cart);});
         </script>

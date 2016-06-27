@@ -29,9 +29,13 @@ if($get['id']){
     WHERE p.id = ".(int)$get['id']." AND p.is_visible = 1"
     )->fetch(PDO::FETCH_ASSOC);
     
-    $ret['parents'] = $dbh->query("SELECT id, title, url_rewrite FROM categories WHERE id IN (".$ret['data']['parents'].")
-        ORDER BY id=".(implode(" DESC , id=",explode(",",$ret['data']['parents'])))." DESC
-    ")->fetchAll(PDO::FETCH_ASSOC);
+    if($ret['data']['parents']){
+        $ret['parents'] = $dbh->query("SELECT id, title, url_rewrite FROM categories WHERE id IN (".$ret['data']['parents'].")
+            ORDER BY id=".(implode(" DESC , id=",explode(",",$ret['data']['parents'])))." DESC
+        ")->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    
     
     $ret['images'] = $dbh->query("SELECT i.id,i.date_add FROM images i WHERE i.id_item = ".(int)$get['id'])->fetchAll(PDO::FETCH_ASSOC);
 }

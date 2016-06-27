@@ -2,7 +2,8 @@
 <?php
     if(!isset($_SERVER['PATH_INFO'])) return;
     
-    list($temp,$id) =  explode("/",$_SERVER['PATH_INFO']);
+    $temp =  explode("/",$_SERVER['PATH_INFO']);
+    list($id) = explode('-',end($temp));
     $dbh = new PDO('sqlite:'.DB_DIR.'blog');
     $article = $dbh->query("
     SELECT 
@@ -62,10 +63,6 @@
         <?php }else { ?>
            <article class="uk-article">
         
-                <h1 class="uk-width-1-1 uk-article-title">
-                    <?=$article['title']?>
-                </h1>
-
                 <div class="uk-article-meta uk-panel-box1">
                     <span datalang>Написана от</span> <b><?=$article['owner']?></b> <span data-lang>на</span> <b><?=$article['date_add']?></b> 
                     | 
@@ -74,8 +71,12 @@
                 
                 <img src="<?=URL_BASE.'articles/image.php/'.$article['id_image'].'/'.$article['image_date']?>" class="uk-thumbnail">
                 
-                <br><br>
-                <div class="uk-article-lead uk-width-1-1 uk-block1 uk-text-strong" name="description" >
+                <h1 class="uk-width-1-1 uk-article-title">
+                    <?=$article['title']?>
+                </h1>
+                
+                
+                <div class="uk-article-lead uk-width-1-1 uk-text-bold" name="description" >
                     <?=$article['description']?>
                 </div>
 
@@ -89,7 +90,7 @@
         
         </div>
         <div class="uk-width-medium-1-4">
-            <?php include '../../snipps/article_cats.php';?>
+            <?php include '../../snipps/article_categories.php';?>
         </div>
     </div>
     
