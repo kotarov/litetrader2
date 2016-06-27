@@ -63,23 +63,24 @@
         <?php }else { ?>
            <article class="uk-article">
         
-                <div class="uk-article-meta uk-panel-box1">
+                <h1 class="uk-width-1-1 uk-article-title">
+                    <?=$article['title']?>
+                </h1>
+                
+                <div class="uk-article-meta">
                     <span datalang>Написана от</span> <b><?=$article['owner']?></b> <span data-lang>на</span> <b><?=$article['date_add']?></b> 
                     | 
                     <span data-lang>Публикувана в</span> <b><?=$article['category']?></b></select>
                 </div>
                 
-                <img src="<?=URL_BASE.'articles/image.php/'.$article['id_image'].'/'.$article['image_date']?>" class="uk-thumbnail">
-                
-                <h1 class="uk-width-1-1 uk-article-title">
-                    <?=$article['title']?>
-                </h1>
-                
-                
                 <div class="uk-article-lead uk-width-1-1 uk-text-bold" name="description" >
                     <?=$article['description']?>
                 </div>
-
+                <br>
+                
+                <img src="<?=URL_BASE.'articles/image.php/'.$article['id_image'].'/'.$article['image_date']?>" class="uk-thumbnail">
+                
+                
                 <div name="content" class="uk-width-1-1 edit uk-margin-top uk-margin-bottom" >
                     <?=$article['content']?>
                 </div>
