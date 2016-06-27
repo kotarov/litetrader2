@@ -1,5 +1,7 @@
 <?php
 
+$id= isset($_GET['id'])?(int)$_GET['id']:0;
+
 $ret = array();
 $dbh = new PDO('sqlite:'.DB_DIR.'blog');
 $ret['data'] = $dbh->query("
@@ -19,7 +21,7 @@ $ret['data'] = $dbh->query("
     FROM items b
     LEFT JOIN categories c ON (c.id = b.id_category)
     LEFT JOIN images im ON (im.id_item = b.id AND im.is_cover = 1) 
-    WHERE b.is_active = 1 AND c.is_visible = 1  
+    WHERE b.is_active = 1 AND c.is_visible = 1 ".($id?'AND b.id_category='.$id:'')."  
     ORDER BY b.date_add DESC 
 ")->fetchAll(PDO::FETCH_ASSOC);
 

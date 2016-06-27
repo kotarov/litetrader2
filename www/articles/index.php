@@ -5,7 +5,7 @@
         list($id_category) = explode('-',$temp[count($temp)-2]);
     }else{ $id_category = 0; }
     
-
+/*
     $dbh = new PDO('sqlite:'.DB_DIR.'blog');
     $p = isset($_GET['p']) ? (int)$_GET['p'] : 0 ;
     $l = 15;
@@ -27,11 +27,11 @@
     FROM items b
     LEFT JOIN categories c ON (c.id = b.id_category)
     LEFT JOIN images im ON (im.id_item = b.id AND im.is_cover = 1) 
-    WHERE b.is_active = 1 AND c.is_visible = 1  
+    WHERE b.is_active = 1 AND c.is_visible = 1  ".($id_category?'AND b.id_category='.$id_category:'')."
     ORDER BY b.date_add DESC 
     LIMIT $p,$l 
     ")->fetchAll(PDO::FETCH_ASSOC);
-    
+    */
     //print_r($articles);exit;
 ?>
 <!DOCTYPE html>
@@ -110,7 +110,7 @@
                         
                         init:function(){ 
                             var _this = this;
-                            $.getJSON("<?=URL_BASE?>ajax.php?f=articles/getList").done(function(ret){
+                            $.getJSON("<?=URL_BASE?>ajax.php?f=articles/getList&id=<?=$id_category?>").done(function(ret){
                                 _this.data = ret.data;
                                 _this.allPages = Math.ceil(_this.data.length / _this.perPage);
                                 
