@@ -39,7 +39,7 @@
             .buy-product,.cannot-buy-poduct {display:none}
         </style>
     </head>
-    <body id="page-product"> 
+    <body id="page-products"> 
         <?php include '../../snipps/head.php'; ?>
        
        
@@ -60,16 +60,16 @@
            <div class="uk-width-medium-1-2 uk-grid ">
                 
                 <div class="uk-width-1-1">
-                    <div>Price: <b class="uk-text-primary uk-text-large" id="price"></b></div>
+                    <div><b class="uk-text-primary" style="font-size:2em;font-weight:bold"><span id="price"></span><span style="font-size:0.7em"> лв</span></b></div>
                     <div id="reference" class="uk-text-muted"></div>
                     <p id="description" class="uk-panel uk-panel-box uk-panel-box-primary"></p>
 
                     
                     <div class="uk-panel"> 
                         <button class="uk-button uk-button-primary buy-product uk-button-large">
-                            <i class="uk-icon-shopping-bag"></i>&nbsp;&nbsp; Buy
+                            <i class="uk-icon-shopping-bag"></i>&nbsp;&nbsp; В кошницата
                         </button> 
-                        <i class="cannot-buy-poduct uk-text-muted">Out of stock</i>
+                        <i class="cannot-buy-poduct uk-text-muted">Не е наличен</i>
                     </div>
                     <script> 
                         $("body").on("click",".buy-product",function(e){ e.preventDefault();
@@ -85,11 +85,11 @@
                     </script>
                     
                     
-                    <h3 class="uk-text-primary">Details</h3>
+                    <h3 class="uk-text-primary" data-lang>Подробности</h3>
                     <hr>
-                    <div id="details" class="uk-width-medium-1-1"></div>
+                    <div id="content" class="uk-width-medium-1-1"></div>
 
-                    <h3 class="uk-text-primary">Contacts</h3>
+                    <h3 class="uk-text-primary" data-lang>Контакти</h3>
                     <hr>
                     <div id="contacts"></div>
 

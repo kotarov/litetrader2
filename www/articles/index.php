@@ -91,7 +91,9 @@
                         <hr class="uk-width-1-1">
                     </div>
                 </template>
-                <div class="template uk-text-center uk-margin-large-top uk-text-muted"><h1 class="uk-icon-circle-o-notch uk-icon-spin"></h1></div>
+                <div class="template uk-text-center uk-margin-large-top">
+                    <i class="uk-icon-circle-o-notch uk-icon-spin uk-text-large" style="color:#ccc;font-size:3em"></i>
+                </div>
             
             </div>
             

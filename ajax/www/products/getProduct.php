@@ -35,7 +35,8 @@ if($get['id']){
         ")->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    
+
+    if(isset($ret['data']['price'])) $ret['data']['price'] = number_format($ret['data']['price'],2);
     
     $ret['images'] = $dbh->query("SELECT i.id,i.date_add FROM images i WHERE i.id_item = ".(int)$get['id'])->fetchAll(PDO::FETCH_ASSOC);
 }

@@ -89,14 +89,22 @@
                     $("#products").html('<span class="uk-text-warning">В тази категория няма налични продукти</span>');
                 }else {
                     $.each(ret.data, function(r,p){
-                        console.log(p);
                         $("#products").append(''
                             +'<div class="uk-margin uk-margin-top">'
                             +'<a class="uk-thumbnail uk-thumbnail-medium" href="<?=URL_BASE.URL_PRODUCT?>'+(p.url_rewrite?p.url_rewrite:'/')+p.id+'-'+p.title.replace(/\ /g,"-")+'/">'
                                 +'<img src="<?=URL_BASE?>image.php/'+p.id_image+'/thumb/'+p.date_add+'" alt="">'
-                                +'<div class="uk-thumbnail-caption">'
-                                    +'<div>'+p.title+'</div>'
-                                    +'<div class="uk-text-large uk-text-bold uk-text-primary">'+(parseFloat(p.price)).toFixed(2)+' лв</div>'
+                                +'<div class="uk-thumbnail-caption" style="height:6em">'
+                                    +'<div class="uk-text-bold uk-text-muted1 uk-margin-bottom uk-text-left uk-margin-left">'+p.title+'</div>'
+                                    +'<div class="uk-text-large uk-text-bold uk-text-primary uk-float-left uk-margin-left" style="font-size:1.5em">'
+                                        +'<span class="">'+(parseFloat(p.price)).toFixed(2)+' лв</span>'
+                                    +'</div>'
+                                    +'<div>'
+                                        +'<div class="uk-float-right uk-margin-right">'
+                                            +(p.is_avaible ? 
+                                            '<button class="uk-button uk-button-primary" data-addtocart="'+p.id+'"><i class="uk-icon-shopping-bag"></i>&nbsp;&nbsp; В кошницата</button>'
+                                            : '<i class="uk-text-muted">Не е наличен</i>')
+                                        + '</div>'
+                                    +'</div>'
                                 +'</div>'
                             +'</a>'
                             +"</div>"
@@ -121,6 +129,18 @@
             $(window).on('popstate', function() {
                 initProducts();
             });
+            
+            $("body").on("click","[data-addtocart]",function(e){
+                e.preventDefault();
+                $.post("<?=URL_BASE?>ajax.php?f=cart/postAdd",{"id_product":$(this).data("addtocart"),"add":"1"}).done(function(cart){
+                    cart = $.parseJSON(cart);
+                    if(cart.error){ UIkit.notify(cart.error,"warning");
+                    }else{
+                        $(document).trigger("shopping-cart-changed",cart);
+                        UIkit.modal("#modal-cart").show();
+                    }
+                });
+            })
         </script>
         
         
