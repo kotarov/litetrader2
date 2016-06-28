@@ -10,7 +10,9 @@ if($me['products']) $menu = include __DIR__.'/../../ajax/www/getMenu.php';
             <div class="uk-panel uk-margin-top">
                 <div class="uk-float-left"><h1><?=$_COMPANY['name']?></h1></div>
                 <div class="uk-navbar-content uk-hidden-small ">
-                    <form class="uk-search no-ajax" action="<?=URL_BASE?>products/search/" data-uk-search="{source:'<?=URL_BASE?>ajax.php?f=products/search'}">
+                    <form class="uk-search no-ajax" action="<?=URL_BASE?>products/search/index.php" 
+                        data-uk-search="{source:'<?=URL_BASE?>ajax.php?f=products/search', msgResultsHeader:'Намерени резултати',msgMoreResults:'Още резултати...',msgNoResults:'Няма намерени резултати'}"
+                    >
                         <input class="uk-search-field" type="search" placeholder="search..." autocomplete="off">
                     </form>
                 </div>

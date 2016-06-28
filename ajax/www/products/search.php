@@ -6,21 +6,39 @@ $post = filter_var_array($_POST,array(
 
 include_once(LIB_DIR."URLBase.php");
 
+
 $dbh = new PDO('sqlite:'.DB_DIR.'products');
 $sth = $dbh->prepare("
 SELECT 
-    p.name AS title,
-    '".URL_BASE."products/view/index.php'||c.url_rewrite||p.url_rewrite url,
+    p.title AS title,
+    '".URL_BASE."products/view/index.php/'||p.url_rewrite||'/' url,
     p.description text
-FROM products p 
+FROM items p 
 LEFT JOIN categories c ON (c.id = p.id_category) 
 WHERE (p.is_visible = 1) AND (
-    p.name LIKE '%".$post['search']."%' 
+    p.title LIKE '%".$post['search']."%' 
     OR p.reference LIKE '%".$post['search']."%'
     OR p.description LIKE '%".$post['search']."%'
     OR p.tags LIKE '%".$post['search']."%'
-    OR p.details LIKE '%".$post['search']."%'
+    OR c.subtitle LIKE '%".$post['search']."%'
 ) LIMIT 10");
+
+/*
+SELECT 
+    p.title AS title,
+    c.title url,
+    p.description text
+FROM items p 
+LEFT JOIN categories c ON (c.id = p.id_category) 
+WHERE (p.is_visible = 1) AND (
+    p.title LIKE '%%' 
+    OR p.reference LIKE '%%'
+    OR p.description LIKE '%%'
+    OR p.tags LIKE '%%'
+    OR c.subtitle LIKE '%%'
+) LIMIT 10*/
+
+
 
 $sth->execute();
 $ret['results'] = $sth->fetchAll(PDO::FETCH_ASSOC);
