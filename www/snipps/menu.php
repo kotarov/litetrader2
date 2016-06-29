@@ -26,7 +26,7 @@ $me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
                             <li class="uk-parent" data-menu-hover="<?=$m['id']?>">
                                 <a class="uk-text-primary" href="<?=URL_BASE.URL_PRODUCTS.$m['url_rewrite']?>">
                                     <?=$m['title']?>
-                                    <?=$m['subtitle']?'<div class="uk-text-muted">'.$m['subtitle'].'</div>':''?>
+                                    <?php /*<?=$m['subtitle']?'<div class="uk-text-muted">'.$m['subtitle'].'</div>':''?> */?>
                                 </a>
                             </li>
                         <?php } } ?>
