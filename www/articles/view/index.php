@@ -78,7 +78,7 @@
                 </div>
                 <br>
                 
-                <img src="<?=URL_BASE.'articles/image.php/'.$article['id_image'].'/'.$article['image_date']?>" class="uk-thumbnail">
+                <img src="<?=URL_BASE.'articles/image.php/'.$article['id_image'].'/'.$article['image_date']?>" class="uk-thumbnail uk-align-left uk-width-large-2-3 ">
                 
                 
                 <div name="content" class="uk-width-1-1 edit uk-margin-top uk-margin-bottom" >
