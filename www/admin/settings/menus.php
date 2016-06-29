@@ -17,7 +17,8 @@
         
         <link  href="<?=$_ASSETS['uikit.notify.css']?>" rel="stylesheet" />
         <script src="<?=$_ASSETS['uikit.notify.js']?>"></script>
-        
+        <link href="<?=$_ASSETS['uikit.form.css']?>" rel="stylesheet" />
+        <script src="<?=$_ASSETS['uikit.form.js']?>"></script>
         <link  href="<?=$_ASSETS['application.css']?>" rel="stylesheet">
         <link  href="<?=URL_BASE.$_ASSETS['theme.css']?>" rel="stylesheet">
         

@@ -46,7 +46,7 @@
         <ul class="uk-breadcrumb"></ul>
        
        
-        <h2 id="product_name" style="margin-top:0"></h2>
+        <h2 style="margin-top:0"><span id="product_name"></span> </h2>
        <div class="uk-grid uk-margin-bottom" data-uk-grid-margin>
            <div class="uk-width-medium-1-2">
                 <div class="uk-overlay uk-width-1-1 uk-thumbnail">
@@ -60,12 +60,19 @@
            <div class="uk-width-medium-1-2 uk-grid ">
                 
                 <div class="uk-width-1-1">
-                    <div><b class="uk-text-primary" style="font-size:2em;font-weight:bold"><span id="price"></span><span style="font-size:0.7em"> лв</span></b></div>
-                    <div id="reference" class="uk-text-muted"></div>
-                    <p id="description" class="uk-panel uk-panel-box uk-panel-box-primary"></p>
-
+                    <div class="uk-margin-top"><span class="uk-text-primary" style="font-size:2.5em;"><span id="price"></span><span style="font-size:0.7em"> лв</span></span></div>
                     
-                    <div class="uk-panel"> 
+                    <br>
+                    
+                    <div class="uk-panel uk-panel-box uk-panel-box-primary">
+                        <span id="description"></span>
+                    </div>
+                    
+                    <div class="uk-margin-top uk-margin-bottom">
+                        <span class="uk-font-bold" data-lang>Код:</span> <span id="reference" class="uk-text-muted uk-text-small"></span>
+                    </div>
+                    
+                    <div class="uk-panel uk-text-center"> 
                         <button class="uk-button uk-button-primary buy-product uk-button-large">
                             <i class="uk-icon-shopping-bag"></i>&nbsp;&nbsp; В кошницата
                         </button> 
@@ -83,6 +90,7 @@
                             });
                         }); 
                     </script>
+                    
                     
                     
                     <h3 class="uk-text-primary" data-lang>Подробности</h3>

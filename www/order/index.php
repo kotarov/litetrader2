@@ -23,6 +23,8 @@
         <script src="<?=$_ASSETS['uikit.autocomplete.js']?>"></script>
         <link rel="stylesheet" href="<?=$_ASSETS['uikit.search.css']?>">
         <script src="<?=$_ASSETS['uikit.search.js']?>"></script>
+        <link href="<?=$_ASSETS['uikit.form.css']?>" rel="stylesheet" />
+        <script src="<?=$_ASSETS['uikit.form.js']?>"></script>
         
         <link href="<?=URL_BASE?>css/theme.css" rel="stylesheet">
         
@@ -98,11 +100,34 @@
             </script>
     
     
+            <?php $delivery_methods = parse_ini_file(INI_DIR.'www/delivery_methods.ini',true); ?>
+            <br><br>
+            <h2><b class="uk-badge uk-badge-notification">3</b> <span data-lang>Доставчик</span> <i class="uk-text-danger">*</i></h2>
+            <hr>
+            <div class="uk-grid" name="choose-method">
+                <div class="uk-width-medium-1-6"></div>
+                <div class="uk-width-medium-2-3">
+                    
+                    <?php foreach($delivery_methods as $key=>$method) { ?>
+                    <div class="uk-form-row">
+                        <div class="">
+                            <label class="uk-text-large" style="cursor:pointer">
+                                <input type="radio" name="method" value="<?=$key?>" class="uk-margin-right"> 
+                                <?=$method['title'];?>
+                            </label>
+                        </div>
+                    </div>
+                    <?php } ?>
+    
+                </div>
+            </div>
+    
+    
             <?php $payment_methods = parse_ini_file(INI_DIR.'www/payment_methods.ini',true); ?>
             
             <br>
             <br>
-            <h2><b class="uk-badge uk-badge-notification">3</b> <span data-lang>Начин на плащане</span> <i class="uk-text-danger">*</i></h2>
+            <h2><b class="uk-badge uk-badge-notification">4</b> <span data-lang>Начин на плащане</span> <i class="uk-text-danger">*</i></h2>
             <hr>
             <div class="uk-grid" name="choose-method">
                 <div class="uk-width-medium-1-6"></div>
