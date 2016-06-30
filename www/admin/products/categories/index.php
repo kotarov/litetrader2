@@ -190,7 +190,9 @@
                     var obj = $("[name=id_parent]", this);
                     $("option[disabled]", obj).prop("disabled",false);
                     var children = ret.data[0]['children'];
+                    
                     if(children){ $.each(children.split(","), function(k,v){
+                        if(parseInt(v))
                         $(obj).find("[value="+v+"]").prop("disabled",true);
                     });}      
                 });

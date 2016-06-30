@@ -47,7 +47,7 @@ foreach($tree AS $n => $row){
     $dbh->query("UPDATE categories SET " 
                     ."id_parent = ".$row['id_parent'].", "
                     ."depth = ".($row['depth'] + 1).", "
-                    ."children = '".implode(',',$row['children'])."', "
+                    ."children = ',".implode(',',$row['children']).",', "
                     ."depth_html = '".$row['depth_html']."', "
                     ."parents = '".implode(',',$row['parents'])."', "
                     ."list_order = ".$n." "
@@ -79,7 +79,7 @@ foreach($all AS $id){
     $current_name = $dbh->query("SELECT title FROM categories WHERE id = ".$id)->fetch(PDO::FETCH_COLUMN);
     $url_rewrite = implode("/",array_reverse($names)).'/'.$id.'-'.$current_name.'/';
     if(!$parents) $parents = array('/');
-    $dbh->query("UPDATE categories SET parents = '".implode(',', array_reverse($parents))."', url_rewrite = '".str_replace(array(' '),'-',$url_rewrite)."' WHERE id = $id");
+    $dbh->query("UPDATE categories SET parents = ',".implode(',', array_reverse($parents)).",', url_rewrite = '".str_replace(array(' '),'-',$url_rewrite)."' WHERE id = $id");
 }
 $dbh->commit();
 
