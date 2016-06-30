@@ -1,6 +1,6 @@
 <?php
 if (!function_exists('base_url')) { function base_url($base_realpath = false){
-    if(!$base_realpath) $base_realpath = realpath(__DIR__.'/../public/');
+    if(!$base_realpath) $base_realpath = realpath(__DIR__.'/../www/');
     
     $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!='off') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO']=='https')) ? 'https://' : 'http://';
     
