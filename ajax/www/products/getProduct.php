@@ -31,7 +31,7 @@ if($get['id']){
     
     if($ret['data']['parents']){
         $ret['parents'] = $dbh->query("SELECT id, title, url_rewrite FROM categories WHERE id IN (".$ret['data']['parents'].")
-            ORDER BY id=".(implode(" DESC , id=",explode(",",$ret['data']['parents'])))." DESC
+            ORDER BY id=".(implode(" DESC , id=",explode(",", trim($ret['data']['parents'],',') )))." DESC
         ")->fetchAll(PDO::FETCH_ASSOC);
     }
     
