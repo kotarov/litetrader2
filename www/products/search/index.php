@@ -67,34 +67,37 @@
                                 $.post(url,{"id_category":id_category,"search":encodeURI(value)}).done(function(ret){
                                     ret =$.parseJSON(ret);
                                     var content='';
-                                    
-                                    $.each(ret.results, function(k,p){
-                                        content += ''
-                                        +'<div class="uk-margin uk-margin-top">'
-                                            +'<a class="uk-thumbnail uk-thumbnail-small" href="'+(p.url)+'">'
-                                                +'<figure class="uk-overlay">'
-                                                    +'<img src="<?=URL_BASE?>image.php/'+p.id_image+'/thumb/'+p.date_add+'" alt="">'
-                                                    +(p.category_title ? 
-                                                    '<figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-bottom">'+p.category_title+'</figcaption>'
-                                                    : '')
-                                                +'</figure>'
-                                                +'<div class="uk-thumbnail-caption uk-text-right" style="height:9em">'
-                                                    +'<div class="uk-text-bold uk-text-left  uk-margin-bottom uk-margin-top uk-margin-left uk-overflow-hidden" style="line-height:1.25em;height:2.5em">'+p.title+'</div>'
-                                                    +'<div class="uk-text-large uk-text-bold uk-text-primary  uk-margin-left" style="font-size:1.5em">'
-                                                        +'<span class="">'+(parseFloat(p.price)).toFixed(2)+' лв</span>'
+                                    if(ret.results.length > 0){
+                                        $.each(ret.results, function(k,p){
+                                            content += ''
+                                            +'<div class="uk-margin uk-margin-top">'
+                                                +'<a class="uk-thumbnail uk-thumbnail-small" href="'+(p.url)+'">'
+                                                    +'<figure class="uk-overlay">'
+                                                        +'<img src="<?=URL_BASE?>image.php/'+p.id_image+'/thumb/'+p.date_add+'" alt="">'
+                                                        +(p.category_title ? 
+                                                        '<figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-bottom">'+p.category_title+'</figcaption>'
+                                                        : '')
+                                                    +'</figure>'
+                                                    +'<div class="uk-thumbnail-caption uk-text-right" style="height:9em">'
+                                                        +'<div class="uk-text-bold uk-text-left  uk-margin-bottom uk-margin-top uk-margin-left uk-overflow-hidden" style="line-height:1.25em;height:2.5em">'+p.title+'</div>'
+                                                        +'<div class="uk-text-large uk-text-bold uk-text-primary  uk-margin-left" style="font-size:1.5em">'
+                                                            +'<span class="">'+(parseFloat(p.price)).toFixed(2)+' лв</span>'
+                                                        +'</div>'
+                                                        +'<div>'
+                                                            +'<div class="">'
+                                                                +(p.is_avaible ? 
+                                                                '<button class="uk-button uk-button-primary" data-addtocart="'+p.id+'"><i class="uk-icon-shopping-bag"></i>&nbsp;&nbsp; В кошницата</button>'
+                                                                : '<i class="uk-text-muted">Не е наличен</i>')
+                                                            + '</div>'
+                                                        +'</div>'
                                                     +'</div>'
-                                                    +'<div>'
-                                                        +'<div class="">'
-                                                            +(p.is_avaible ? 
-                                                            '<button class="uk-button uk-button-primary" data-addtocart="'+p.id+'"><i class="uk-icon-shopping-bag"></i>&nbsp;&nbsp; В кошницата</button>'
-                                                            : '<i class="uk-text-muted">Не е наличен</i>')
-                                                        + '</div>'
-                                                    +'</div>'
-                                                +'</div>'
-                                            +'</a>'
-                                        +"</div>"
-                                        ;
-                                    });
+                                                +'</a>'
+                                            +"</div>"
+                                            ;
+                                        });
+                                    }else{
+                                        content += '<div class="uk-text-muted uk-text-large"><i class="uk-icon-warning"></i> Няма намерени продукти</div>';
+                                    }
                                     $("#products").hide().html(content).fadeIn();
                                 });
                             }    
@@ -108,7 +111,9 @@
         
         <h2 data-lang>Резултати от търсенето</h2>
         
-        <div id="products" class="uk-grid uk-container-center"></div>
+        <div id="products" class="uk-grid uk-container-center">
+            <div class="uk-text-muted uk-text-large"><i class="uk-icon-warning"></i> Няма намерени продукти</div>
+        </div>
         
         <script>
         /*
