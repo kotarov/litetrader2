@@ -4,21 +4,28 @@ $post = filter_var_array($_POST,array(
     'search'=>FILTER_SANITIZE_STRING ,
     'id_category'=>FILTER_VALIDATE_INT
 ));
+$post['search'] = urldecode($post['search']);
 
-include_once(LIB_DIR."URLBase.php");
 
+//include_once(LIB_DIR."URLBase.php");
 
 $dbh = new PDO('sqlite:'.DB_DIR.'products');
 $sth = $dbh->prepare("
 SELECT 
+    p.id, 
     p.title,
     '".URL_BASE."products/view/index.php/'||p.url_rewrite||'/' AS url,
     p.price,
     p.is_avaible,
-    p.description text
+    p.description text,
+    p.url_rewrite,
+    i.id id_image,
+    i.date_add,
+    c.title category_title 
 FROM items p 
 LEFT JOIN categories c ON (c.id = p.id_category) 
-WHERE (p.is_visible = 1) AND ".($post['id_category']?"(c.id_category=".$post['id_category']." AND c.parents LIKE '%".$post['id_category']."%') AND ":'')."(
+LEFT JOIN images i ON (i.id_item = p.id AND i.is_cover = 1)  
+WHERE (p.is_visible = 1) AND ".($post['id_category']?"(p.id_category=".$post['id_category']." OR c.parents LIKE '%,".$post['id_category'].",%') AND ":'')."(
     p.title LIKE '%".$post['search']."%' 
     OR p.reference LIKE '%".$post['search']."%'
     OR p.description LIKE '%".$post['search']."%'

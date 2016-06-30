@@ -14,14 +14,18 @@ SELECT c.id, c.title title, c.subtitle, c.date_image, c.tags,
 ."FROM categories c WHERE c.is_visible = 1 AND id_parent = ".(int)$get['id'];
 
 $ret['categories'] = $dbh->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
 if($get['id']) {
     $parents = $dbh->query("SELECT parents FROM categories WHERE id = ".$get['id'])->fetch(PDO::FETCH_COLUMN);
+    $parents = trim($parents,',');
     
     $ret['parents'] = $dbh->query("SELECT id, title, url_rewrite FROM categories WHERE id IN ($parents)
         ORDER BY id=".(implode(" DESC , id=",explode(",",$parents)))." DESC
     ")->fetchAll(PDO::FETCH_ASSOC);
     
 }
+
+
 $ret['current'] = $dbh->query("SELECT id, title FROM categories WHERE id = ".(int)$get['id'])->fetch(PDO::FETCH_ASSOC);
 
 $ret['data'] = $dbh->query("

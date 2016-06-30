@@ -37,7 +37,7 @@
         <?php include '../../snipps/head.php'; ?>
         
         <h2 data-lang>Търсене на продукт</h2>
-        <form id="form-search-product" class="uk-form uk-panel-box uk-margin-bottom">
+        <form id="form-search-product" class="uk-form uk-panel-box uk-margin-bottom" method="post" action="<?=URL_BASE?>ajax.php?f=products/search">
             <div class="uk-form-row">
                 <div class="uk-form-controls uk-flex uk-flex-wrap">
                     <?php 
@@ -51,21 +51,56 @@
                             <option value="<?=$cat['id']?>"><?=$cat['title']?></option>
                         <?php } ?>
                     </select>
-                    <div class="uk-form-icon uk-width-medium-6-10 uk-large-7-10">
+                    <div class="uk-form-icon uk-width-small-8-10 uk-width-medium-6-10 uk-large-7-10">
                         <i class="uk-icon-search"></i>
                         <input type="search" class="uk-width-1-1 uk-form-large" name="search_product" placeholder="Започнете да въвеждате">
                         <script>
-                            $("#form-search-product [name=search_product]").typeWatch({ callback: searchProduct });
+                            $("#form-search-product [name=search_product]").typeWatch({ callback: searchProduct,captureLength: 1 });
+                            $("#form-search-product [name=search_product]").on("keyup",function(e){
+                                $("#products").html('<h1 class="uk-width-1-1 uk-text-large uk-text-muted uk-text-center uk-margin-top"><i class="uk-icon-circle-o-notch uk-icon-spin"></i></h1>');
+                            });
                             function searchProduct(value){
                                 if(!value) value = $("#form-search-product [name=search_product]").val();
                                 var id_category = $("#form-search-product [name=id_category]").val();
-                                $.post("<?=URL_BASE?>ajax.php?f=products/search",{"id_category":id_category,"term":encodeURI(value)}).done(function(ret){
-                                    console.log(ret);
+                                var url = $("#form-search-product").attr("action");
+                                
+                                $.post(url,{"id_category":id_category,"search":encodeURI(value)}).done(function(ret){
+                                    ret =$.parseJSON(ret);
+                                    var content='';
+                                    
+                                    $.each(ret.results, function(k,p){
+                                        content += ''
+                                        +'<div class="uk-margin uk-margin-top">'
+                                            +'<a class="uk-thumbnail uk-thumbnail-small" href="'+(p.url)+'">'
+                                                +'<figure class="uk-overlay">'
+                                                    +'<img src="<?=URL_BASE?>image.php/'+p.id_image+'/thumb/'+p.date_add+'" alt="">'
+                                                    +(p.category_title ? 
+                                                    '<figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-bottom">'+p.category_title+'</figcaption>'
+                                                    : '')
+                                                +'</figure>'
+                                                +'<div class="uk-thumbnail-caption uk-text-right" style="height:9em">'
+                                                    +'<div class="uk-text-bold uk-text-left  uk-margin-bottom uk-margin-top uk-margin-left uk-overflow-hidden" style="line-height:1.25em;height:2.5em">'+p.title+'</div>'
+                                                    +'<div class="uk-text-large uk-text-bold uk-text-primary  uk-margin-left" style="font-size:1.5em">'
+                                                        +'<span class="">'+(parseFloat(p.price)).toFixed(2)+' лв</span>'
+                                                    +'</div>'
+                                                    +'<div>'
+                                                        +'<div class="">'
+                                                            +(p.is_avaible ? 
+                                                            '<button class="uk-button uk-button-primary" data-addtocart="'+p.id+'"><i class="uk-icon-shopping-bag"></i>&nbsp;&nbsp; В кошницата</button>'
+                                                            : '<i class="uk-text-muted">Не е наличен</i>')
+                                                        + '</div>'
+                                                    +'</div>'
+                                                +'</div>'
+                                            +'</a>'
+                                        +"</div>"
+                                        ;
+                                    });
+                                    $("#products").hide().html(content).fadeIn();
                                 });
                             }    
                         </script>
                     </div>
-                    <button class="uk-button uk-button-primary uk-text-nowrap uk-button-large uk-width-medium-1-10">Търси</button>
+                    <a class="uk-button uk-button-primary uk-text-nowrap uk-button-large  uk-width-small-2-10 uk-width-medium-1-10"><i class="uk-icon-search"></i></a>
                 </div>
                 
             </div>
@@ -76,6 +111,7 @@
         <div id="products" class="uk-grid uk-container-center"></div>
         
         <script>
+        /*
         function initProducts(){
             url = decodeURIComponent(window.location).split("/");
             id = parseInt(url[ url.length-2 ].split("-")[0], 10);
@@ -114,6 +150,7 @@
             });
         }
         initProducts();
+        */
         </script>
             
         <script>

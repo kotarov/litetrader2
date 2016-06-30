@@ -15,7 +15,7 @@ $me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
                 if($me['products']) $menu = include __DIR__.'/../../ajax/www/getMenu.php';
         ?>
         <style>
-            #category-menu{margin:auto!important;left:-3em!important; }
+            #category-menu{margin:auto!important;left:-3em!important;min-width:650px;}
         </style>
         <li data-active="page-products" data-uk-dropdown>
             <a href="<?=URL_BASE?>products/" class="uk-button-dropdown" aria-haspopup="true" data-uk-dropdown="" aria-expanded="false" ><?=$me['products_title']?></a>
@@ -24,7 +24,7 @@ $me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
                         
                         <?php foreach($menu['data'] AS $r=>$m){ if($m['depth'] == 1) { ?>
                             <li class="uk-parent" data-menu-hover="<?=$m['id']?>">
-                                <a class="uk-text-primary" href="<?=URL_BASE.URL_PRODUCTS.$m['url_rewrite']?>">
+                                <a class="uk-text-primary" href="<?=URL_BASE.'products/index.php'.$m['url_rewrite']?>">
                                     <?=$m['title']?>
                                     <?php /*<?=$m['subtitle']?'<div class="uk-text-muted">'.$m['subtitle'].'</div>':''?> */?>
                                 </a>
@@ -60,9 +60,9 @@ $me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
                             <div class="uk-width-1-1 ">
                             <?php foreach($menu['data'] AS $rr=>$mm) { if($mm['id_parent'] == $m['id']) { ?>
                                 <div class="uk-width-1-3 uk-margin-bottom uk-float-left">
-                                    <a href="<?=URL_BASE.URL_PRODUCTS.$mm['url_rewrite']?>" class="uk-text-primary"><?=$mm['title']?></a>
+                                    <a href="<?=URL_BASE.'products/index.php'.$mm['url_rewrite']?>" class="uk-text-primary"><?=$mm['title']?></a>
                                     <?php foreach($menu['data'] AS $rrr=>$mmm) { if($mmm['id_parent'] == $mm['id']){ ?>
-                                        <div class="uk-text-muted">&nbsp;&nbsp;<i class="uk-icon-caret-right"></i> <a href="<?=URL_BASE.URL_PRODUCT.$mmm['url_rewrite'];?>" class="uk-text-muted"><?=$mmm['title']?></a></div>    
+                                        <div class="uk-text-muted">&nbsp;&nbsp;<i class="uk-icon-caret-right"></i> <a href="<?=URL_BASE.'products/index.php'.$mmm['url_rewrite'];?>" class="uk-text-muted"><?=$mmm['title']?></a></div>    
                                     <?php }} ?>
                                 </div>
                             <?php } } ?>
@@ -135,9 +135,9 @@ $me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
                 <ul class="uk-nav-sub" >
                     <?php foreach($menu['data'] AS $k=>$m){ ?>
                         <li class="uk-margin-left">
-                            <a class="uk-text-primary" href="<?=URL_BASE.URL_PRODUCTS.$m['url_rewrite']?>"><?=$m['title']?></a>
+                            <a class="uk-text-primary" href="<?=URL_BASE.'products'.$m['url_rewrite']?>"><?=$m['title']?></a>
                             <?php foreach($menu['l2'][$m['id']] AS $kk=>$mm){ ?>
-                                <a class="uk-margin-left" href="<?=URL_BASE.URL_PRODUCTS.$mm['url_rewrite']?>"><?=$mm['title']?></a>
+                                <a class="uk-margin-left" href="<?=URL_BASE.'products'.$mm['url_rewrite']?>"><?=$mm['title']?></a>
                             <?php } ?>
                         </li>
                     <?php } ?>
