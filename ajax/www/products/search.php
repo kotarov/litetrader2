@@ -6,6 +6,7 @@ $post = filter_var_array($_POST,array(
 ));
 
 $post['search'] = trim(rawurldecode($post['search']));
+if(!$post['search']) $post['search'] = '~';
 
 $dbh = new PDO('sqlite:'.DB_DIR.'products');
 $sth = $dbh->prepare("
