@@ -70,7 +70,7 @@
             						+'<img src="image.php/'+d+'/thumb/'+r.date_image+'" width="40" ></a>';
             			}
             		},
-            		{ data:"title", title:(lang["Name"]||"Name"), class:"uk-nowrap" },
+            		{ data:"title", title:(lang["Name"]||"Name"), class:"uk-text-nowrap" },
             		{ data:"subtitle", title:(lang["Descrition"]||"Descrition")},
             		{ data:"position", title:(lang["Pos"]||"Pos"), width:"1em","class":"uk-text-center"},
             		{ data:"actions", title:"", width:"1em", orderable:false, searchable:false, "class":"uk-text-center uk-text-middle uk-text-nowrap actions",
