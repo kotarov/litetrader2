@@ -13,13 +13,13 @@ $NO_ENCODE = true;
                     <form class="uk-search no-ajax" id="menu-search-form" action="<?=URL_BASE?>products/search/index.php" 
                         data-uk-search="{source:'<?=URL_BASE?>ajax.php?f=products/search', msgResultsHeader:'Намерени резултати',msgMoreResults:'Още резултати...',msgNoResults:'Няма намерени резултати'}"
                     >
-                        <input class="uk-search-field" id="menu-search-input" type="search" placeholder="search..." autocomplete="off">
+                        <input class="uk-search-field uk-text-primary" style="border-width:1px;border:0px solid #00a8e6;" id="menu-search-input" type="search" placeholder="search..." autocomplete="off">
                         <a href="<?=URL_BASE?>products/search" class="uk-button uk-button-primary" style="display:none;z-index:0;position:absolute;left:100%;top:0;" id="menu-search-button"><i class="uk-icon-search"></i></a>
                     </form>
                     
                     <script>
-                        $("#menu-search-input").focus(function(e){ $("#menu-search-button").fadeIn() });
-                        $("#menu-search-input").focusout(function(e){ $("#menu-search-button").fadeOut() });
+                        $("#menu-search-input").focus(function(e){ $("#menu-search-button").fadeIn();$("#menu-search-input"); $(this).css("border-width","1px") });
+                        $("#menu-search-input").focusout(function(e){ $("#menu-search-button").fadeOut(); $(this).css("border-width","0") });
                     </script>
                     <!-- /Search -->
                 </div>

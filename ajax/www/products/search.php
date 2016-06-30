@@ -4,10 +4,8 @@ $post = filter_var_array($_POST,array(
     'search'=>FILTER_SANITIZE_STRING ,
     'id_category'=>FILTER_VALIDATE_INT
 ));
-$post['search'] = urldecode($post['search']);
 
-
-//include_once(LIB_DIR."URLBase.php");
+$post['search'] = trim(rawurldecode($post['search']));
 
 $dbh = new PDO('sqlite:'.DB_DIR.'products');
 $sth = $dbh->prepare("
@@ -25,7 +23,7 @@ SELECT
 FROM items p 
 LEFT JOIN categories c ON (c.id = p.id_category) 
 LEFT JOIN images i ON (i.id_item = p.id AND i.is_cover = 1)  
-WHERE (p.is_visible = 1) AND ".($post['id_category']?"(p.id_category=".$post['id_category']." OR c.parents LIKE '%,".$post['id_category'].",%') AND ":'')."(
+WHERE (p.is_visible = 1) AND ".($post['id_category'] ?"(p.id_category=".$post['id_category']." OR c.parents LIKE '%,".$post['id_category'].",%') AND ":'')."(
     p.title LIKE '%".$post['search']."%' 
     OR p.reference LIKE '%".$post['search']."%'
     OR p.description LIKE '%".$post['search']."%'
