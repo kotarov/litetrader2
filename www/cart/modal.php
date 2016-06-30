@@ -5,7 +5,7 @@
                 <?php include __DIR__."/../cart/content.php";?>
                 <div class="uk-modal-footer">
                     <button class="uk-button uk-modal-close uk-button-large" data-lang>Затвори</button>
-                    <a href="<?=URL_BASE?>order/" class="uk-button uk-button-primary uk-button-large uk-float-right checkout"><span>Вземи</span> <i class="uk-icon-truck"></i></a>
+                    <a href="<?=URL_BASE?>order/" class="uk-button uk-button-primary uk-button-large uk-float-right checkout"><span>Поръчай</span> <i class="uk-icon-truck"></i></a>
                 </div>
             </div>
         </div>
