@@ -13,6 +13,8 @@
         <link  href="<?=$_ASSETS['uikit.css']?>" rel="stylesheet"/>
         <script src="<?=$_ASSETS['uikit.js']?>"></script>
         <script src="<?=$_ASSETS['uikit.offcanvas.js']?>"></script>
+        <link  href="<?=$_ASSETS['uikit.form.css']?>" rel="stylesheet" />
+        <script src="<?=$_ASSETS['uikit.form.js']?>"></script>
         
         <link  href="<?=$_ASSETS['uikit.notify.css']?>" rel="stylesheet" />
         <script src="<?=$_ASSETS['uikit.notify.js']?>"></script>
@@ -22,6 +24,11 @@
         <script src="<?=$_ASSETS['dataTables.uikit.js']?>"></script>
         <script src="<?=$_ASSETS['dataTables.buttons.js']?>"></script>
         
+         <link  href="<?=$_ASSETS['uikit.autocomplete.css']?>" rel="stylesheet" />
+        <script src="<?=$_ASSETS['uikit.autocomplete.js']?>"></script>
+        <link  href="<?=$_ASSETS['uikit.datepicker.css']?>" rel="stylesheet" />
+        <script src="<?=$_ASSETS['uikit.datepicker.js']?>"></script>
+        <script src="<?=$_ASSETS['uikit.timepicker.js']?>"></script>
         
         
         <link  href="<?=$_ASSETS['codemirror.css']?>" rel="stylesheet">
@@ -95,6 +102,7 @@
             						+'<img src="image.php/'+d+'/small/'+r.date_image+'" width="40" >'+badge+'</a>';
             		}},
             		{ data:"title", title:(lang["Name"]||"Name"), render:function(d,t,r){return d+(r.reference?' <small class="uk-text-muted">/ '+r.reference+'</small>':'');}},
+            		{ data:"date_add", title:(lang["Date"]||"Date")},
             		{ data:"category", title:(lang["Category"]||"Category"),render:function(d,t,r){
             		    return r.cat_is_visible == 1 ? (d?d:"") : '<strike class="uk-text-muted">'+(d?d:"")+'</strike>';
             		}},
@@ -137,6 +145,17 @@
                                 <label class="uk-form-label"><span data-lang>Description</span>  <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls"><textarea class="uk-width-1-1" name="description"></textarea></div>
                             </div>
+                            <div class="uk-form-row">
+                        <label class="uk-form-label" ><span data-lang>Date</span></label>
+                        <div class="uk-form-controls">
+                            <div class="uk-width-small-1-2 uk-grid uk-grid-collapse" style="margin-left:0">
+                                <input class="uk-width-small-2-3" type="text" placeholder="__.__.____" data-uk-datepicker="{format:'DD.MM.YYYY'}" name="date_add">
+                                <div class="uk-width-small-1-3">
+                                    <input class="uk-width-1-1" type="text" placeholder="__:__" data-uk-timepicker="{format:'24h'}" name="date_add_time">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Price</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls"><input class="uk-width-1-1" type="text" name="price"></div>
@@ -198,6 +217,17 @@
                                 <label class="uk-form-label"><span data-lang>Description</span>  <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls"><textarea class="uk-width-1-1" name="description"></textarea></div>
                             </div>
+                            <div class="uk-form-row">
+                        <label class="uk-form-label" ><span data-lang>Date</span></label>
+                        <div class="uk-form-controls">
+                            <div class="uk-width-small-1-2 uk-grid uk-grid-collapse" style="margin-left:0">
+                                <input class="uk-width-small-2-3" type="text" placeholder="__.__.____" data-uk-datepicker="{format:'DD.MM.YYYY'}" name="date_add">
+                                <div class="uk-width-small-1-3">
+                                    <input class="uk-width-1-1" type="text" placeholder="__:__" data-uk-timepicker="{format:'24h'}" name="date_add_time">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Price</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls"><input class="uk-width-1-1" type="text" name="price"></div>
@@ -331,7 +361,7 @@
                                     
                     <form id="form-product-upload-image" action="<?=URL_BASE?>ajax.php?f=products/images/postImages" data-trigger="item-image-changed,item-updated">
                         <input type="hidden" name="id">
-                        <input type="file" id="select-product-image-files" name="images[]" multiple class="uk-hidden" onchange="$(this).closest('form').submit()">
+                        <input type="file" id="select-product-image-files" name="images[]" multiple class="uk-hidden" onchange="if($(this).val()) $(this).closest('form').submit()">
                         <div class="uk-text-right">
                             <span class="upload-progress" data-lang>Upload:</span>
                             <a href="#modal-tune-upload-image" data-uk-modal='{modal:false}' onclick="$('#modal-tune-upload-image [name=id]').val($('#form-product-upload-image [name=id]').val());" class="uk-button uk-button-primary" ><i class="uk-icon-object-group"></i> <span data-lang>Tune upload</span></a>

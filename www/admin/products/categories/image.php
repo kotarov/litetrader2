@@ -9,8 +9,6 @@ if(isset($_SERVER['PATH_INFO'])){
     $dbh = new PDO('sqlite:'.DB_DIR.'products');
     $sth = $dbh->query("SELECT $size AS image FROM categories WHERE id = $id");
     $image = $sth->fetch(PDO::FETCH_COLUMN);
-    
-    
     if(!$image) {
         $noimage = "../../img/no-products-category-$size.jpg";
         if(!file_exists($noimage)){
@@ -23,7 +21,6 @@ if(isset($_SERVER['PATH_INFO'])){
         }
         $image = file_get_contents( $noimage );
     }
-    
     header('Content-type: image/jpeg');
     echo $image;
 }

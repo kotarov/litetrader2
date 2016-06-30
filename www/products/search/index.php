@@ -21,7 +21,8 @@
         <script src="<?=$_ASSETS['uikit.autocomplete.js']?>"></script>
         <link rel="stylesheet" href="<?=$_ASSETS['uikit.search.css']?>">
         <script src="<?=$_ASSETS['uikit.search.js']?>"></script>
-        
+
+        <script src="<?=$_ASSETS['typewatch.js']?>"></script>    
         
         <link  href="<?=$_ASSETS['dataTables.uikit.css']?>" rel="stylesheet">
         <script src="<?=$_ASSETS['dataTables.js']?>"></script>
@@ -36,7 +37,7 @@
         <?php include '../../snipps/head.php'; ?>
         
         <h2 data-lang>Търсене на продукт</h2>
-        <form class="uk-form uk-panel-box uk-margin-bottom">
+        <form id="form-search-product" class="uk-form uk-panel-box uk-margin-bottom">
             <div class="uk-form-row">
                 <div class="uk-form-controls uk-flex uk-flex-wrap">
                     <?php 
@@ -44,7 +45,7 @@
                         $cats=$dbh->query("SELECT id, title FROM categories where id_parent=0")->fetchAll(PDO::FETCH_ASSOC);
                     ?>
                     
-                    <select name="id_category" class="uk-form-large uk-width-medium-3-10 uk-large-2-10">
+                    <select name="id_category" onchange="searchProduct()" class="uk-text-primary uk-form-large uk-width-medium-3-10 uk-large-2-10">
                         <option value="0">Навсякъде</option>
                         <?php foreach($cats AS $cat){ ?>
                             <option value="<?=$cat['id']?>"><?=$cat['title']?></option>
@@ -53,6 +54,16 @@
                     <div class="uk-form-icon uk-width-medium-6-10 uk-large-7-10">
                         <i class="uk-icon-search"></i>
                         <input type="search" class="uk-width-1-1 uk-form-large" name="search_product" placeholder="Започнете да въвеждате">
+                        <script>
+                            $("#form-search-product [name=search_product]").typeWatch({ callback: searchProduct });
+                            function searchProduct(value){
+                                if(!value) value = $("#form-search-product [name=search_product]").val();
+                                var id_category = $("#form-search-product [name=id_category]").val();
+                                $.post("<?=URL_BASE?>ajax.php?f=products/search",{"id_category":id_category,"term":encodeURI(value)}).done(function(ret){
+                                    console.log(ret);
+                                });
+                            }    
+                        </script>
                     </div>
                     <button class="uk-button uk-button-primary uk-text-nowrap uk-button-large uk-width-medium-1-10">Търси</button>
                 </div>

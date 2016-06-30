@@ -42,6 +42,7 @@ foreach($tree AS $n => $row){
     }
 }
 
+$dbh->beginTransaction();
 foreach($tree AS $n => $row){
     $dbh->query("UPDATE categories SET " 
                     ."id_parent = ".$row['id_parent'].", "
@@ -52,11 +53,12 @@ foreach($tree AS $n => $row){
                     ."list_order = ".$n." "
                 ."WHERE id = ".$row['id']);
 }
-
+$dbh->commit();
 
 
 ///// parents 
 $all = $dbh->query("SELECT id FROM categories")->fetchAll(PDO::FETCH_COLUMN);
+$dbh->beginTransaction();
 foreach($all AS $id){
     $parents = array();
     $names = array();
@@ -79,6 +81,7 @@ foreach($all AS $id){
     if(!$parents) $parents = array('/');
     $dbh->query("UPDATE categories SET parents = '".implode(',', array_reverse($parents))."', url_rewrite = '".str_replace(array(' '),'-',$url_rewrite)."' WHERE id = $id");
 }
+$dbh->commit();
 
 
 

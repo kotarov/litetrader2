@@ -12,6 +12,7 @@ $sth = $dbh->prepare("SELECT
     items.is_advertise,
     items.is_avaible,
     items.id,
+    strftime('%d.%m.%Y %H:%M',datetime(items.date_add,'unixepoch')) date_add,
     img.id image, img.date_add date_image,(SELECT COUNT(id) FROM images WHERE id_item = items.id) nb_images,
     c.title category, c.is_visible cat_is_visible,
     items.title,
