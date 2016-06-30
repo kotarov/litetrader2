@@ -6,7 +6,6 @@ if (!function_exists('base_url')) { function base_url($base_realpath = false){
     
     $tmpURL = str_replace(chr(92),'/',$base_realpath);
     $tmpURL = trim(str_replace($_SERVER['DOCUMENT_ROOT'],'',$tmpURL),'/');
-
     if ($tmpURL !== $_SERVER['HTTP_HOST']) $base_url .= $_SERVER['HTTP_HOST'].'/'.$tmpURL.'/';
     else $base_url .= $tmpURL.'/';
     

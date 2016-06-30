@@ -11,10 +11,9 @@ if($request_uri == 'index.php'  ||  substr($_SERVER['REQUEST_URI'],-1) == '/'){
 include __DIR__.'/../../lib/URLBase.php';
 define('URL_BASE', base_url());
 
-print_r(URL_BASE);exit;
 
 if(isset($_SESSION['admin']['id']))
-    header('Location: '.URL_BASE.'home/');
+    header('Location: '.URL_BASE.'admin/home/');
 else
-    header('Location: '.URL_BASE.'login.php');
+    header('Location: '.URL_BASE.'admin/login.php');
 ?>
