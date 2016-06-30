@@ -39,7 +39,7 @@ $me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
                     <div class="uk-width-2-3" style="margin-left:15px; ">
                         <div class="menu-hover" style="margin-left:15px;">
                             <h3 class="uk-panel-titleuk-text-right">
-                                <div class="uk-text-bold uk-text-large"><?=$_COMPANY['name']?> &trade;</div>
+                                <div class="uk-text-large"><?=$_COMPANY['name']?> &trade;</div>
                                 <div class="uk-text-muted uk-text-small">Категории</div>
                             </h3>
                         </div>
