@@ -35,52 +35,85 @@
         <script src="<?=$_ASSETS['elevatezoom.js']?>"></script>
         
         <style>
-            .zoomGalleryActive { border: 1px solid red;}
-            .buy-product,.cannot-buy-poduct {display:none}
+            .zoomGalleryActive { border: 1px solid #ccc;}
         </style>
     </head>
     <body id="page-products"> 
         <?php include '../../snipps/head.php'; ?>
        
        
-        <ul class="uk-breadcrumb"></ul>
-       
-       
-        <h2 style="margin-top:0"><span id="product_name"></span> </h2>
-       <div class="uk-grid uk-margin-bottom" data-uk-grid-margin>
+        <?php
+            $_GET['id'] = 0;
+            if(isset($_SERVER['PATH_INFO'])){
+                $temp = explode("/", $_SERVER['PATH_INFO']);
+                $nb = count($temp); if($nb < 2) $nb = 2;
+                $temp = $temp[$nb-2];
+                list($_GET['id'], $temp) = explode('-',$temp);
+
+            }
+            $NO_JSON = TRUE;
+            $product = include __DIR__."/../../../ajax/www/products/getProduct.php";
+       ?>
+        <ul class="uk-breadcrumb">
+            <li><a href="<?=URL_BASE?>products/"><i class="uk-icon-home"></i> <span data-lang>Начало</span></a></li>
+            <?php foreach($product['parents'] AS $n=>$parent) { ?>
+                <li><a href="<?=URL_BASE?>products/index.php<?=$parent['url_rewrite']?>"><?=$parent['title']?></a></li>
+            <?php } ?>
+            <li class="uk-active"><a href="<?=URL_BASE.'products/index.php'.$product['data']['url_rewrite']?>"><?=$product['data']['category']?></a></li>
+        </ul>
+        
+
+        <h2 style="margin-top:0"><span id="product_name"><?=$product['data']['title']?></span> </h2>
+        <div class="uk-grid uk-margin-bottom" data-uk-grid-margin>
            <div class="uk-width-medium-1-2">
                 <div class="uk-overlay uk-width-1-1 uk-thumbnail">
                     <a data-uk-lightbox="{group:'main-image'}" href="#">
-                        <img id="main-image" class="uk-width-1-1" style="max-height:100%" src="">
+                        <img id="main-image" class="uk-width-1-1" style="max-height:100%" src="<?=URL_BASE?>image.php/<?=$product['data']['id_image']?>/<?=$product['data']['date_add']?>/">
                     </a>
                 </div>
                 
-                <div id="product-images" class="uk-thumbnav uk-grid-width-1-5"></div>
+                <div id="product-images" class="uk-thumbnav uk-grid-width-1-5 uk-margin-remove">
+                    <?php foreach($product['images'] AS $image) {  $url = URL_BASE.'image.php/'.$image['id'].'/full/'.$image['date_add'];?>
+                        <a href="#" data-image="<?=$url?>" data-uk-lightbox="{group:'main-image'}" class="uk-width-1-5<?=$image['is_cover']?' zoomGalleryActive':''?>">
+                            <img src="<?=$url?>">
+                        </a>
+                    <?php } ?>
+                </div>
            </div>
+           <script>
+               $("#main-image").elevateZoom({ gallery:"product-images" });
+           </script>
+           
+           
            <div class="uk-width-medium-1-2 uk-grid ">
                 
                 <div class="uk-width-1-1">
-                    <div class="uk-margin-top"><span class="uk-text-primary" style="font-size:2.5em;"><span id="price"></span><span style="font-size:0.7em"> лв</span></span></div>
+                    <div class="uk-margin-top"><span class="uk-text-primary" style="font-size:2.5em;">
+                        <span id="price"><?=$product['data']['price']?></span><span style="font-size:0.7em"> лв</span></span>
+                    </div>
                     
                     <br>
                     
                     <div class="uk-panel uk-panel-box uk-panel-box-primary">
-                        <span id="description"></span>
+                        <span id="description"><?=$product['data']['description']?></span>
                     </div>
                     
                     <div class="uk-margin-top uk-margin-bottom">
-                        <span class="uk-font-bold" data-lang>Код:</span> <span id="reference" class="uk-text-muted uk-text-small"></span>
+                        <span class="uk-font-bold" data-lang>Код:</span> <span id="reference" class="uk-text-muted uk-text-small"><?=$product['data']['reference']?></span>
                     </div>
                     
                     <div class="uk-panel uk-text-center"> 
-                        <button class="uk-button uk-button-primary buy-product uk-button-large">
+                        <?php if($product['data']['is_avaible'] == 1) { ?>
+                        <button class="buy-product uk-button uk-button-primary uk-button-large">
                             <i class="uk-icon-shopping-bag"></i>&nbsp;&nbsp; В кошницата
                         </button> 
-                        <i class="cannot-buy-poduct uk-text-muted">Не е наличен</i>
+                        <?php }else{ ?>
+                        <i class="uk-text-muted">Не е наличен</i>
+                        <?php } ?>
                     </div>
                     <script> 
                         $("body").on("click",".buy-product",function(e){ e.preventDefault();
-                            $.post("<?=URL_BASE?>ajax.php?f=cart/postAdd",{"id_product":window['id_product'],"add":"1"}).done(function(cart){
+                            $.post("<?=URL_BASE?>ajax.php?f=cart/postAdd",{"id_product":<?=$product['data']['id']?>,"add":"1"}).done(function(cart){
                                 cart = $.parseJSON(cart);
                                 if(cart.error){ UIkit.notify(cart.error,"warning");
                                 }else{
@@ -92,14 +125,15 @@
                     </script>
                     
                     
-                    
-                    <h3 class="uk-text-primary" data-lang>Подробности</h3>
+                    <h3 class="uk-text-primary" data-lang>Детайли</h3>
                     <hr>
-                    <div id="content" class="uk-width-medium-1-1"></div>
+                    <div id="content" class="uk-width-medium-1-1"><?=$product['data']['content']?></div>
 
+                    <?php /*
                     <h3 class="uk-text-primary" data-lang>Контакти</h3>
                     <hr>
                     <div id="contacts"></div>
+                    */?>
 
                 </div>
 
@@ -112,9 +146,9 @@
         </div>
         
         <script>
-            
-
+        
             /*** INIT */
+            <?php /*
             url = decodeURIComponent(window.location).split("/");
             window['id_product'] = parseInt(url[ url.length-2 ].split("-")[0], 10);
             $.getJSON("<?=URL_BASE?>ajax.php?f=products/getProduct&id="+window['id_product']).done(function(ret){
@@ -151,7 +185,8 @@
                     gallery:"product-images", 
                 });
                 
-            });    
+            }); 
+            */ ?>
         </script>
         
         

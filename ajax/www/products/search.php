@@ -17,7 +17,7 @@ SELECT
     p.price,
     p.is_avaible,
     p.description text,
-    p.url_rewrite,
+    '/'||p.url_rewrite||'/' AS ukr_rewrite,
     i.id id_image,
     i.date_add,
     c.title category_title 

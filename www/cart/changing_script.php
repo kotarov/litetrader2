@@ -20,7 +20,7 @@
                         +'  <td class=" uk-text-middle" data-id="'+v.id+'">'+v.title+'</td>'
                         +'  <td class="uk-text-right uk-text-middle">'+v.price+'</td>'
                         +'  <td class="uk-text-center uk-text-middle">'+v.unit+'</td>'
-                        +'  <td class="uk-text-right uk-text-middle uk-form"><input type="number" class="quantity" value="'+v.qty+'"></td>'
+                        +'  <td class="uk-text-right uk-text-middle uk-form"><input type="number" class="quantity" style="width:5em" value="'+v.qty+'"></td>'
                         +'  <td class="uk-text-right uk-text-middle">'+(v.price*v.qty).toFixed(2)+'</td>'
                         +'</tr>');
                     });

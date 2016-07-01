@@ -68,32 +68,34 @@
                                     ret =$.parseJSON(ret);
                                     var content='';
                                     if(ret.results.length > 0){
-                                        $.each(ret.results, function(k,p){
-                                            content += ''
-                                            +'<div class="uk-margin uk-margin-top">'
-                                                +'<a class="uk-thumbnail uk-thumbnail-small" href="'+(p.url)+'">'
+                                        $.each(ret.results, function(r,p){
+                                            content +=''
+                                            +'<div class="uk-width-large-1-4 uk-width-medium-1-3 uk-width-small-1-2 uk-width-1-1 uk-margin-bottom">'
+                                            +'<a class="uk-panel products-list-panel" href="<?=URL_BASE.URL_PRODUCT?>'+(p.url_rewrite?p.url_rewrite:'/')+p.id+'-'+p.title.replace(/\ /g,"-")+'/">'
+                                                //+'<div class="uk-badge uk-panel-badge uk-text-large">New</div>'
+                                                +'<div class="uk-panel-teaser">'
                                                     +'<figure class="uk-overlay">'
-                                                        +'<img src="<?=URL_BASE?>image.php/'+p.id_image+'/thumb/'+p.date_add+'" alt="">'
+                                                        +'<img src="<?=URL_BASE?>image.php/'+p.id_image+'/thumb/'+p.date_add+'" alt="'+(p.url_rewrite?p.url_rewrite:'/')+p.id+'-'+p.title.replace(/\ /g,"-")+'">'
                                                         +(p.category_title ? 
                                                         '<figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-bottom">'+p.category_title+'</figcaption>'
                                                         : '')
                                                     +'</figure>'
-                                                    +'<div class="uk-thumbnail-caption uk-text-right" style="height:9em">'
-                                                        +'<div class="uk-text-bold uk-text-left  uk-margin-bottom uk-margin-top uk-margin-left uk-overflow-hidden" style="line-height:1.25em;height:2.5em">'+p.title+'</div>'
-                                                        +'<div class="uk-text-large uk-text-bold uk-text-primary  uk-margin-left" style="font-size:1.5em">'
-                                                            +'<span class="">'+(parseFloat(p.price)).toFixed(2)+' лв</span>'
-                                                        +'</div>'
-                                                        +'<div>'
-                                                            +'<div class="">'
-                                                                +(p.is_avaible ? 
-                                                                '<button class="uk-button uk-button-primary" data-addtocart="'+p.id+'"><i class="uk-icon-shopping-bag"></i>&nbsp;&nbsp; В кошницата</button>'
-                                                                : '<i class="uk-text-muted">Не е наличен</i>')
-                                                            + '</div>'
-                                                        +'</div>'
+                                                +'</div>'
+                                                +'<div class="uk-text-muted uk-text-center products-list-title">'+p.title+'</div>'
+                                                
+                                                +'<div class="uk-width-1-1 uk-margin-top uk-margin-bottom">'
+                                                    +'<div class="uk-text-center uk-margin-bottom">'
+                                                        +'<span class="uk-text-primary products-list-price">'+(parseFloat(p.price)).toFixed(2)+' лв</span>'
                                                     +'</div>'
-                                                +'</a>'
-                                            +"</div>"
-                                            ;
+                                                    
+                                                    +'<div class="uk-text-center">'
+                                                        +(p.is_avaible ? 
+                                                        '<button class="uk-button uk-button-primary" data-addtocart="'+p.id+'"><i class="uk-icon-shopping-bag"></i>&nbsp;&nbsp; В кошницата</button>'
+                                                        : '<i class="uk-text-muted">Не е наличен</i>')
+                                                    + '</div>'
+                                                +'</div>'
+                                            +'</a>'
+                                            +'</div>';
                                         });
                                     }else{
                                         content += '<div class="uk-text-muted uk-text-large"><i class="uk-icon-warning"></i> Няма намерени продукти</div>';

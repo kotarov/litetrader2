@@ -11,3 +11,7 @@ table tfoot th { font-weight:bold; font-style:normal;font-size:1.2em;}
 input[type=search] { background-color:#f5f5f5;min-width:10em;}
 
 .uk-thumbnail-caption{ height:3em; overflow:hidden;}
+
+.products-list-title { height:3.2em;overflow:hidden }
+.products-list-panel { border:1px solid #ddd;padding:5px; }
+.products-list-price { font-size:1.7em}

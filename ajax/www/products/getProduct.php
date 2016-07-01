@@ -40,8 +40,8 @@ if($get['id']){
 
     if(isset($ret['data']['price'])) $ret['data']['price'] = number_format($ret['data']['price'],2);
     
-    $ret['images'] = $dbh->query("SELECT i.id,i.date_add FROM images i WHERE i.id_item = ".(int)$get['id'])->fetchAll(PDO::FETCH_ASSOC);
+    $ret['images'] = $dbh->query("SELECT i.id,i.date_add,is_cover FROM images i WHERE i.id_item = ".(int)$get['id'])->fetchAll(PDO::FETCH_ASSOC);
 }
-
+if(isset($NO_JSON) && $NO_JSON) return $ret;
 return json_encode($ret);
 ?>

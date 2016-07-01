@@ -19,7 +19,7 @@ $NO_ENCODE = true;
                     
                     <script>
                         $("#menu-search-input").focus(function(e){ $("#menu-search-button").fadeIn();$("#menu-search-input");});
-                        $("#menu-search-input").focusout(function(e){ $("#menu-search-button").fadeOut();});
+                        $("#menu-search-form").focusout(function(e){ $("#menu-search-button").fadeOut();});
                     </script>
                     <!-- /Search -->
                 </div>

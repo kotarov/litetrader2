@@ -43,7 +43,7 @@
         
         <hr>
         <h2>Продукти в тази категория</h2>
-        <div id="products" class="uk-grid uk-container-center"></div>
+        <div id="products" class="uk-grid"></div>
         
         <script>
         function initProducts(){
@@ -84,34 +84,43 @@
                 
 
                 
-                $("#products").html("").hide();
+                var content = "";
                 if(ret.data.length == 0){
-                    $("#products").html('<span class="uk-text-warning">В тази категория няма налични продукти</span>');
+                    content = '<span class="uk-text-warning">В тази категория няма налични продукти</span>';
                 }else {
                     $.each(ret.data, function(r,p){
-                        $("#products").append(''
-                            +'<div class="uk-margin uk-margin-top">'
-                            +'<a class="uk-thumbnail uk-thumbnail-medium" href="<?=URL_BASE.URL_PRODUCT?>'+(p.url_rewrite?p.url_rewrite:'/')+p.id+'-'+p.title.replace(/\ /g,"-")+'/">'
-                                +'<img src="<?=URL_BASE?>image.php/'+p.id_image+'/thumb/'+p.date_add+'" alt="">'
-                                +'<div class="uk-thumbnail-caption" style="height:7em">'
-                                    +'<div class="uk-text-bold uk-text-left  uk-margin-bottom uk-margin-top uk-margin-left" style="height:2.3em">'+p.title+'</div>'
-                                    +'<div class="uk-text-large uk-text-bold uk-text-primary uk-float-left uk-margin-left" style="font-size:1.7em">'
-                                        +'<span class="">'+(parseFloat(p.price)).toFixed(2)+' лв</span>'
+                        content +=''
+                            +'<div class="uk-width-large-1-4 uk-width-medium-1-3 uk-width-small-1-2 uk-width-1-1 uk-margin-bottom">'
+                            +'<a class="uk-panel products-list-panel" href="<?=URL_BASE.URL_PRODUCT?>'+(p.url_rewrite?p.url_rewrite:'/')+p.id+'-'+p.title.replace(/\ /g,"-")+'/">'
+                                //+'<div class="uk-badge uk-panel-badge uk-text-large">New</div>'
+                                +'<div class="uk-panel-teaser">'
+                                    +'<figure class="uk-overlay">'
+                                        +'<img src="<?=URL_BASE?>image.php/'+p.id_image+'/thumb/'+p.date_add+'" alt="'+(p.url_rewrite?p.url_rewrite:'/')+p.id+'-'+p.title.replace(/\ /g,"-")+'">'
+                                        <?php /*
+                                        +(p.category_title ? 
+                                        '<figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-bottom">'+p.category_title+'</figcaption>'
+                                        : '')
+                                        */?>
+                                    +'</figure>'
+                                +'</div>'
+                                +'<div class="uk-text-muted uk-text-center products-list-title">'+p.title+'</div>'
+                                
+                                +'<div class="uk-width-1-1 uk-margin-top uk-margin-bottom">'
+                                    +'<div class="uk-text-center uk-margin-bottom">'
+                                        +'<span class="uk-text-primary products-list-price">'+(parseFloat(p.price)).toFixed(2)+' лв</span>'
                                     +'</div>'
-                                    +'<div>'
-                                        +'<div class="uk-float-right uk-margin-right">'
-                                            +(p.is_avaible ? 
-                                            '<button class="uk-button uk-button-primary" data-addtocart="'+p.id+'"><i class="uk-icon-shopping-bag"></i>&nbsp;&nbsp; В кошницата</button>'
-                                            : '<i class="uk-text-muted">Не е наличен</i>')
-                                        + '</div>'
-                                    +'</div>'
+                                    
+                                    +'<div class="uk-text-center">'
+                                        +(p.is_avaible ? 
+                                        '<button class="uk-button uk-button-primary" data-addtocart="'+p.id+'"><i class="uk-icon-shopping-bag"></i>&nbsp;&nbsp; В кошницата</button>'
+                                        : '<i class="uk-text-muted">Не е наличен</i>')
+                                    + '</div>'
                                 +'</div>'
                             +'</a>'
-                            +"</div>"
-                        );
+                            +'</div>';
                     });
                 }
-                 $("#products").fadeIn();
+                $("#products").hide().html(content).show();
                 
                 $(window).trigger('resize');
             });

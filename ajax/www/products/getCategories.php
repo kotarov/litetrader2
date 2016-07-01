@@ -29,7 +29,8 @@ if($get['id']) {
 $ret['current'] = $dbh->query("SELECT id, title FROM categories WHERE id = ".(int)$get['id'])->fetch(PDO::FETCH_ASSOC);
 
 $ret['data'] = $dbh->query("
-SELECT i.id id_image, p.id, p.title, p.reference, p.description, p.tags, p.price, i.date_add, c.url_rewrite url_rewrite, p.is_avaible  
+SELECT i.id id_image, p.id, p.title, p.reference, p.description, p.tags, p.price, i.date_add, 
+    c.url_rewrite url_rewrite, p.is_avaible, c.title category_title 
 FROM items p 
 LEFT JOIN images i ON (i.id_item = p.id AND i.is_cover =1 )
 LEFT JOIN categories c ON (c.id = p.id_category) 
