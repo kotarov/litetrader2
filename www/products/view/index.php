@@ -59,7 +59,9 @@
             <?php foreach($product['parents'] AS $n=>$parent) { ?>
                 <li><a href="<?=URL_BASE?>products/index.php<?=$parent['url_rewrite']?>"><?=$parent['title']?></a></li>
             <?php } ?>
-            <li class="uk-active"><a href="<?=URL_BASE.'products/index.php'.$product['data']['url_rewrite']?>"><?=$product['data']['category']?></a></li>
+            <?php if($product['data']['url_rewrite']) { ?>
+                <li class="uk-active"><a href="<?=URL_BASE.'products/index.php'.$product['data']['url_rewrite']?>"><?=$product['data']['category']?></a></li>
+            <?php } ?>
         </ul>
         
 
@@ -88,8 +90,8 @@
            <div class="uk-width-medium-1-2 uk-grid ">
                 
                 <div class="uk-width-1-1">
-                    <div class="uk-margin-top"><span class="uk-text-primary" style="font-size:2.5em;">
-                        <span id="price"><?=$product['data']['price']?></span><span style="font-size:0.7em"> лв</span></span>
+                    <div class="uk-margin-top"><span class="uk-text-primary">
+                        <span id="price" class="product-view-price"><?=$product['data']['price']?></span><span class="uk-text-large"> лв</span></span>
                     </div>
                     
                     <br>
