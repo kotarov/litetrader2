@@ -56,7 +56,7 @@
        ?>
         <ul class="uk-breadcrumb">
             <li><a href="<?=URL_BASE?>products/"><i class="uk-icon-home"></i> <span data-lang>Начало</span></a></li>
-            <?php foreach($product['parents'] AS $n=>$parent) { ?>
+            <?php if(isset($product['parents'])) foreach($product['parents'] AS $n=>$parent) { ?>
                 <li><a href="<?=URL_BASE?>products/index.php<?=$parent['url_rewrite']?>"><?=$parent['title']?></a></li>
             <?php } ?>
             <?php if($product['data']['url_rewrite']) { ?>
