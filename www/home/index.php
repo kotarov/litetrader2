@@ -27,10 +27,6 @@
         
         <link rel="stylesheet" href="<?=$_ASSETS['uikit.dotnav.css']?>" />
         <script src="<?=$_ASSETS['uikit.slideset.js']?>"></script>
-
-        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/components/slideshow.min.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/components/slideshow.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/components/slideshow-fx.min.js"></script> -->
     </head>
     <body id="page-home"> 
             <?php include '../snipps/head.php'; ?>

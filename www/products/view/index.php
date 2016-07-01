@@ -147,51 +147,6 @@
            
         </div>
         
-        <script>
-        
-            /*** INIT */
-            <?php /*
-            url = decodeURIComponent(window.location).split("/");
-            window['id_product'] = parseInt(url[ url.length-2 ].split("-")[0], 10);
-            $.getJSON("<?=URL_BASE?>ajax.php?f=products/getProduct&id="+window['id_product']).done(function(ret){
-                $(".uk-breadcrumb").html('<li><a href="<?=URL_BASE?>products/"><i class="uk-icon-home"></i> Home</a></li>');
-                $.each(ret.parents, function(r,c){
-                    $(".uk-breadcrumb").append('<li><a href="<?=URL_BASE.URL_PRODUCTS;?>'+c.url_rewrite+'">'+c.title+'</a></li>');
-                });
-                if(ret.data.category)
-                    $(".uk-breadcrumb").append('<li class="uk-active"><a href="<?=URL_BASE.URL_PRODUCTS;?>'+ret.data.url_rewrite+'">'+ret.data.category+'</a></li>');
-                
-                var imgSRC = "<?=URL_BASE?>image.php/"+ret.data.id_image+"/"+ret.data.date_add+"/";
-                $("#main-image").attr("src",imgSRC);
-                
-                $("#product_name").html(ret.data.title);
-                $.each(ret.data, function(id,value){ $("#"+id).html(value) });
-                
-                $("#product-images").html("");
-                $.each(ret.images, function(k,v){
-                    var url = '<?=URL_BASE?>image.php/'+v.id+'/full/'+v.date_add;
-                    $("#product-images").append('<a href="#" data-image="'+url+'" data-uk-lightbox="{group:\'main-image\'}" class="uk-width-1-5"><img src="'+url+'"> </a>');
-                });
-                
-                if(ret.data.is_avaible == 1) {
-                    $(".buy-product").show();
-                    $(".cannot-buy-poduct").hide();
-                    
-                }else {
-                    $(".buy-product").hide();
-                    $(".cannot-buy-poduct").show();
-                }
-                
-                $("#main-image").elevateZoom({
-                    tint:true, tintColour:'black', tintOpacity:0.5,
-                    gallery:"product-images", 
-                });
-                
-            }); 
-            */ ?>
-        </script>
-        
-        
         <br>        
         <?php include '../../snipps/featured.php';?>        
         

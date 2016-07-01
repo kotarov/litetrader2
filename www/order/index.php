@@ -56,7 +56,7 @@
         </div>
         
         <br>
-        <form class="uk-form uk-form-horizontal cart-depends" action="postOrder">    
+        <form id="form-order" class="uk-form uk-form-horizontal cart-depends no-ajax" action="">    
             <h2><b class="uk-badge uk-badge-notification">2</b> <span data-lang>Адрес</span></h2>
             <hr>
             <div class="uk-grid">
@@ -104,7 +104,7 @@
             <br><br>
             <h2><b class="uk-badge uk-badge-notification">3</b> <span data-lang>Доставчик</span> <i class="uk-text-danger">*</i></h2>
             <hr>
-            <div class="uk-grid" name="choose-method">
+            <div class="uk-grid" name="delivery-method">
                 <div class="uk-width-medium-1-6"></div>
                 <div class="uk-width-medium-2-3">
                     
@@ -112,8 +112,8 @@
                     <div class="uk-form-row">
                         <div class="">
                             <label class="uk-text-large" style="cursor:pointer">
-                                <input type="radio" name="method" value="<?=$key?>" class="uk-margin-right"> 
-                                <?=$method['title'];?>
+                                <input type="radio" name="delivery_method" value="<?=$key?>" class="uk-margin-right"> 
+                                <?=$method['title'];?> <span class="uk-button "><?=number_format($method['price'],2)?> лв </span>
                             </label>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
             <br>
             <h2><b class="uk-badge uk-badge-notification">4</b> <span data-lang>Начин на плащане</span> <i class="uk-text-danger">*</i></h2>
             <hr>
-            <div class="uk-grid" name="choose-method">
+            <div class="uk-grid" name="payment-method">
                 <div class="uk-width-medium-1-6"></div>
                 <div class="uk-width-medium-2-3">
                     
@@ -137,7 +137,7 @@
                     <div class="uk-form-row">
                         <div class="">
                             <label class="uk-text-large" style="cursor:pointer">
-                                <input type="radio" name="method" value="<?=$key?>" class="uk-margin-right"> 
+                                <input type="radio" name="payment_method" value="<?=$key?>" class="uk-margin-right"> 
                                 <?=$method['title'];?>
                             </label>
                         </div>
@@ -154,7 +154,7 @@
                     <div class="uk-form-row">
                         <label class="uk-form-label"><span class="uk-description uk-float-rigt uk-text-warning">* <span data-lang>Всички полета са задължителни!</span></label>
                         <div class="uk-form-controls">
-                            <button class="uk-button uk-button-primary uk-button-large" id="submit-order">&nbsp;&nbsp;&nbsp; <span data-lang>Поръчай</span> &nbsp;&nbsp;&nbsp;</button>
+                            <button class="uk-button uk-button-primary uk-button-large" id="submit-order">&nbsp;&nbsp;&nbsp; <span data-lang>Потвърди</span> &nbsp;&nbsp;&nbsp;</button>
                         </div>
                     </div>
                 </div>
@@ -171,15 +171,30 @@
                 var $form = $(this);
                 $(".uk-form-danger", $form).removeClass('uk-form-danger');
                 
-                $.post("<?=URL_BASE?>ajax.php?f=customer/"+$(this).attr('action'), $(this).serialize()).done(function(ret){
+                $.post("<?=URL_BASE?>ajax.php?f=customer/postOrder", $(this).serialize()).done(function(ret){
                     $("body").find(".uk-alert").remove();
                     ret = $.parseJSON(ret);
                     if(ret.required){
                         $.each(ret.required, function(i,field){ $("[name='"+field+"']", $form).addClass("uk-form-danger"); });
                         UIkit.notify('<i class="uk-icon-asterisk"></i>'+" Fill down Required fields","danger");
+                        $('html, body').stop().animate({ scrollTop: ($(".uk-form-danger").offset().top - 0) }, 1000);
                     }else if(ret.error){
                         $("body").prepend('<div class="uk-alert uk-alert-danger"><b>'+ret.error+'</b></div>');
+                        $('html, body').stop().animate({ scrollTop: ($(".uk-alert-danger").offset().top - 0) }, 1000);
                     }else if(ret.success){
+                        $.each(ret.order,function(k,v){
+                            $("[name="+k+"]", "#modal-order-summary").html(v);
+                        });
+                        
+                        $("#order-summary-products tbody").html("");
+                        $.each(ret.cart,function(k,v){
+                            $("#order-summary-products tbody").append(
+                                '<tr><td>'+(parseInt(k,10)+1)+'</td><td>'+v.title+'</td><td class="uk-text-right">'+parseFloat(v.price).toFixed(2)+'</td>'
+                                +'<td class="uk-text-center">'+v.qty+'</td><th class="uk-text-right">'+(v.qty*v.price).toFixed(2)+'</th></tr>'
+                            );
+                        });
+                        UIkit.modal("#modal-order-summary").show();
+                       /*
                         $("#container").find("input").prop("disabled",true);
                         var m = '<h3 id="message-success" class="uk-alert uk-alert-success">Order submited successfull.</h3>';
                         
@@ -187,8 +202,8 @@
                         $("#submit-order").hide();
                         $("#shcart-badge").hide();
                         $("#shcart-price").hide();
-                        
-                        $('html, body').stop().animate({ scrollTop: ($("#message-success").offset().top - 70) }, 1000);
+                        */
+                        //$('html, body').stop().animate({ scrollTop: ($("#message-success").offset().top - 70) }, 1000);
                     }
                 });
             });
@@ -198,6 +213,47 @@
                 else{ $(".cart-depends").hide(); $(".cart-dependans-reverse").show();}
             });
         </script>
+        
+        
+        <div id="modal-order-summary" class="uk-modal">
+            <div class="uk-modal-dialog uk-modal-large"><a class="uk-modal-close uk-close"></a>
+                <div class="uk-modal-header"><h3 data-lang>Преглед на заявката</h3></div>
+                
+                
+                <div class="uk-panel uk-panel-box">
+                <table class="uk-table uk-table-striped1 uk-table-condensed">
+                    <tr><td class="">Имена</td><th class="uk-width-1-1" name="customer"></th></tr>
+                    <tr><td class="">Телефон</td><th name="phone"></th></tr>
+                    <tr><td class="">Email</td><th name="email"></th></tr>
+                    <tr><td class="">Адрес</td><th name="address"></th></tr>
+                </table>
+                </div>
+                
+                <div style="overflow-x:auto">
+                <table class="uk-table uk-table-hover uk-table-striped uk-table-condensed" id="order-summary-products">
+                    <thead><tr class="uk-contrast1 uk-block-secondary1">
+                        <th>№</th><th>Продукт</th><th class="uk-text-center">Цена</th><th class="uk-text-center">Кол.</th><th class="uk-text-center">Тотал</th>
+                    </tr></thead>
+                    <tbody style="border-top:1px solid #ccc;border-bottom:1px solid #ccc"></tbody>
+                    <tfoot><tr>
+                        <tr><td colspan="4" class="uk-text-right">Продукти</td><td class="uk-text-right" name="sum"></td></tr>
+                        <tr><td colspan="4" class="uk-text-right">Доставчик "<span class="uk-text-bold" name="delivery_title"></span>"</td><td class="uk-text-right" name="delivery_price"></td></tr>
+                        <tr><th colspan="4" class="uk-text-right">ВСИЧКО</th><th class="uk-text-right uk-text-large" name="total"></th></tr> 
+                    </tr></tfoot>
+                </table>
+                </div>
+                
+                <div class="uk-text-center uk-panel uk-panel-box">
+                    <span>Начин на плащане</span>: <span class="uk-text-bold" name="payment_method"></span>
+                </div>
+                
+                <div class="uk-modal-footer">
+                    <button class="uk-button uk-modal-close uk-button-large" data-lang>Обратно</button>
+                    <a href="<?=URL_BASE?>ajax.php?f=customer/confirmOrder" class="uk-button uk-button-danger uk-button-large uk-float-right checkout"><i class="uk-icon-check"></i> <span>Потвърди</span></a>
+                </div>
+            </div>
+        </div>
+        
     
         </div> <?php /** /container */?>
     
