@@ -20,9 +20,9 @@ CREATE TABLE orders (
     address text,
     price real,
     is_active integer,
-    id_payment_method text,
+    key_payment_method text,
     payment_method text,
-    id_delivery_method text,
+    key_delivery_method text,
     delivery_method text,
     code text
 );
