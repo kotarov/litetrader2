@@ -1,4 +1,5 @@
 <?php
+include LIB_DIR.'Tax.php';
 
 $ret = array();
 $post = filter_var_array($_POST,array(
@@ -116,6 +117,9 @@ if(!isset($ret['required'])){
 
         $status = array('id_order'=>$_REQUEST['id'],'id_status'=>$post['id_status']);
         include 'registerStatus.php';
+    
+        $tax = calculateTax($_REQUEST['id'], 'sales', 'www');
+        $sth = $dbh->query("UPDATE orders SET tax = '".$tax['title']."', tax_price=".$tax['price']." WHERE id = ".$_REQUEST['id']);
     }else{
         $ret['id'] = $_REQUEST['id'] = (int)$_POST['id'];
         $sets = array(); foreach(array_keys($post) AS $k=>$v){ $sets[] = $v.'=:'.$v; }
@@ -123,7 +127,6 @@ if(!isset($ret['required'])){
         $sth = $dbh->prepare("UPDATE orders SET ".implode(",", $sets)." WHERE id = ".$ret['id'] );
         $sth->execute($post);
 
-        include LIB_DIR.'Tax.php';
         $tax = calculateTax((isset($_POST['id'])?(int)$_POST['id']:0), 'sales', 'www');
         $sth = $dbh->query("UPDATE orders SET tax = '".$tax['title']."', tax_price=".$tax['price']." WHERE id = ".$ret['id']);
     }
