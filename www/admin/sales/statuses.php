@@ -13,6 +13,8 @@
         <link  href="<?=$_ASSETS['uikit.css']?>" rel="stylesheet"/>
         <script src="<?=$_ASSETS['uikit.js']?>"></script>
         <script src="<?=$_ASSETS['uikit.offcanvas.js']?>"></script>
+        <link href="<?=$_ASSETS['uikit.form.css']?>" rel="stylesheet" />
+        <script src="<?=$_ASSETS['uikit.form.js']?>"></script>
         
         <link  href="<?=$_ASSETS['uikit.notify.css']?>" rel="stylesheet" />
         <script src="<?=$_ASSETS['uikit.notify.js']?>"></script>
@@ -105,9 +107,7 @@
                     </div> 
                     <div class="uk-form-row">
                         <div class="uk-form-controls">
-                            <label class="uk-form-label">
-                            <input type="checkbox" type="text" name="is_closed">
-                            <span data-lang>This is close status</span> </label>
+                            <label><input type="checkbox" type="text" name="is_closed"> <span data-lang>This is close status</span> </label>
                         </div>
                     </div> 
                     <div class="uk-modal-footer">
@@ -162,7 +162,7 @@
                     </div> 
                     <div class="uk-form-row">
                         <div class="uk-form-controls">
-                            <label class="uk-form-label"><input type="checkbox" type="text" name="is_closed"><span data-lang>This is close status</span></label>
+                            <label><input type="checkbox" type="text" name="is_closed"><span data-lang>This is close status</span></label>
                         </div>
                     </div> 
                     <div class="uk-modal-footer">
