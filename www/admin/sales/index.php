@@ -239,30 +239,6 @@
                             </div>
                         </div>
                         
-                        <div class="uk-form-row">
-                            <label class="uk-form-label" data-lang>Delivery</label>
-                            <div class="uk-form-controls uk-grid">
-                                <select type="text"  class="uk-width-small-1-1" data-lang 
-                                    name="key_delivery_method"
-                                    title="Delivery"
-                                    data-get="<?=URL_BASE?>ajax.php?f=sales/deliveries/getList"  
-                                >
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="uk-form-row">
-                            <label class="uk-form-label" data-lang>Payment</label>
-                            <div class="uk-form-controls uk-grid">
-                                <select type="text"  class="uk-width-small-1-1" data-lang 
-                                    name="key_payment_method"
-                                    title="Payment"
-                                    data-get="<?=URL_BASE?>ajax.php?f=sales/payments/getList"   
-                                >
-                                </select>
-                            </div>
-                        </div>
-                       
                        <hr>
                         <?php /***/ ?>
                         <div class="uk-form-row">
