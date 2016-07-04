@@ -1,6 +1,6 @@
 <?php
 session_start();
-//print_r($_SESSION);exit;
+
 $ret = array();
 $post = filter_var_array($_POST,array(
     'address'=>FILTER_SANITIZE_STRING,
@@ -21,10 +21,10 @@ if(!$post['delivery_method']) $ret['required'][] = 'delivery-method';
 if(!$post['payment_method']) $ret['required'][] = 'payment-method';
 if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])) $ret['required'][] = 'cart-container';
 
-$deliveries = parse_ini_file(__DIR__.'/../../../ini/www/delivery_methods.ini',true);
+$deliveries = parse_ini_file(INI_DIR.'www/delivery_methods.ini',true);
 if(!isset($deliveries[$post['delivery_method']]) ) $ret['required'][] = 'delivery-method';
 
-$payments = parse_ini_file(__DIR__.'/../../../ini/www/payment_methods.ini',true);
+$payments = parse_ini_file(INI_DIR.'www/payment_methods.ini',true);
 if(!isset($payments[$post['payment_method']]) ) $ret['required'][] = 'payment-method';
 
 if(!isset($ret['required'])){

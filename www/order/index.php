@@ -171,16 +171,16 @@
                 var $form = $(this);
                 $(".uk-form-danger", $form).removeClass('uk-form-danger');
                 
-                $.post("<?=URL_BASE?>ajax.php?f=customer/postOrder", $(this).serialize()).done(function(ret){
+                $.post("<?=URL_BASE?>ajax.php?f=orders/postOrder", $(this).serialize()).done(function(ret){
                     $("body").find(".uk-alert").remove();
                     ret = $.parseJSON(ret);
                     if(ret.required){
                         $.each(ret.required, function(i,field){ $("[name='"+field+"']", $form).addClass("uk-form-danger"); });
                         UIkit.notify('<i class="uk-icon-asterisk"></i>'+" Fill down Required fields","danger");
-                        $('html, body').stop().animate({ scrollTop: ($(".uk-form-danger").offset().top - 0) }, 1000);
+                        $('html, body').stop().animate({ scrollTop: ($(".uk-form-danger").offset().top - 30) }, 1000);
                     }else if(ret.error){
                         $("body").prepend('<div class="uk-alert uk-alert-danger"><b>'+ret.error+'</b></div>');
-                        $('html, body').stop().animate({ scrollTop: ($(".uk-alert-danger").offset().top - 0) }, 1000);
+                        $('html, body').stop().animate({ scrollTop: ($(".uk-alert-danger").offset().top - 30) }, 1000);
                     }else if(ret.success){
                         $.each(ret.order,function(k,v){
                             $("[name="+k+"]", "#modal-order-summary").html(v);
@@ -194,16 +194,6 @@
                             );
                         });
                         UIkit.modal("#modal-order-summary").show();
-                       /*
-                        $("#container").find("input").prop("disabled",true);
-                        var m = '<h3 id="message-success" class="uk-alert uk-alert-success">Order submited successfull.</h3>';
-                        
-                        $("#container").prepend(m);
-                        $("#submit-order").hide();
-                        $("#shcart-badge").hide();
-                        $("#shcart-price").hide();
-                        */
-                        //$('html, body').stop().animate({ scrollTop: ($("#message-success").offset().top - 70) }, 1000);
                     }
                 });
             });
@@ -249,7 +239,7 @@
                 
                 <div class="uk-modal-footer">
                     <button class="uk-button uk-modal-close uk-button-large" data-lang>Обратно</button>
-                    <a href="<?=URL_BASE?>ajax.php?f=customer/confirmOrder" class="uk-button uk-button-danger uk-button-large uk-float-right checkout"><i class="uk-icon-check"></i> <span>Потвърди</span></a>
+                    <a href="<?=URL_BASE?>order/view" class="uk-button uk-button-danger uk-button-large uk-float-right checkout"><i class="uk-icon-check"></i> <span>Приключи</span></a>
                 </div>
             </div>
         </div>

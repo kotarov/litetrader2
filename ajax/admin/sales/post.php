@@ -11,7 +11,10 @@ $post = filter_var_array($_POST,array(
     'phone'=>FILTER_SANITIZE_STRING,
     'country'=>FILTER_SANITIZE_STRING,
     'city'=>FILTER_SANITIZE_STRING,
-    'address'=>FILTER_SANITIZE_STRING
+    'address'=>FILTER_SANITIZE_STRING,
+    'key_payment_method'=>FILTER_SANITIZE_STRING,
+    'key_delivery_method'=>FILTER_SANITIZE_STRING,
+    'key_tax'=>FILTER_SANITIZE_STRING,
 ));
 if(!$post['partner']) $ret['required'][] = 'partner';
 if(!$post['email'] && !$post['phone']) { $ret['required'][] = 'email'; $ret['required'][] = 'phone'; }
@@ -27,6 +30,18 @@ if( $post['company'] ){
 if(!isset($ret['required'])){
     if($post['id_company'] < 0) $post['id_company'] = 0; // On Edit -> if HOME address id_company = -1
 
+    $payments = parse_ini_file(INI_DIR.'www/payment_methods.ini',true);
+    $post['payment_method'] = isset($payments[$post['key_payment_method']]) ? $payments[$post['key_payment_method']]['title'] : '';
+    
+    $deliveries = parse_ini_file(INI_DIR.'www/delivery_methods.ini',true);
+    if( isset($deliveries[$post['key_delivery_method']]) ){
+        $post['delivery_method'] =  $deliveries[$post['key_delivery_method']]['title'];
+        $post['delivery_price'] = $deliveries[$post['key_delivery_method']]['price'];
+    }else{
+        $post['delivery_method'] =  '';
+        $post['delivery_price'] = '';
+    }
+    
     $dbh = new PDO('sqlite:'.DB_DIR.'customers');
     $NO_RETURN = true;
     
@@ -107,6 +122,10 @@ if(!isset($ret['required'])){
         
         $sth = $dbh->prepare("UPDATE orders SET ".implode(",", $sets)." WHERE id = ".$ret['id'] );
         $sth->execute($post);
+
+        include LIB_DIR.'Tax.php';
+        $tax = calculateTax((isset($_POST['id'])?(int)$_POST['id']:0), 'sales', 'www');
+        $sth = $dbh->query("UPDATE orders SET tax = '".$tax['title']."', tax_price=".$tax['price']." WHERE id = ".$ret['id']);
     }
     
     

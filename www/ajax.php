@@ -1,7 +1,8 @@
 <?php
+define('DIR_BASE',realpath('../').'/');
 define( 'DB_DIR', realpath('../sqlite/').'/' );
 define('LIB_DIR', realpath('../lib/'   ).'/' );
-define('INI_DIR', realpath('../'   ).'/' );
+define('INI_DIR', realpath('../ini/'   ).'/' );
 
 if( isset($_GET['f']) 
     && file_exists('../ajax/www/'.$_GET['f'].'.php') 

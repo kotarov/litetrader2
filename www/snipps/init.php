@@ -1,7 +1,7 @@
 <?php
-    define('DIR_BASE', realpath(__DIR__.'/../../').'/');
-    define( 'DB_DIR', realpath(__DIR__.'/../../sqlite/').'/' );
-    define('LIB_DIR', realpath(__DIR__.'/../../lib/'   ).'/' );
+    define('DIR_BASE',realpath(__DIR__.'/../../'        ).'/' );
+    define( 'DB_DIR', realpath(__DIR__.'/../../sqlite/' ).'/' );
+    define('LIB_DIR', realpath(__DIR__.'/../../lib/'    ).'/' );
     define('INI_DIR', realpath(__DIR__.'/../../ini/'    ).'/' );
 
 

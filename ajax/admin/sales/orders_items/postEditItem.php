@@ -1,4 +1,6 @@
 <?php
+include_once LIB_DIR.'Tax.php';
+
 $ret = array();
 $post = filter_var_array($_POST,array(
     'id'=> FILTER_VALIDATE_INT,
@@ -29,6 +31,9 @@ if(!isset($ret['required'])){
     $sth = $dbh->prepare("UPDATE orders_items SET ".implode(",", $sets)." WHERE id=:id AND id_order = :id_order AND id_item = :id_item");
     $sth->execute($post);
 
+    // update Tax
+    $tax = calculateTax($post['id_order'], 'sales', 'www');
+    $sth = $dbh->query("UPDATE orders SET tax = '".$tax['title']."', tax_price=".$tax['price']." WHERE id = ".$post['id_order']);
     
     $_REQUEST['id'] = $post['id_order'];
     include '../getList.php';

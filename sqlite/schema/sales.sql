@@ -24,7 +24,11 @@ CREATE TABLE orders (
     payment_method text,
     key_delivery_method text,
     delivery_method text,
-    code text
+    delivery_price real,
+    code text,
+    key_tax text,
+    tax text,
+    tax_price real
 );
 
 

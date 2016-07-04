@@ -50,7 +50,7 @@
             data-trigger-add="order-added"
             data-trigger-update="order-updated"
             data-trigger-delete="order-deleted"
-        ><tfoot><tr> <th></th> <th></th> <th></th> <th></th> <td colspan="2" class="uk-text-right"><span data-lag>Current page SUM</span>:</td> <th class="sum"></th>  </tr></tfoot></table>
+        ><tfoot><tr> <th></th> <th></th> <th></th> <th></th> <td colspan="2" class="uk-text-right"><span data-lag>Current page SUM</span>:</td> <th class="sum uk-text-nowrap"></th> <th class="sum_tax"></th> <th class="sum_delivery"></th> </tr></tfoot></table>
 
         <script> 
             $("#orders").DataTable({
@@ -71,15 +71,26 @@
             		{ data:"partner", title:(lang["Customers"]||"Customers"), render:function(d,t,r){return (r.id_partner>0?d:d+' <small class="uk-badge uk-badge-warning">Unregistered</small> ')} },
             		{ data:"company", title:(lang["Company"]||"Company"),render:function(d,t,r){
     var un = r.id_company > 0 ? '' : ' <small class="uk-badge uk-badge-warning">Unregistered</small> ';
-    return (d?d+un:'<i class="uk-icon-home"></i> ');
+    return (d?d+un:'<i class="uk-icon-home"></i> Home');
 }},
             		{ data:"address", title:(lang["Address"]||"Address"), render:function(d,t,r){ 
             		    return r.city + ', ' + r.country + ',<br> ' + r.address;
             		}  },
+            		
             		{ data:"total", title:(lang["Total"]||"Total"),"class":"uk-text-right sum actions", render:function(d,t,r){
-            		    return '<a href="#modal-cart-order" data-uk-modal data-get="id='+r.id+'" data-populate=\'{"id":"'+r.id+'"}\' style="color:inherit">'+(d?d:'<i class="uk-icon-cart-arrow-down uk-text-success"></i>')+ '</a>&nbsp;&nbsp;';
+            		    return '<a href="#modal-cart-order" data-uk-modal data-get="id='+r.id+'" data-populate=\'{"id":"'+r.id+'"}\'>'+(d?parseFloat(d).toFixed(2):'<i class="uk-icon-cart-plus uk-text-success"></i>')+ '</a>&nbsp;&nbsp;';
             		} },
+            		{ data: "tax_price", "class":"uk-text-center sum_tax", title: (lang["Tax"]||"Tax"), render:function(d,t,r){
+            		    return parseFloat(d).toFixed(2)+' <br><sup>'+r.tax+'</sup>';
+            		}},
+            		{ data: "delivery_price", "class":"uk-text-center sum_delivery", title:(lang["Delivery"]||"Delivery"),render:function(d,t,r){
+            		    if(!d) d=0;
+            		    return parseFloat(d).toFixed(2)+' <br><sup>'+r.delivery_method+'</sup>';
+            		}},
+            		
+            		
             		{ data: "invoice", "class":"actions", title:(lang["Invoice"]||"Invoice")},
+            		
             	    { data:"actions", title:"", width:"1em", orderable:false, searchable:false, "class":"uk-text-center uk-text-middle uk-text-nowrap actions",
             		    render: function(d,t,r){ return ''
             			+'<a href="#modal-edit-order" data-uk-modal class="uk-icon-edit uk-icon-justify" data-get="id='+d+'" data-populate=\'{"id":"'+d+'","partner-photo":"../customers/image.php/'+r.id_partner+'","company-logo":"../customers/companies/image.php/'+r.id_company+'"}\' title="Edit"></a>'
@@ -90,8 +101,15 @@
             		init: function(dt, node, config){ node.attr("data-uk-modal",true).attr("href","#modal-new-order"); }
             	}],
                 fnDrawCallback:function(settings){ $("tbody",this[0]).unhighlight().highlight( this.api().search().split(" ") ); 
-                    var api = this.api(); $( api.table().footer() ).find(".sum").html(
-                        parseFloat(api.column( ".sum", {page:'current'} ).data().sum()).toFixed(2)
+                    var api = this.api(); 
+                    $( api.table().footer() ).find(".sum").html(
+                        parseFloat(api.column( ".sum", {page:'current'} ).data().sum()).toFixed(2)+' лв'
+                    );
+                    $( api.table().footer() ).find(".sum_tax").html(
+                        parseFloat(api.column( ".sum_tax", {page:'current'} ).data().sum()).toFixed(2)
+                    );
+                     $( api.table().footer() ).find(".sum_delivery").html(
+                        parseFloat(api.column( ".sum_delivery", {page:'current'} ).data().sum()).toFixed(2)
                     );
                 }
             });    		
@@ -147,7 +165,9 @@
                                 data-depends-on="#modal-new-order [name=id_company],#modal-new-order [name=id_partner]"
                                 data-get="<?=URL_BASE?>ajax.php?f=sales/getPartnerData&field=partner" 
                             ></div>
-                            
+                            <div class="uk-form-controls">
+                                    <label><input type="checkbox" class="toggle-color" name="register-new-partner">  <span data-lang>Create new</span> <span data-lang>Customers</span></label>
+                            </div>
                         </div>
                          
                         
@@ -167,7 +187,9 @@
                                     data-get="<?=URL_BASE?>ajax.php?f=sales/getPartnerData&field=ein" 
                                 >
                             </div>
-                            
+                            <div class="uk-form-controls">
+                                    <label><input type="checkbox" class="toggle-color" name="register-new-company"> <span data-lang>Crete new</span> <span data-lang>company</span>  </label>
+                            </div>
                         </div>
                         <br>
                         
@@ -216,6 +238,71 @@
                                 >
                             </div>
                         </div>
+                        
+                        <div class="uk-form-row">
+                            <label class="uk-form-label" data-lang>Delivery</label>
+                            <div class="uk-form-controls uk-grid">
+                                <select type="text"  class="uk-width-small-1-1" data-lang 
+                                    name="key_delivery_method"
+                                    title="Delivery"
+                                    data-get="<?=URL_BASE?>ajax.php?f=sales/deliveries/getList"  
+                                >
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="uk-form-row">
+                            <label class="uk-form-label" data-lang>Payment</label>
+                            <div class="uk-form-controls uk-grid">
+                                <select type="text"  class="uk-width-small-1-1" data-lang 
+                                    name="key_payment_method"
+                                    title="Payment"
+                                    data-get="<?=URL_BASE?>ajax.php?f=sales/payments/getList"   
+                                >
+                                </select>
+                            </div>
+                        </div>
+                       
+                       <hr>
+                        <?php /***/ ?>
+                        <div class="uk-form-row">
+                            <label class="uk-form-label" data-lang>Tax</label>
+                            <div class="uk-form-controls uk-grid">
+                                <select type="text"  class="uk-width-small-1-1" data-lang 
+                                    name="key_tax"
+                                    title="Tax"
+                                    data-get="<?=URL_BASE?>ajax.php?f=sales/taxes/getList"   
+                                >
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="uk-form-row">
+                            <label class="uk-form-label" data-lang>Delivery</label>
+                            <div class="uk-form-controls uk-grid">
+                                <select type="text"  class="uk-width-small-1-1" data-lang 
+                                    name="key_delivery_method"
+                                    title="Delivery"
+                                    data-get="<?=URL_BASE?>ajax.php?f=sales/deliveries/getList"  
+                                >
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="uk-form-row">
+                            <label class="uk-form-label" data-lang>Payment</label>
+                            <div class="uk-form-controls uk-grid">
+                                <select type="text"  class="uk-width-small-1-1" data-lang 
+                                    name="key_payment_method"
+                                    title="Payment"
+                                    data-get="<?=URL_BASE?>ajax.php?f=sales/payments/getList"   
+                                >
+                                </select>
+                            </div>
+                        </div>
+                         
+                        
+                    <?php /*    
                     <div class="uk-form-row">
                         <label class="uk-form-label" datal-lang>Create new</label>
                         <div class="uk-form-controls">
@@ -225,6 +312,7 @@
                                 <label><input type="checkbox" class="toggle-color" name="register-new-company"> <span data-lang>Company</span> </label>
                         </div>
                     </div>
+                    */?>
                     <div class="uk-modal-footer uk-margin-top">
                         <button class="uk-button uk-button-primary"><span data-lang>Post</span></button>
                         <button class="uk-button uk-modal-close " data-lang>Cancel</button>
@@ -290,8 +378,10 @@
                                         ><i class="uk-icon-pencil"></i> <span data-lang>Fill down</span></button>
                             </div>
                     </div>
-                        
+                       
+                       
                     <hr>
+                       
                      <!-- ********* -->
                         <div class="uk-form-row">
                             <label class="uk-form-label"><span data-lang>Name</span> <span class="uk-text-danger">*</span></label>
@@ -300,8 +390,14 @@
                                 data-depends-on="#modal-edit-order [name=id_company_change],#modal-edit-order [name=id_partner]" 
                                 data-get="<?=URL_BASE?>ajax.php?f=sales/getPartnerData&field=partner" 
                             ></div>
-                            
-                        </div>
+                        
+                            <div class="uk-form-controls">
+                                    <label><input type="checkbox" class="toggle-color" name="register-new-partner">  <span data-lang>Create new</span> <span data-lang>Customers</span></label>
+                            </div>
+                        </div>                        
+                        
+                        
+                        
                         <div class="uk-form-row uk-margin-top">
                             <label class="uk-form-label" data-lang>Company</label>
                             <div class="uk-form-controls uk-grid">
@@ -319,6 +415,10 @@
                                 >
                             </div>
                             
+                        
+                            <div class="uk-form-controls">
+                                    <label><input type="checkbox" class="toggle-color" name="register-new-company"> <span data-lang>Crete new</span> <span data-lang>company</span>  </label>
+                            </div>
                         </div>
                         <br>
                         
@@ -367,15 +467,51 @@
                                 >
                             </div>
                         </div>
-                    <div class="uk-form-row">
-                        <label class="uk-form-label" data-lang>Create new</label>
-                        <div class="uk-form-controls">
-                                <label><input type="checkbox" class="toggle-color" name="register-new-partner"> <span data-lang>Customers</span> </label>
+                        
+                    
+                         
+                        
+
+                        
+                        <hr>
+                        <?php /***/ ?>
+                        <div class="uk-form-row">
+                            <label class="uk-form-label" data-lang>Tax</label>
+                            <div class="uk-form-controls uk-grid">
+                                <select type="text"  class="uk-width-small-1-1" data-lang 
+                                    name="key_tax"
+                                    title="Tax"
+                                    data-get="<?=URL_BASE?>ajax.php?f=sales/taxes/getList"   
+                                >
+                                </select>
+                            </div>
                         </div>
-                        <div class="uk-form-controls">
-                                <label><input type="checkbox" class="toggle-color" name="register-new-company"> <span data-lang>Company</span> </label>
+                        
+                        <div class="uk-form-row">
+                            <label class="uk-form-label" data-lang>Delivery</label>
+                            <div class="uk-form-controls uk-grid">
+                                <select type="text"  class="uk-width-small-1-1" data-lang 
+                                    name="key_delivery_method"
+                                    title="Delivery"
+                                    data-get="<?=URL_BASE?>ajax.php?f=sales/deliveries/getList"  
+                                >
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                        
+                        <div class="uk-form-row">
+                            <label class="uk-form-label" data-lang>Payment</label>
+                            <div class="uk-form-controls uk-grid">
+                                <select type="text"  class="uk-width-small-1-1" data-lang 
+                                    name="key_payment_method"
+                                    title="Payment"
+                                    data-get="<?=URL_BASE?>ajax.php?f=sales/payments/getList"   
+                                >
+                                </select>
+                            </div>
+                        </div>
+                        
+                        
                     
                     <div class="uk-modal-footer uk-margin-top">
                         <button class="uk-button uk-button-primary"><span data-lang>Save</span></button>
