@@ -10,7 +10,8 @@ $("form").not(".no-ajax").on("submit",function(e){
         ret = $.parseJSON(ret);
         if(ret.required){
             $.each(ret.required, function(i,field){ $("[name='"+field+"']", $form).addClass("uk-form-danger"); });
-            $form.prepend('<div class="uk-alert uk-alert-danger"><b>Fill down Required fields</b></div>');
+            var msg = 'Моля, попълнете Задължителните полета';
+            $form.prepend('<div class="uk-alert uk-alert-danger"><b>'+msg+'</b></div>');
         }else if(ret.error){
             $form.prepend('<div class="uk-alert uk-alert-danger"><b>'+ret.error+'</b></div>');
         }else if(ret.success){

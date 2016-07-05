@@ -92,10 +92,17 @@
                                 $opts .= '</optgroup>';
                             }
                         ?>
-                        <div class="uk-form-controls"> <select name="city" style="width:100%" class="uk-width-1-1"><?=$opts?></select></div>
+                        <div class="uk-form-controls"> 
+                            <select name="city" style="width:100%" class="uk-width-1-1">
+                                <optgroup>
+                                    <option value="0" data-region="">-</option>
+                                </optgroup>
+                                <?=$opts?>
+                            </select>
+                        </div>
                         <script> $("#form-order [name=city]").select2({templateSelection:function(data){
                             var reg = data.element.attributes['data-region'].value;
-                            return data.text + ' (обл. '+reg+')';
+                            return data.text + (reg ? ' (обл. '+reg+')' : '');
                         }}); </script>
                     </div>
                 </div>
@@ -106,7 +113,7 @@
                         $("#address [name=customer]").val(d.name+' '+d.family);
                         $("#address [name=phone]").val(d.phone);
                         $("#address [name=address]").val(d.address);
-                        $("#address [name=city]").val(d.city);
+                        $("#address [name=city]").val(d.city).trigger("change");
                         $("#address [name=email]").val(d.email);
                     }
                 });
@@ -119,25 +126,34 @@
             <hr>
             <div class="uk-grid" name="delivery-method">
                 <div class="uk-width-medium-1-6"></div>
-                <div class="uk-width-medium-2-3">
-                    
-                    <?php foreach($delivery_methods as $key=>$method) { ?>
-                    <div class="uk-form-row">
-                        <div class="">
-                            <label class="uk-text-large" style="cursor:pointer">
-                                <input type="radio" name="delivery_method" value="<?=$key?>" class="uk-margin-right"> 
-                                <?=$method['title'];?> <span class="uk-button "><?=number_format((float)$method['price'],2)?> лв </span>
-                            </label>
-                        </div>
-                    </div>
-                    <?php } ?>
-    
+                <div class="uk-width-medium-2-3" id="list_delivery_methods">
+                    <div class="uk-text-muted"> Изберете град </div>
                 </div>
             </div>
+            <script>
+                $("#address [name=city]").on("change",function(e){
+                    $.getJSON("<?=URL_BASE?>ajax.php?f=getDeliveryMethods&city="+$(this).val() ).done(function(ret){
+                        var l = "";
+                        $.each(ret.data,function(k,v){
+                            var price = parseFloat(v['price']).toFixed(2,10);
+                            l += '<div class="uk-form-row">'
+                                    +'<div class="">'
+                                        +'<label class="uk-text-large" style="cursor:pointer">'
+                                            +'<input type="radio" name="delivery_method" value="'+k+'" class="uk-margin-right">'
+                                            +'<span class="uk-button ">'+(isNaN(price)?'0.00':price)+' лв </span> '
+                                            +v['title']
+                                        +'</label>'
+                                    +'</div>'
+                                +'</div>';
+                        });
+                        $("#list_delivery_methods").html(l);
+                    });
+                });
+            </script>
     
     
+
             <?php $payment_methods = parse_ini_file(INI_DIR.'www/payment_methods.ini',true); ?>
-            
             <br>
             <br>
             <h2><b class="uk-badge uk-badge-notification">4</b> <span data-lang>Начин на плащане</span> <i class="uk-text-danger">*</i></h2>
@@ -189,7 +205,7 @@
                     ret = $.parseJSON(ret);
                     if(ret.required){
                         $.each(ret.required, function(i,field){ $("[name='"+field+"']", $form).addClass("uk-form-danger"); });
-                        UIkit.notify('<i class="uk-icon-asterisk"></i>'+" Fill down Required fields","danger");
+                        UIkit.notify('<i class="uk-icon-asterisk"></i>'+" Попълнете Задължителните полета","danger");
                         $('html, body').stop().animate({ scrollTop: ($(".uk-form-danger").offset().top - 30) }, 1000);
                     }else if(ret.error){
                         $("body").prepend('<div class="uk-alert uk-alert-danger"><b>'+ret.error+'</b></div>');
