@@ -142,11 +142,25 @@
                             <input class="uk-width-small-1-3" type="text" placeholder="(Twitter)" title="Twitter" name="twitter">
                         </div>
                     </div>
-                    <div class="uk-form-row">
+                    <?php if(!isset($cities_opts)){
+    $cities_opts = '';
+    foreach(parse_ini_file(INI_DIR.'cities-bg.ini',true) AS $region=>$cc){
+        $cities_opts .= '<optgroup label="'.$region.'">';
+        foreach($cc AS $city=>$r) $cities_opts .= '<option value="'.$city.'"data-region="'.$region.'">'.$city.'</option>';
+        $cities_opts .= '</optgroup>';
+    } 
+}?>
+<div class="uk-form-row">
                         <label class="uk-form-label" data-lang>Address</label>
                         <div class="uk-form-controls uk-grid">
-                            <input class="uk-width-small-1-2" type="text" placeholder="Country" title="Country" name="country">
-                            <input class="uk-width-small-1-2" type="text" placeholder="City" title="City" name="city">
+                            <input class="uk-width-small-1-2" type="text" placeholder="Country" title="Country" name="country" value="България">
+                            <span class="uk-width-small-1-2" style="padding:0">
+                                <select name="city" style="width:100%" class="select2" data-lang
+                                    title="City"
+                                ><?=$cities_opts?></select>
+                            </span>
+                            
+                            <?php /*<input class="uk-width-small-1-2" type="text" placeholder="City" title="City" name="city"> */?>
                             <input class="uk-width-small-1-1" type="text" placeholder="Address" title="Address" name="address">
                         </div>
                     </div>
@@ -238,11 +252,25 @@
                             <input class="uk-width-small-1-3" type="text" placeholder="(Twitter)" title="Twitter" name="twitter">
                         </div>
                     </div>
-                    <div class="uk-form-row">
+                    <?php if(!isset($cities_opts)){
+    $cities_opts = '';
+    foreach(parse_ini_file(INI_DIR.'cities-bg.ini',true) AS $region=>$cc){
+        $cities_opts .= '<optgroup label="'.$region.'">';
+        foreach($cc AS $city=>$r) $cities_opts .= '<option value="'.$city.'"data-region="'.$region.'">'.$city.'</option>';
+        $cities_opts .= '</optgroup>';
+    } 
+}?>
+<div class="uk-form-row">
                         <label class="uk-form-label" data-lang>Address</label>
                         <div class="uk-form-controls uk-grid">
-                            <input class="uk-width-small-1-2" type="text" placeholder="Country" title="Country" name="country">
-                            <input class="uk-width-small-1-2" type="text" placeholder="City" title="City" name="city">
+                            <input class="uk-width-small-1-2" type="text" placeholder="Country" title="Country" name="country" value="България">
+                            <span class="uk-width-small-1-2" style="padding:0">
+                                <select name="city" style="width:100%" class="select2" data-lang
+                                    title="City"
+                                ><?=$cities_opts?></select>
+                            </span>
+                            
+                            <?php /*<input class="uk-width-small-1-2" type="text" placeholder="City" title="City" name="city"> */?>
                             <input class="uk-width-small-1-1" type="text" placeholder="Address" title="Address" name="address">
                         </div>
                     </div>

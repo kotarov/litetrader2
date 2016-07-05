@@ -1,4 +1,12 @@
 <?php include '../../snipps/init.php'; ?>
+<?php 
+    $cities_opts = '';
+    foreach(parse_ini_file(INI_DIR.'cities-bg.ini',true) AS $region=>$cc){
+        $cities_opts .= '<optgroup label="'.$region.'">';
+        foreach($cc AS $city=>$r) $cities_opts .= '<option value="'.$city.'"data-region="'.$region.'">'.$city.'</option>';
+        $cities_opts .= '</optgroup>';
+    } 
+?>
 <!DOCTYPE html>
 <html class="uk-height-1-1">
     <head>
@@ -122,8 +130,13 @@
                     <div class="uk-form-row">
                         <label class="uk-form-label" data-lang>Address</label>
                         <div class="uk-form-controls uk-grid">
-                            <input class="uk-width-small-1-2" placeholder="Country" title="Country" type="text" name="country" data-lang>
-                            <input class="uk-width-small-1-2" placeholder="City" title="City" type="text" name="city" data-lang>                            
+                            <input class="uk-width-small-1-2" placeholder="Country" title="Country" type="text" name="country" data-lang value="България">
+                            <span class="uk-width-small-1-2" style="padding:0">
+                                <select name="city" style="width:100%" class="select2" data-lang
+                                    title="City"
+                                ><?=$cities_opts?></select>
+                            </span>
+                            <?php /*<input class="uk-width-small-1-2" placeholder="City" title="City" type="text" name="city" data-lang>*/?>                        
                             <input type="text" class="uk-width-1-1" placeholder="Address" title="Address" name="address" data-lang>
                         </div>
                     </div>
@@ -178,7 +191,12 @@
                         <label class="uk-form-label" data-lang>Address</label>
                         <div class="uk-form-controls uk-grid">
                             <input class="uk-width-small-1-2" placeholder="Country" title="Country" type="text" name="country">
-                            <input class="uk-width-small-1-2" placeholder="City" title="City" type="text" name="city">                            
+                            <span class="uk-width-small-1-2" style="padding:0">
+                                <select name="city" style="width:100%" class="select2" data-lang
+                                    title="City"
+                                ><?=$cities_opts?></select>
+                            </span>
+                            <?php /*<input class="uk-width-small-1-2" placeholder="City" title="City" type="text" name="city"> */?>                         
                             <input type="text" class="uk-width-1-1" placeholder="Address" title="Address" name="address">
                         </div>
                     </div>

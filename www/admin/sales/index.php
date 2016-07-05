@@ -1,4 +1,11 @@
 <?php include '../snipps/init.php'; ?>
+<?php $cities_opts = '';
+    foreach(parse_ini_file(INI_DIR.'cities-bg.ini',true) AS $region=>$cc){
+        $cities_opts .= '<optgroup label="'.$region.'">';
+        foreach($cc AS $city=>$r) $cities_opts .= '<option value="'.$city.'"data-region="'.$region.'">'.$city.'</option>';
+        $cities_opts .= '</optgroup>';
+    }
+?>
 <!DOCTYPE html>
 <html class="uk-height-1-1">
 
@@ -216,19 +223,24 @@
                         <div class="uk-form-row">
                             <label class="uk-form-label" data-lang>Address</label>
                             <div class="uk-form-controls uk-grid">
-                                <input type="text"  class="uk-width-small-1-2" data-lang 
+                                <input type="text" class="uk-width-small-1-2" data-lang 
                                     name="country"
                                     placeholder="Country" title="Country"
-                                    data-depends-on="#modal-new-order [name=id_company],#modal-new-order [name=id_partner]"
-                                    data-get="<?=URL_BASE?>ajax.php?f=sales/getPartnerData&field=country"  
+                                    data-depends-on1="#modal-new-order [name=id_company],#modal-new-order [name=id_partner]"
+                                    data-get1="<?=URL_BASE?>ajax.php?f=sales/getPartnerData&field=country"
+                                    readonly="readonly"
+                                    value="България"
                                 >
                             
-                                <input type="text" class="uk-width-small-1-2" data-lang 
-                                    name="city"
-                                    placeholder="City" title="City"
-                                    data-depends-on="#modal-new-order [name=id_company],#modal-new-order [name=id_partner]"
+                                
+                                <span class="uk-width-small-1-2" style="padding:0">
+                                <select name="city" style="width:100%" class="select2" data-lang
+                                    title="City"
+                                    data-depends-on="#modal-edit-order [name=id_company_change],#modal-edit-order [name=id_company],#modal-edit-order [name=id_partner]"
                                     data-get="<?=URL_BASE?>ajax.php?f=sales/getPartnerData&field=city" 
-                                >
+                                ><?=$cities_opts?></select>
+                                </span>
+                                
                         
                                 <input class="uk-width-small-1-1" data-lang 
                                     name="address"
@@ -277,18 +289,6 @@
                             </div>
                         </div>
                          
-                        
-                    <?php /*    
-                    <div class="uk-form-row">
-                        <label class="uk-form-label" datal-lang>Create new</label>
-                        <div class="uk-form-controls">
-                                <label><input type="checkbox" class="toggle-color" name="register-new-partner"> <span data-lang>Customers</span> </label>
-                        </div>
-                        <div class="uk-form-controls">
-                                <label><input type="checkbox" class="toggle-color" name="register-new-company"> <span data-lang>Company</span> </label>
-                        </div>
-                    </div>
-                    */?>
                     <div class="uk-modal-footer uk-margin-top">
                         <button class="uk-button uk-button-primary"><span data-lang>Post</span></button>
                         <button class="uk-button uk-modal-close " data-lang>Cancel</button>
@@ -428,12 +428,22 @@
                                     data-get="<?=URL_BASE?>ajax.php?f=sales/getPartnerData&field=country"  
                                 >
                             
+                                <?php /*
                                 <input type="text" class="uk-width-small-1-2" data-lang 
                                     name="city"
                                     placeholder="City" title="City"
                                     data-depends-on="#modal-edit-order [name=id_company_change],#modal-edit-order [name=id_company],#modal-edit-order [name=id_partner]"
                                     data-get="<?=URL_BASE?>ajax.php?f=sales/getPartnerData&field=city" 
-                                >
+                                > */?>
+                               
+                                <span class="uk-width-small-1-2" style="padding:0">
+                                <select name="city" style="width:100%" class="select2" data-lang
+                                    title="City"
+                                    data-depends-on="#modal-edit-order [name=id_company_change],#modal-edit-order [name=id_company],#modal-edit-order [name=id_partner]"
+                                    data-get="<?=URL_BASE?>ajax.php?f=sales/getPartnerData&field=city" 
+                                ><?=$cities_opts?></select>
+                                </span>
+
                         
                                 <input class="uk-width-small-1-1" data-lang 
                                     name="address"

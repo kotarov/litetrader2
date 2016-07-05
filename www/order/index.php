@@ -26,12 +26,14 @@
         <link href="<?=$_ASSETS['uikit.form.css']?>" rel="stylesheet" />
         <script src="<?=$_ASSETS['uikit.form.js']?>"></script>
         
-        <link href="<?=URL_BASE?>css/theme.css" rel="stylesheet">
-        
         <link  href="<?=$_ASSETS['dataTables.uikit.css']?>" rel="stylesheet">
         <script src="<?=$_ASSETS['dataTables.js']?>"></script>
         <script src="<?=$_ASSETS['dataTables.uikit.js']?>"></script>
         
+        <link  href="<?=$_ASSETS['select2.css']?>" rel="stylesheet" />
+        <script src="<?=$_ASSETS['select2.js']?>"></script>
+        
+        <link href="<?=URL_BASE?>css/theme.css" rel="stylesheet">        
         <style>
             .cart-depends { display:none;}
         </style>
@@ -83,7 +85,18 @@
                     
                     <div class="uk-form-row">
                         <label class="uk-form-label"><span data-lang>Град</span> <b class="uk-text-danger">*</b></label>
-                        <div class="uk-form-controls"><input name="city" class="uk-width-1-1"></div>
+                        <?php $opts = '';
+                            foreach(parse_ini_file(INI_DIR.'cities-bg.ini',true) AS $region=>$cc){
+                                $opts .= '<optgroup label="обл. '.$region.'">';
+                                foreach($cc AS $city=>$rr) $opts .= '<option value="'.$city.'" data-region="'.$region.'">'.$city.'</option>';
+                                $opts .= '</optgroup>';
+                            }
+                        ?>
+                        <div class="uk-form-controls"> <select name="city" style="width:100%" class="uk-width-1-1"><?=$opts?></select></div>
+                        <script> $("#form-order [name=city]").select2({templateSelection:function(data){
+                            var reg = data.element.attributes['data-region'].value;
+                            return data.text + ' (обл. '+reg+')';
+                        }}); </script>
                     </div>
                 </div>
             </div>
@@ -113,7 +126,7 @@
                         <div class="">
                             <label class="uk-text-large" style="cursor:pointer">
                                 <input type="radio" name="delivery_method" value="<?=$key?>" class="uk-margin-right"> 
-                                <?=$method['title'];?> <span class="uk-button "><?=number_format($method['price'],2)?> лв </span>
+                                <?=$method['title'];?> <span class="uk-button "><?=number_format((float)$method['price'],2)?> лв </span>
                             </label>
                         </div>
                     </div>

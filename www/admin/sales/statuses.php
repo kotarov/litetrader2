@@ -107,7 +107,7 @@
                     </div> 
                     <div class="uk-form-row">
                         <div class="uk-form-controls">
-                            <label><input type="checkbox" type="text" name="is_closed"> <span data-lang>This is close status</span> </label>
+                            <label><input type="checkbox" type="text" name="is_closed"> <span data-lang> This is close status</span> </label>
                         </div>
                     </div> 
                     <div class="uk-modal-footer">
