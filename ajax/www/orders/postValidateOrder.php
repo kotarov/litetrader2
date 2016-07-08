@@ -42,9 +42,9 @@ if(!isset($ret['required'])){
     $tax = calculateDefaultTax($sum);
     
     $_SESSION['order'] = array(
-        'id_partner' => isset($_SESSION['customer']['id']) ? $_SESSION['customer']['id'] : 0,
+        'id_partner' => isset($_SESSION['customer']['id']) ? $_SESSION['customer']['id'] : null,
         'partner'=>$post['partner'],
-        'id_company'=>0,
+        'id_company'=>null,
         'company'=>'',
         'mrp'=>'',
         'ein'=>'',
