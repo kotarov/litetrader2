@@ -15,7 +15,8 @@ $("form").not(".no-ajax").on("submit",function(e){
         }else if(ret.error){
             $form.prepend('<div class="uk-alert uk-alert-danger"><b>'+ret.error+'</b></div>');
         }else if(ret.success){
-            window.location.href = "profile.php";
+            //window.location.href = "profile.php";
+            $form.trigger("after-submit", ret);
         }
     });
 });

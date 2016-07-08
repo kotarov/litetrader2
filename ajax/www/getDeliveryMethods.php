@@ -16,4 +16,6 @@ if($get['city']){
     }
 }
 
+
+if(isset($NO_JSON) && $NO_JSON) return $ret;
 return json_encode($ret); 

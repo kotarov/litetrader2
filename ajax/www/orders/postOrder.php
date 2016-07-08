@@ -1,52 +1,51 @@
 <?php
-session_start();
+//print_r($_SESSION);exit;
 
-$ret = array();
-$post = filter_var_array($_POST,array(
-    'address'=>FILTER_SANITIZE_STRING,
-    'city'=>FILTER_SANITIZE_STRING,
-    'customer'=>FILTER_SANITIZE_STRING,
-    'phone'=>FILTER_SANITIZE_STRING,
-    'delivery_method'=>FILTER_SANITIZE_STRING,
-    'payment_method'=>FILTER_SANITIZE_STRING,
-    'email'=>FILTER_SANITIZE_EMAIL
-));
-
-if(!$post['address']) $ret['required'][] = 'address';
-if(!$post['city']) $ret['required'][] = 'city';
-if(!$post['customer']) $ret['required'][]='customer';
-if(!$post['phone']) $ret['required'][] = 'phone';
-if(!$post['email']) $ret['required'][] = 'email';
-if(!$post['delivery_method']) $ret['required'][] = 'delivery-method';
-if(!$post['payment_method']) $ret['required'][] = 'payment-method';
-if(!isset($_SESSION['cart']) || !count($_SESSION['cart'])) $ret['required'][] = 'cart-container';
-
-$deliveries = parse_ini_file(INI_DIR.'www/delivery_methods.ini',true);
-if(!isset($deliveries[$post['delivery_method']]) ) $ret['required'][] = 'delivery-method';
-
-$payments = parse_ini_file(INI_DIR.'www/payment_methods.ini',true);
-if(!isset($payments[$post['payment_method']]) ) $ret['required'][] = 'payment-method';
-
-if(!isset($ret['required'])){
+    $date_add = $_SESSION['order']['date_add'];    
+    $dbh = new PDO('sqlite:'.DB_DIR.'sales');
     
-    $sum = 0; foreach($_SESSION['cart'] AS $n => $r) $sum += $r['qty'] * $r['price']; $sum = number_format($sum,2);
-    $_SESSION['order'] = array(
-        'customer'=>$post['customer'],
-        'phone'=>$post['phone'],
-        'email'=>$post['email'],
-        'address'=>$post['city'].'; '.$post['address'],
-        'delivery_method'=>$post['delivery_method'],
-        'delivery_title'=>$deliveries[$post['delivery_method']]['title'],
-        'delivery_price'=>number_format($deliveries[$post['delivery_method']]['price'], 2),
-        'sum'=> $sum,
-        'total'=>number_format(($sum + $deliveries[$post['delivery_method']]['price']),2),
-        'payment_method'=>$payments[$post['payment_method']]['title'],
+    $post = $_SESSION['order'];
+    $post['date_add'] = time();//strtotime($post['date_add']);
+    $post['price']=$post['total']; unset($post['total']);
+    $post['is_active']=1;
+    $post['id_status'] = $dbh->query("SELECT id, name FROM statuses WHERE is_default = 1")->fetch(PDO::FETCH_COLUMN);
+   
+    $sth = $dbh->prepare("INSERT INTO orders (".implode(',', array_keys($post)).") VALUES (:".implode(", :", array_keys($post)).")");
+    if($sth->execute($post)){
+        $id_order = $dbh->lastInsertId();
+        $dbh->query('ATTACH DATABASE "'.DB_DIR.'products" AS "pr"');
         
-    );
-    $ret['order'] = $_SESSION['order'];
-    $ret['cart'] = $_SESSION['cart'];
-    $ret['success'] = "OK";
-}
+        $status = array();
+        $status['id_order'] = $id_order;
+        $status['id_status'] = $post['id_status'];
+        $status['status'] = $dbh->query("SELECT name FROM statuses WHERE id = ".$post['id_status'])->fetch(PDO::FETCH_COLUMN);
+        $status['user'] = $post['partner'];
+        $status['project'] = 'Online shop';
+        $status['date_add'] = $post['date_add'];
+        $sth = $dbh->prepare("INSERT INTO orders_statuses (".implode(',', array_keys($status)).") VALUES (:".implode(", :", array_keys($status)).")");
+        $sth->execute($status);
+    
+        $p = array();
+        $p['id_order'] = $id_order;
+        $p['date_add'] = $post['date_add'];
+        foreach($_SESSION['cart'] AS $n => $c){
+            $p['id_item'] =  $c['id'];
+            $p['item'] = $c['title'].' '.$c['reference'];
+            $p['note'] = '';
+            $p['id_unit'] = $dbh->query("SELECT id_unit FROM pr.items WHERE id = ".$c['id'])->fetch(PDO::FETCH_COLUMN);
+            $p['unit'] = $c['unit'];
+            $p['qty'] = $c['qty'];
+            $p['price'] = $c['price'];
 
-return json_encode($ret);
-?>
+            $sth = $dbh->prepare("INSERT INTO orders_items (".implode(',', array_keys($p)).") VALUES (:".implode(", :", array_keys($p)).")");
+            $sth->execute($p);
+        }
+        
+        unset($_SESSION['cart']);
+        unset($_SESSION['order']);
+
+        $ret['order'] = array('id'=>$id_order,'date_add'=>$date_add,'email'=>$post['email']);
+        $ret['success'] = "OK";
+    }
+
+    return $ret;

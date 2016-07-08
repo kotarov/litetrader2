@@ -104,9 +104,8 @@ if(!isset($ret['required'])){
  
     
     $dbh = new PDO('sqlite:'.DB_DIR.'sales');
-    $post['date_add'] = time();
-    
     if(!isset($_POST['id']) || !(int)$_POST['id']){
+        $post['date_add'] = time();
         $post['id_status'] = $dbh->query("SELECT id FROM statuses WHERE is_default = 1")->fetch(PDO::FETCH_COLUMN);
         if(!$post['id_status']) $post['id_status'] = 1;
         $post['number'] = $dbh->query("SELECT MAX(number) FROM orders")->fetch(PDO::FETCH_COLUMN) + 1;        

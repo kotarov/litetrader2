@@ -2,7 +2,7 @@
             $(document).on("shopping-cart-changed",function(e,cart){
                 if(cart.nb){
                     $(".checkout").show();
-                    $("table.shopping-cart-detailed").html('<thead><tr>'
+                    $("table.shopping-cart-detailed").html('<thead clss="cart-header"><tr>'
                     +'  <th></th>'
                     +'  <th class="uk-text-center" data-lang>Продукт</th>'
                     +'  <th class="uk-text-center" data-lang>Цена</th>'
@@ -11,8 +11,11 @@
                     +'  <th class="uk-text-right" data-lang>Тотал &nbsp;</th>'
                     +'</tr></thead>'
                     +'<tbody></tbody>'
-                    +'<tfoot>'
-                    +'  <tr><th colspan="5" class="uk-text-right "><span data-lang>Всичко</span>:</th><th class="uk-text-right uk-text-nowrap cart-sum"> '+cart.total.toFixed(2)+' лв</th></tr>'
+                    +'<tfoot class="cart-footer">'
+                    +(cart.tax.value > 0 ? 
+                        '  <tr class="cart-tax-row"><td colspan="5" class="uk-text-right"> '+cart.tax.title+': </td> <td class="uk-text-right">'+parseFloat(cart.tax.value).toFixed(2)+' лв</td> </tr>'
+                        : '')
+                    +'  <tr class="cart-sum-row"><th colspan="5" class="uk-text-right "><span data-lang>Всичко</span>:</th><th class="uk-text-right uk-text-nowrap cart-sum"> '+cart.total.toFixed(2)+' лв</th></tr>'
                     +'</tfoot>');
                     $.each(cart.data, function(k,v){
                         $("table.shopping-cart-detailed").find("tbody").append('<tr>'

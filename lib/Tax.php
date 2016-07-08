@@ -1,4 +1,5 @@
 <?php
+/* Изчислява тксата на количката */
 function calculateTax($id = 0, $database = 'sales', $module = 'www'){
         $ret = array( 0=>'', 1=>0, 'title'=>'',  'price'=> 0 );
 
@@ -21,4 +22,24 @@ function calculateTax($id = 0, $database = 'sales', $module = 'www'){
             }
         }
         return $ret;
+}
+
+
+
+/* Изчислява default таксата спрямо подаденатсума*/
+function calculateDefaultTax($sum){
+    //$tax = array('title'=>'','value'=>0,'type'=>'percent'||'value');
+    
+    $taxes = parse_ini_file(INI_DIR.'www/taxes.ini', true);
+    $tax = reset($taxes); 
+    $tax['key'] = key($taxes);
+    
+    if(strpos($tax['value'], '%') === FALSE ){
+        $tax['value'] = (float)$tax['value'];
+        $tax['type'] = 'value';
+    }else{
+        $tax['value'] = $sum * (float)$tax['value'] / 100;
+        $tax['type'] = 'percent';
     }
+    return $tax;
+}

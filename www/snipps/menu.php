@@ -105,6 +105,8 @@ $me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
     
     <div class="uk-navbar-flip">
         <ul class="uk-navbar-nav uk-hidden-small customer-nav-menu">
+            <li data-active="page-orderview"><a href="<?=URL_BASE?>order/view"><i class="uk-icon-"></i> Проследи заявка</a></li>
+            
             <?php if($me['login']) { ?>
             <li data-active="page-profile"><a href="<?=URL_BASE?>customer/"><i class="uk-icon-user"></i> <?=$me['login_title']?></a></li>
             <?php } ?>
@@ -133,14 +135,14 @@ $me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
             <li data-active="page-category" class="uk-parent">
                 <a href="#"><?=$me['products_title']?></a>
                 <ul class="uk-nav-sub" >
-                    <?php foreach($menu['data'] AS $k=>$m){ ?>
+                    <?php foreach($menu['data'] AS $k=>$m){ if($m['depth'] == 1) {?>
                         <li class="uk-margin-left">
                             <a class="uk-text-primary" href="<?=URL_BASE.'products'.$m['url_rewrite']?>"><?=$m['title']?></a>
-                            <?php foreach($menu['l2'][$m['id']] AS $kk=>$mm){ ?>
+                            <?php foreach($menu['data'] AS $kk=>$mm){ if($mm['depth'] == 2) { ?>
                                 <a class="uk-margin-left" href="<?=URL_BASE.'products'.$mm['url_rewrite']?>"><?=$mm['title']?></a>
-                            <?php } ?>
+                            <?php } } ?>
                         </li>
-                    <?php } ?>
+                    <?php } } ?>
                 </ul>
             </li>
             <?php } ?>
