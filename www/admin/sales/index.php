@@ -57,7 +57,7 @@
             data-trigger-add="order-added"
             data-trigger-update="order-updated"
             data-trigger-delete="order-deleted"
-        ><tfoot><tr> <th></th> <th></th> <th></th> <th></th> <td colspan="2" class="uk-text-right"><span data-lag>Current page SUM</span>:</td> <th class="sum uk-text-nowrap"></th> <th class="sum_tax"></th> <th class="sum_delivery"></th> </tr></tfoot></table>
+        ><tfoot><tr> <th></th> <th></th> <th></th> <th></th> <td colspan="2" class="uk-text-right"><span data-lag>Current page SUM</span>:</td> <th class="sum"></th> <th class="sum_tax"></th> <th class="sum_delivery"></th><th class="sum_total"></th> </tr></tfoot></table>
 
         <script> 
             $("#orders").DataTable({
@@ -84,7 +84,7 @@
             		    return r.city + ', ' + r.country + ',<br> ' + r.address;
             		}  },
             		
-            		{ data:"total", title:(lang["Total"]||"Total"),"class":"uk-text-right sum actions", render:function(d,t,r){
+            		{ data:"sum", title:(lang["Products"]||"Products"),"class":"uk-text-right sum actions", render:function(d,t,r){
             		    return '<a href="#modal-cart-order" data-uk-modal data-get="id='+r.id+'" data-populate=\'{"id":"'+r.id+'"}\'>'+(d?parseFloat(d).toFixed(2):'<i class="uk-icon-cart-plus uk-text-success"></i>')+ '</a>&nbsp;&nbsp;';
             		} },
             		{ data: "tax_price", "class":"uk-text-center sum_tax", title: (lang["Tax"]||"Tax"), render:function(d,t,r){
@@ -94,6 +94,9 @@
             		    if(!d) d=0;
             		    return parseFloat(d).toFixed(2)+' <br><sup>'+r.delivery_method+'</sup>';
             		}},
+            		{ data:"total", title:(lang["Total"]||"Total"),"class":"uk-text-right sum_total", render:function(d,t,r){
+            		    return '<b>'+(parseFloat(d) > 0 ? parseFloat(d).toFixed(2,10):'0.00')+'</b>';
+            		} },
             		
             		
             		{ data: "invoice", "class":"actions", title:(lang["Invoice"]||"Invoice")},
@@ -110,13 +113,16 @@
                 fnDrawCallback:function(settings){ $("tbody",this[0]).unhighlight().highlight( this.api().search().split(" ") ); 
                     var api = this.api(); 
                     $( api.table().footer() ).find(".sum").html(
-                        parseFloat(api.column( ".sum", {page:'current'} ).data().sum()).toFixed(2)+' лв'
+                        parseFloat(api.column( ".sum", {page:'current'} ).data().sum()).toFixed(2)
                     );
                     $( api.table().footer() ).find(".sum_tax").html(
                         parseFloat(api.column( ".sum_tax", {page:'current'} ).data().sum()).toFixed(2)
                     );
-                     $( api.table().footer() ).find(".sum_delivery").html(
+                    $( api.table().footer() ).find(".sum_delivery").html(
                         parseFloat(api.column( ".sum_delivery", {page:'current'} ).data().sum()).toFixed(2)
+                    );
+                    $( api.table().footer() ).find(".sum_total").html(
+                        parseFloat(api.column( ".sum_total", {page:'current'} ).data().sum()).toFixed(2)
                     );
                 }
             });    		
