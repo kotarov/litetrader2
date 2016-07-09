@@ -41,6 +41,25 @@
     
     <body id="page-order"> 
         <?php include '../snipps/head.php'; ?>
+        
+        <div class="cart-depends">
+        <div id="message-login" class="uk-alert uk-alert-warning" style="display:none" data-uk-alert>
+            <a href="" class="uk-alert-close uk-close"></a>
+            <b><i class="uk-icon-info uk-text-large"></i> &nbsp;&nbsp; Не сте влезли в своя профил !</b>
+            <p>
+                Разбира се заявка можете да се пусне и като нерегистриран потребител. 
+                Но ако използвате профил, ще можете през удобен интерфейс да следите всички ваши поръчки, 
+                както и ще имате улеснението да не трябва да въвеждате всеки път своите данни и адрес. 
+                <br>
+                Също така ще имате възможността да участвате в рaзлични промоции и томболи.  
+            </p>
+            <p>
+                
+                <a href="<?=URL_BASE?>customer/">Ще ползвам профил <i class="uk-icon-link"></i></a>
+            </p>
+        </div>
+        </div>
+        
         <h1 data-lang>Данни за поръчката</h1>
         
         <br>
@@ -128,6 +147,8 @@
                         $("#address [name=address]").val(d.address);
                         $("#address [name=city]").val(d.city).trigger("change");
                         $("#address [name=email]").val(d.email);
+                        
+                        $("#message-login").fadeIn();
                     }
                 });
             </script>
