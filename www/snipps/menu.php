@@ -105,10 +105,10 @@ $me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
     
     <div class="uk-navbar-flip">
         <ul class="uk-navbar-nav uk-hidden-small customer-nav-menu">
-            <li data-active="page-orderview"><a href="<?=URL_BASE?>order/view">Проследи заявка</a></li>
+            <li data-active="page-orderview"><a href="<?=URL_BASE?>order/view"><i class="uk-icon-history"></i> Проследи заявка</a></li>
             
             <?php if($me['login']) { ?>
-            <li data-active="page-profile"><a href="<?=URL_BASE?>customer/"><i class="uk-icon-user"></i> <?=$me['login_title']?></a></li>
+            <li data-active="page-profile"><a href="<?=URL_BASE?>customer/"><i class="uk-icon-sign-in"></i> <?=$me['login_title']?></a></li>
             <?php } ?>
         </ul>
     </div>
@@ -174,7 +174,7 @@ $me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
                         <a href="<?=URL_BASE?>order/view">Проследи заявка</a>
                     </li>
                     <?php if($me['login']) { ?>
-                    <li><a href="<?=URL_BASE?>customer/"><?=$me['login_title']?></a></li>
+                    <li><a href="<?=URL_BASE?>customer/"><i class="uk-icon-sign-in"></i> <?=$me['login_title']?></a></li>
                     <?php } ?>
                 </ul>
             </li>
@@ -187,8 +187,8 @@ $me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
         var active = "";
         if($("body").attr("id") == "page-profile") active = ' class="uk-active"'
         $(".customer-nav-menu").html(''
-            +'<li'+active+'><a href="<?=URL_BASE?>customer/profile.php"> '+ d.name+' '+ d.family +' </a></li>'
-            +'<li><a onclick="$.get(\'<?=URL_BASE?>ajax.php?f=login/postLogout\').done(window.location.replace(\'<?=URL_BASE?>home/\'))"><i class="uk-icon-power-off"></i> Exit</a></li>'
+            +'<li'+active+'><a href="<?=URL_BASE?>customer/profile.php"><i class="uk-icon-user"></i> '+ d.name+' '+ d.family +' </a></li>'
+            +'<li><a onclick="$.get(\'<?=URL_BASE?>ajax.php?f=login/postLogout\').done(window.location.replace(\'<?=URL_BASE?>home/\'))"><i class="uk-icon-sign-out"></i> Exit</a></li>'
         );
     }});
     $("[data-active='"+$("body").attr("id")+"']").addClass("uk-active");
