@@ -55,7 +55,7 @@
             </p>
             <p>
                 
-                <a href="<?=URL_BASE?>customer/">Ще ползвам профил <i class="uk-icon-link"></i></a>
+                <a href="<?=URL_BASE?>customer/"><i class="uk-icon-user"></i> Влез в профил</a>
             </p>
         </div>
         </div>

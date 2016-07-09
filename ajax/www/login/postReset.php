@@ -8,9 +8,9 @@ $post=filter_var_array($_POST,array(
 if(!$post['email'])      $ret['required'][]='email';
 
 if(!isset($ret['required'])){
-    $dbh = new PDO('sqlite:../sqlite/customers');
+    $dbh = new PDO('sqlite:'.DB_DIR.'customers');
     
-    $sth = $dbh->prepare("SELECT id FROM customers WHERE email LIKE :email AND `is_active` = 1");
+    $sth = $dbh->prepare("SELECT id FROM partners WHERE email LIKE :email AND `is_active` = 1");
     $sth->execute( $post );
     $exists = $sth->fetch(PDO::FETCH_COLUMN) ;
     
@@ -20,11 +20,10 @@ if(!isset($ret['required'])){
             'time' => time()
         );
         
-        
-        $sth = $dbh->prepare("UPDATE customers SET onelogin_pass = :pass, onelogin_time = :time WHERE id = $exists");
+        $sth = $dbh->prepare("UPDATE partners SET onelogin_pass = :pass, onelogin_time = :time WHERE id = $exists");
         $sth->execute( $data );
-        
-        include '../lib/SMTPMailer.php';
+     
+        include LIB_DIR.'SMTPMailer.php';
         
         if(sendmail( $post['email'], 'Reset password',"Your temporary password is: ".$data['pass'] )) {
             $ret['success'] = 'Ok! Check your email for temporary password';
@@ -33,7 +32,7 @@ if(!isset($ret['required'])){
         }
         
     }else{
-        $ret['error']= 'This Email is not active or registered';
+        $ret['error']= 'This Email is not active or is not registered';
     }
     
 }

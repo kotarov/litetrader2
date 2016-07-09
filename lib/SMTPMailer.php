@@ -25,15 +25,17 @@ function sendmail( $to, $subject, $htmlMessage){
 
 
 class SMTPMailer extends PHPMailer {
-	public $isLogging = true;
-	public $logFile = 'mail.log';
+	public $logErrors;
+	public $logSuccesses;
+	public $logFile;
+	public $logContent;
 
 	public function __construct($exceptions = false)
 	{	
-        $settings = parse_ini_file(__DIR__.'/../mail.ini', true);
+        $settings = parse_ini_file(INI_DIR.'mail.ini', true);
 	    
 	    $this->exceptions = (boolean)$exceptions;
-		$this->CharSet = $settings['charset'];
+		$this->CharSet = 'UTF-8';
 		$this->isSMTP();
 		$this->SMTPAuth = $settings['smtp']['auth'];
 		$this->SMTPSecure = $settings['smtp']['secure'];
@@ -50,18 +52,23 @@ class SMTPMailer extends PHPMailer {
 		$this->ClearAttachments();
 		$this->ClearCustomHeaders();
 		
-		$this->isLogging = $settings['log']['enable'];
+		$this->logErrors = $settings['log']['errors'];
+		$this->logSuccesses = $settings['log']['successes'];
 		$this->logFile = $settings['log']['file'];
 		$this->logContent = $settings['log']['addMessage'];
 	}
 	public function Send(){
 		$success = parent::Send();
-		if( $this->isLogging ){
+		if($success && $this->logSuccesses){
 		    $to = implode(",", $this->to[0]);
 		    $row = "[ ".date('Y-m-d H:i:s')." ] ".$this->From." -> ".$to." [ ".$this->Subject." ] ".($this->logContent?$this->AltBody:'')."\r\n";
-            if(!$success) $row = "*** Error *** $row";
-		    file_put_contents ( $this->logFile, $row, FILE_APPEND );
+		    file_put_contents ( DIR_BASE.$this->logFile, $row, FILE_APPEND );
+		}elseif( $this->logErrors){
+		    $to = implode(",", $this->to[0]);
+		    $row = "[ ".date('Y-m-d H:i:s')." ] ".$this->From." -> ".$to." [ ".$this->Subject." ] ".($this->logContent?$this->AltBody:'')."\r\n";
+		    file_put_contents ( DIR_BASE.$this->logFile, "*** Error *** ".$row, FILE_APPEND );
 		}
+		
 		return $success;
 	}
 }

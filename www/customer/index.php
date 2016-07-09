@@ -23,7 +23,9 @@
         <script>
             lang = {
                 'Wellcom':'Добре дошли',
-                'Wrong email or password':'Грешна поща или парола'
+                'Wrong email or password':'Грешна поща или парола',
+                'This Email is not active or is not registered':'Тази поща не регистрирана или не е активна',
+                'Ok! Check your email for temporary password':'Ок! Проверете си пощата за веменната парола'
             }
         </script>
 
@@ -119,9 +121,9 @@
                                 </div>
                                 
                                 <div class="uk-form-row">
-                                    <button type="submit" class="uk-width-1-1 uk-button uk-button-danger uk-button-large" href="#" data-lang>Нулирай паролта</button>
+                                    <button type="submit" class="uk-width-1-1 uk-button uk-button-danger uk-button-large" href="#" data-lang>Генерирай паролта</button>
                                 </div>
-                                <div class="uk-form-row " data-lang>Ще генерираме нова парола, която ще изпратим на Вашата електронна поща !</div>
+                                <div class="uk-form-row " data-lang>Ще генерираме временна парола, която ще изпратим на Вашата електронна поща !</div>
                             </form>
                         </div>
 
