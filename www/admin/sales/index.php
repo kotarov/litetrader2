@@ -433,15 +433,6 @@
                                     data-depends-on="#modal-edit-order [name=id_company_change],#modal-edit-order [name=id_company],#modal-edit-order [name=id_partner]"
                                     data-get="<?=URL_BASE?>ajax.php?f=sales/getPartnerData&field=country"  
                                 >
-                            
-                                <?php /*
-                                <input type="text" class="uk-width-small-1-2" data-lang 
-                                    name="city"
-                                    placeholder="City" title="City"
-                                    data-depends-on="#modal-edit-order [name=id_company_change],#modal-edit-order [name=id_company],#modal-edit-order [name=id_partner]"
-                                    data-get="<?=URL_BASE?>ajax.php?f=sales/getPartnerData&field=city" 
-                                > */?>
-                               
                                 <span class="uk-width-small-1-2" style="padding:0">
                                 <select name="city" style="width:100%" class="select2" data-lang
                                     title="City"
