@@ -10,31 +10,7 @@ if($post['id'] && $post['email'] && $post['date_add']){
     $tstart = strtotime($post['date_add'].' 00:00:00');
     $tend = strtotime($post['date_add'].' 23:59:59');
     
-    //print_r($tstart."...".$tend."...".strtotime('+1 day', strtotime($post['date_dd'])));exit;
-    
     unset($post['date_add']);
-    
-    /*
-    print_r("SELECT 
-            o.id, 
-            o.id_status,
-            o.number,
-            o.invoice,
-            strftime('%d.%m.%Y',datetime(o.date_add,'unixepoch')) date_add,
-            o.date_delivery,
-            o.partner customer,
-            o.company,
-            o.mrp,
-            o.phone, o.email,
-            o.country, o.city, o.address,
-            o.price,
-            o.is_active,
-            o.delivery_method,
-            o.delivery_price, o.payment_method,
-            o.tax, o.tax_price
-        FROM orders o
-        WHERE o.id = ".$post['id']." AND o.email like '".$post['email']."' AND o.date_add > $tstart AND o.date_add < $tend
-    ");exit; /**/
     
     $dbh = new PDO('sqlite:'.DB_DIR.'sales');
     $sth = $dbh->prepare("SELECT 

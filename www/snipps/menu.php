@@ -105,7 +105,7 @@ $me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
     
     <div class="uk-navbar-flip">
         <ul class="uk-navbar-nav uk-hidden-small customer-nav-menu">
-            <li data-active="page-orderview"><a href="<?=URL_BASE?>order/view"><i class="uk-icon-"></i> Проследи заявка</a></li>
+            <li data-active="page-orderview"><a href="<?=URL_BASE?>order/view">Проследи заявка</a></li>
             
             <?php if($me['login']) { ?>
             <li data-active="page-profile"><a href="<?=URL_BASE?>customer/"><i class="uk-icon-user"></i> <?=$me['login_title']?></a></li>
@@ -166,13 +166,19 @@ $me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
             <?php } ?>
             
             <li class="uk-nav-divider"></li>
-            <?php if($me['login']) { ?>
+            
+            
             <li>
                 <ul class="uk-nav customer-nav-menu">
+                    <li data-active="page-orderview">
+                        <a href="<?=URL_BASE?>order/view">Проследи заявка</a>
+                    </li>
+                    <?php if($me['login']) { ?>
                     <li><a href="<?=URL_BASE?>customer/"><?=$me['login_title']?></a></li>
+                    <?php } ?>
                 </ul>
             </li>
-            <?php } ?>
+            
         </ul>
     </div>
 </div>

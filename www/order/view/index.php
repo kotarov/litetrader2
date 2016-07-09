@@ -8,6 +8,10 @@ if(isset($_GET['post']) && isset($_SESSION['cart']) && isset($_SESSION['order'])
     if(isset($save['success'])) $message = true;
 }
 
+if(isset($_SESSION['customer'])){
+    header("Location: ".URL_BASE."customer/profile.php");
+}
+
 $get = filter_var_array($_GET,array(
     'id'=>FILTER_VALIDATE_INT,
     'email'=>FILTER_SANITIZE_EMAIL,
@@ -71,16 +75,16 @@ $get = filter_var_array($_GET,array(
         <form id="form-order-view" action="<?=URL_BASE?>ajax.php?f=orders/getOrder" class="uk-form uk-form-horizontal uk-width-large-2-4 uk-wdth-medium-1-3">
             <div class="uk-form-row">
                 <label class="uk-form-label">Email</label>
-                <div class="uk-form-controls"><input name="email" value="<?=$get['email']?>"></div>
+                <div class="uk-form-controls"><input name="email" class="uk-width-1-1" value="<?=$get['email']?>"></div>
             </div>
             
             <div class="uk-form-row">
                 <label class="uk-form-label">Номер</label>
-                <div class="uk-form-controls"><input  type="text" name="id" value="<?=$get['id']?>" ></div>
+                <div class="uk-form-controls"><input  type="text" class="uk-width-1-1" name="id" value="<?=$get['id']?>" ></div>
             </div>
             <div class="uk-form-row">
                 <label class="uk-form-label">Дата</label>
-                <div class="uk-form-controls"><input  type="text" data-uk-datepicker="{format:'DD.MM.YYYY'}" name="date_add" placeholder="__.__.____" value="<?=$get['date_add']?>" ></div>
+                <div class="uk-form-controls"><input  type="text" class="uk-width-1-1" data-uk-datepicker="{format:'DD.MM.YYYY'}" name="date_add" placeholder="__.__.____" value="<?=$get['date_add']?>" ></div>
             </div>
             
             <div class="uk-form-row">

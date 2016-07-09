@@ -8,12 +8,13 @@ $("form").not(".no-ajax").on("submit",function(e){
     $.post($(this).attr('action'), $(this).serialize()).done(function(ret){
         $("body").find(".uk-alert").remove();
         ret = $.parseJSON(ret);
+
         if(ret.required){
             $.each(ret.required, function(i,field){ $("[name='"+field+"']", $form).addClass("uk-form-danger"); });
             var msg = 'Моля, попълнете Задължителните полета';
-            $form.prepend('<div class="uk-alert uk-alert-danger"><b>'+msg+'</b></div>');
+            $form.prepend('<div class="uk-alert uk-alert-danger"><b>'+(lang[msg]||msg)+'</b></div>');
         }else if(ret.error){
-            $form.prepend('<div class="uk-alert uk-alert-danger"><b>'+ret.error+'</b></div>');
+            $form.prepend('<div class="uk-alert uk-alert-danger"><b>'+(lang[ret.error]||ret.error)+'</b></div>');
         }else if(ret.success){
             //window.location.href = "profile.php";
             $form.trigger("after-submit", ret);

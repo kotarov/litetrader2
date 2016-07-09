@@ -6,10 +6,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Customer Login</title>
-        <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
-        <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon.png">
-        
-        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="<?=URL_BASE?>img/favicon.png" type="image/x-icon">
+        <link rel="apple-touch-icon-precomposed" href="<?=URL_BASE?>img/apple-touch-icon.png">
         
         <script src="<?=$_ASSETS['jquery.js']?>"></script>
         
@@ -21,6 +19,13 @@
         <style> .uk-tab > li.uk-active > a {background:#f5f5f5} 
             .uk-panel-box { border-color: #ddd; border-style: solid; border-width: 0 1px 1px;}
         </style>
+        
+        <script>
+            lang = {
+                'Wellcom':'Добре дошли',
+                'Wrong email or password':'Грешна поща или парола'
+            }
+        </script>
 
     </head>
 
@@ -32,9 +37,9 @@
                 
                 
                 <ul id="login-forms-tabs"  data-uk-tab="#login-forms" class="uk-tab" >
-                    <li class="uk-active">      <a href="#login" class="translate"> Have an account </a></li>
-                    <li>                        <a href="#signup"> Sign Up </a></li>
-                    <li>                        <a href="#reset"> Reset password </a></li>
+                    <li class="uk-active">      <a href="#login" data-lang>Имате профил</a></li>
+                    <li>                        <a href="#signup" data-lang>Регистрация</a></li>
+                    <li>                        <a href="#reset" data-lang>Забрвена парола</a></li>
                 </ul>
                 
                 
@@ -51,13 +56,13 @@
                                 <input class="uk-width-1-1 uk-form-large" type="text" placeholder="Email" name="email">
                             </div>
                             <div class="uk-form-row">
-                                <input class="uk-width-1-1 uk-form-large" type="password" placeholder="Password" name="password">
+                                <input class="uk-width-1-1 uk-form-large" type="password" placeholder="Парола" name="password" data-lang>
                             </div>
                             <div class="uk-form-row">
-                                <button type="submit" name="login" class="uk-width-1-1 uk-button uk-button-primary uk-button-large">Login</button>
+                                <button type="submit" name="login" class="uk-width-1-1 uk-button uk-button-primary uk-button-large" data-lang>Вход</button>
                             </div>
                             <div class="uk-form-row uk-text-small">
-                                <label class="uk-float-left"><input type="checkbox"> Remember Me</label>
+                                <label class="uk-float-left"><input type="checkbox"> <span data-lng>Запомни ме</span></label>
                             </div>
                         </form>
                     </div>
@@ -67,14 +72,14 @@
                     <li id="signup">
                     <div class="uk-width-medium-1-1 uk-panel uk-panel-box">
                         
-                        <h3 class="uk-margin-bottom">You don't have an account ?</h3>
-                        <p>Just fill this simple form.</p>
+                        <h3 class="uk-margin-bottom">Нямате все още профил ?</h3>
+                        <p>Само попълнете тази проста форма.</p>
                         
                         <form id="signup-form" class="uk-form" method="post" action="login/postSignup">
                             
                             <div class="uk-grid uk-form-row" style="margin-left:0">
-                                <input class="uk-width-1-2 uk-form-large" type="text" placeholder="Name*" name="name">
-                                <input class="uk-width-1-2 uk-form-large" type="text" placeholder="Family" name="family">
+                                <input class="uk-width-1-2 uk-form-large" type="text" placeholder="Име*" name="name">
+                                <input class="uk-width-1-2 uk-form-large" type="text" placeholder="Фамилия" name="family">
                             </div>
                             
                             <div class="uk-form-row">
@@ -82,23 +87,23 @@
                             </div>
                             
                             <div class="uk-form-row uk-grid uk-width-1-1" style="margin-left:0">
-                                <input class="uk-width-1-2 uk-form-large" type="password" placeholder="Password*" name="password">
-                                <input class="uk-width-1-2 uk-form-large" type="password" placeholder="Repeat password" name="repeat">
+                                <input class="uk-width-1-2 uk-form-large" type="password" placeholder="Парола*" name="password">
+                                <input class="uk-width-1-2 uk-form-large" type="password" placeholder="Повторете пролата" name="repeat">
                             </div>
                             <div class="uk-form-row uk-grid" style="margin-left:0">
-                                <input class="uk-width-1-2 uk-form-large" type="text" placeholder="Phone*" name="phone">
-                                <input class="uk-width-1-2 uk-form-large" type="text" placeholder="City*" name="city">
+                                <input class="uk-width-1-2 uk-form-large" type="text" placeholder="Телефон*" name="phone">
+                                <input class="uk-width-1-2 uk-form-large" type="text" placeholder="Град*" name="city">
                             </div>
                             <div class="uk-form-row">
                                 <input class="uk-width-1-1 uk-form-large" type="text" placeholder="Address*" name="address">
                             </div>
                             <br>
-                            <div class="uk-fom-row uk-text-left">
-                                All fields are required. You need a valid email toactivate your account
-                            </div>
                             <div class="uk-form-row">
-                                <button type="submit" name="signup" class="uk-width-1-1 uk-button uk-button-success uk-button-large">Create new</button>
+                                <button type="submit" name="signup" class="uk-width-1-1 uk-button uk-button-success uk-button-large">Създай</button>
                             </div>
+                            <br>
+                            <div class="uk-fom-row uk-text-left" data-lang>Всички полета са задължителни. Ще се нуждаете от валидна ел. поща, за да активирате профила.</div>
+                            
                         </form>
                     </div>
                     </li>
@@ -106,7 +111,7 @@
 
                     <li id="reset">
                         <div class="uk-panel uk-panel-box ">
-                            <h3>Forgot your password ?</h3>
+                            <h3>Забрвили сте паролата си ?</h3>
                         
                             <form id="reset-password" class="uk-form" method="post" action="login/postReset">
                                 <div class="uk-form-row">
@@ -114,11 +119,9 @@
                                 </div>
                                 
                                 <div class="uk-form-row">
-                                    <button type="submit" class="uk-width-1-1 uk-button uk-button-danger uk-button-large" href="#">Reset password</button>
+                                    <button type="submit" class="uk-width-1-1 uk-button uk-button-danger uk-button-large" href="#" data-lang>Нулирай паролта</button>
                                 </div>
-                                <div class="uk-form-row ">
-                                    Newly generated password will be send to email.
-                                </div>
+                                <div class="uk-form-row " data-lang>Ще генерираме нова парола, която ще изпратим на Вашата електронна поща !</div>
                             </form>
                         </div>
 
@@ -129,7 +132,7 @@
                 </ul>
                 
                 <div class="uk-margin-top uk-text-large">
-                     <a href="<?=URL_BASE?>"><i class="uk-icon-home"></i> Home page</a>
+                     <a href="<?=URL_BASE?>"><i class="uk-icon-home"></i> <span data-lang>Началната страница</span></a>
                 </div>
             </div>
         </div>
@@ -146,11 +149,11 @@
                     ret = $.parseJSON(ret);
                     if(ret.required){
                         $.each(ret.required, function(i,field){ $("[name='"+field+"']", $form).addClass("uk-form-danger"); });
-                        $("body").prepend('<div class="uk-alert uk-alert-danger"><b>Fill down Required fields</b></div>');
+                        $("body").prepend('<div class="uk-alert uk-alert-danger"><b>Попълнете задължителните полета !</b></div>');
                     }else if(ret.error){
-                        $("body").prepend('<div class="uk-alert uk-alert-danger"><b>'+ret.error+'</b></div>');
+                        $("body").prepend('<div class="uk-alert uk-alert-danger"><b>'+(lang[ret.error]||ret.error)+'</b></div>');
                     }else if(ret.success){
-                        $("body").prepend('<div class="uk-alert uk-alert-success"><b>'+ret.success+'</b></div>');
+                        $("body").prepend('<div class="uk-alert uk-alert-success"><b>'+(lang[ret.success]||ret.success)+'</b></div>');
                         window.location.href = "profile.php";
                     }
                 });

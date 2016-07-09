@@ -25,10 +25,11 @@ if($post){
         $sets[] = $k.' = :'.$k;
     }
     $dbh = new PDO('sqlite:'.DB_DIR.'customers');
-    $sth = $dbh->prepare("UPDATE customers SET ".implode(', ',$sets)." WHERE id = ".$_SESSION['customer']['id']);
+    $sth = $dbh->prepare("UPDATE partners SET ".implode(', ',$sets)." WHERE id = ".$_SESSION['customer']['id']);
     $sth->execute($post);
     
     $_SESSION['customer'] = array_merge( $_SESSION['customer'], $post );
+    $ret['success']='Profile updated';
 }
 
 return json_encode($ret);

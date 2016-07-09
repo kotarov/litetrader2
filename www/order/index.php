@@ -45,14 +45,14 @@
         
         <br>
         <div class="cart-dependans-reverse">
-            <p class="uk-alert" data-lang>Кошницата Ви е празна. </p>
+            <p class="uk-alert"> <b data-lang>Кошницата Ви е празна!</b><br> <i>Зада направите поръчка, моля сложете поне един продукт в кошницата си.</i></p>
         </div>
         <div id="container">
         
         
-        <h2 name="cart-container"><b class="uk-badge uk-badge-notification">1</b> <span data-lang>Пазарска кошница</span></h2>
+        <h2 name="cart-container" class="cart-depends"><b class="uk-badge uk-badge-notification">1</b> <span data-lang>Пазарска кошница</span></h2>
         <hr>
-        <div class="uk-grid">
+        <div class="uk-grid cart-depends">
             <div class="uk-width-medium-1-6"></div>
             <div class="uk-width-medium-2-3"><?php include __DIR__.'/../cart/content.php'; ?></div>
         </div>

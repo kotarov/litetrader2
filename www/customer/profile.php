@@ -31,7 +31,15 @@
         <style type="text/css">
             @media (min-width: 768px){.left-menu-hat { border-right: 1px solid #ddd; } }
             table.cart { border:1px solid; background:#fff;}
+            table.cart thead tr th { background: #333;color:#fff;}
+            table.cart tfoot tr th { background: #fafafa;}
+            table.dataTable tbody { border-top:1px solid #ddd; border-bottom:1px solid #ddd;}
         </style>
+        <script>
+            var lang = {
+                'Profile updated':'Профила е променен'
+            };
+        </script>
     </head>
     <body id="page-profile"> 
         <?php include '../snipps/head.php'; ?>
@@ -43,10 +51,10 @@
                     <div id="personal-email" class="uk-text-muted" style="padding-bottom:1em"></div>
                 </div>
                 <ul class="uk-tab uk-tab-left" data-uk-tab="{connect:'#tab-content'}" >
-                    <li  class="uk-active"><a href="#active-orders">Active orders</a></li>
-                    <li><a href="#done-orders">Done orders</a></li>
-                    <li><a href="#canceled-orders">Canceled orders</a></li>
-                    <li><a href="#profile">Profile data</a></li>
+                    <li  class="uk-active"><a href="#active-orders" data-lang>Нови заявки</a></li>
+                    <li><a href="#done-orders" data-lang>Приключили заявки</a></li>
+                    <li><a href="#canceled-orders" data-lang>Отказани заявки</a></li>
+                    <li><a href="#profile">Данни на профила</a></li>
                 </ul>
                 <div class="uk-hidden-small" style="border-right:1px solid #ddd">
                     <br><br><br><br><br><br><br><br><br>
@@ -58,111 +66,100 @@
                 <ul class="uk-switcher" id="tab-content">
                     
                     <li id="active-orders"> 
-                        <h2>Active orders</h2> 
-                        <table class="dataTable uk-table uk-table-hover uk-table-striped" width="100%" 
-                            data-ajax="<?=URL_BASE?>ajax.php?f=customer/getOrders&t=active" 
-                            data-dom="ltip"
-                            data-sort="false"
-                        >
-                            <thead><tr> 
-                                <th data-data="id" data-class="uk-text-center" data-width="1em">ID</th>
-                                <th data-data="date" data-render="new Date(d*1000).toLocaleDateString()">Date</th>
-                                <th data-data="address" >Address</th>
-                                <th data-data="products" data-class="uk-text-center" data-render="'<a data-cart=\''+r['id']+'\' class=\'uk-icon-shopping-cart\'><span class=\'uk-badge\'>'+d+'</span></a>'">Products</th>
-                                <th data-data="total">Total</th> 
-                            </tr></thead>
-                        </table>
+                        <h2 data-lang>Активни заявки</h2> 
+                        <div class="uk-overflow-container">
+                        <?php 
+                            $url = URL_BASE.'ajax.php?f=customer/getOrders&t=active';
+                            include __DIR__.'/_order_table.php';
+                        ?>
+                        </div>
                     </li>
                     <li id="done-orders">
-                        <h2>Done Orders</h2>
-                        <table class="dataTable uk-table uk-table-hover uk-table-striped" width="100%" 
-                            data-ajax="<?=URL_BASE?>ajax.php?f=customer/getOrders&t=done" 
-                            data-dom="ltip"
-                            data-sort="false"
-                        >
-                            <thead><tr> 
-                                <th data-data="id" data-class="uk-text-center" data-width="1em">ID</th>
-                                <th data-data="date" data-render="new Date(d*1000).toLocaleDateString()">Date</th>
-                                <th data-data="address" >Address</th>
-                                <th data-data="products" data-class="uk-text-center" data-render="'<a data-cart=\''+r['id']+'\' class=\'uk-icon-shopping-cart\'><span class=\'uk-badge\'>'+d+'</span></a>'">Products</th>
-                                <th data-data="total">Total</th>
-                            </tr></thead>
-                            <tbody><tr> <td colspan="4" class="uk-text-center uk-text-muted">No orders</td> </tr></tbody>
-                        </table>
+                        <h2 data-lang>Приключили заявки</h2>
+                        <div class="uk-overflow-container">
+                        <?php 
+                            $url = URL_BASE.'ajax.php?f=customer/getOrders&t=done';
+                            include __DIR__.'/_order_table.php';
+                        ?>
+                        </div>
                     </li>
                     <li id="canceled-orders">
-                        <h2>Canceled orders</h2>
-                        <table class="dataTable uk-table uk-table-hover uk-table-striped" width="100%" 
-                            data-ajax="<?=URL_BASE?>ajax.php?f=customer/getOrders&t=canceld" 
-                            data-dom="ltip"
-                            data-sort="false"
-                        >
-                            <thead><tr> 
-                                <th data-data="id" data-class="uk-text-center" data-width="1em">ID</th>
-                                <th data-data="date" data-render="new Date(d*1000).toLocaleDateString()">Date</th>
-                                <th data-data="address" >Address</th>
-                                <th data-data="products" data-class="uk-text-center" data-render="'<a data-cart=\''+r['id']+'\' class=\'uk-icon-shopping-cart\'><span class=\'uk-badge\'>'+d+'</span></a>'">Products</th>
-                                <th data-data="total">Total</th> 
-                            </tr></thead>
-                            <tbody><tr> <td colspan="4" class="uk-text-center uk-text-muted">No canceled orders</td> </tr></tbody>
-                        </table>
+                        <h2 data-lang>Отказани заявки</h2>
+                        <div class="uk-overflow-container">
+                        <?php 
+                            $url = URL_BASE.'ajax.php?f=customer/getOrders&t=canceled';
+                            include __DIR__.'/_order_table.php';
+                        ?>
+                        </div>
                     </li>
                     
                     
                     <li id="profile">
-                        <form class="uk-form" action="<?=URL_BASE?>ajax.php?f=customer/postUpdateProfile" method="post">
-                        <h2>Profile summary</h2>
-                        <dl id="personal-summary" class="uk-description-list uk-description-list-line uk-width-medium-1-2">
-                            <dt>Name</dt>
-                            <dd id="personal-name" class="uk-visible-hover-inline">-</dd>
-
-                            <dt>Family</dt>
-                            <dd id="personal-family" class="uk-visible-hover-inline">-</dd>
-
-                            
-                            <dt>Phone</dt>
-                            <dd id="personal-phone" class="uk-visible-hover-inline">-</dd>
-                            
-                            
-                            <dt>Skype</dt>
-                            <dd id="personal-skype" class="uk-visible-hover-inline">-</dd>
-                            
-                            <dt>Facebook</dt>
-                            <dd id="personal-facebook" class="uk-visible-hover-inline">-</dd>
-                            
-                            <dt>Tweeter</dt>
-                            <dd id="personal-twitter" class="uk-visible-hover-inline">-</dd>
-                            
-                            <dt>City</dt>
-                            <dd id="personal-city" class="uk-visible-hover-inline">-</dd>
-                            
-                            <dt>Address</dt>
-                            <dd id="personal-address" class="uk-visible-hover-inline">-</dd>
-                            
-                            <dt>Password</dt>
-                            <dd id="personal-password" class="uk-visible-hover-inline">-</dd>
-                        </dl>
-                        <button id="submit-change-personal-data" type="submit" class="uk-button uk-button-primary uk-hidden">Save changes</button>
-                        <button id="reset-change-personal-data" type="reset" class="uk-button uk-hidden">Reset</button>
+                        <form id="form-profile" class="uk-form" action="<?=URL_BASE?>ajax.php?f=customer/postUpdateProfile" method="post" data-trigger="profile-changed">
+                            <h2 data-lang>Данни на профила</h2>
+                            <dl id="personal-summary" class="uk-description-list uk-description-list-line uk-width-medium-1-2">
+                                <dt data-lang>Име</dt>
+                                <dd id="personal-name" class="uk-visible-hover-inline">-</dd>
+    
+                                <dt data-lang>Фамилия</dt>
+                                <dd id="personal-family" class="uk-visible-hover-inline">-</dd>
+    
+                                
+                                <dt data-lang>Телефон</dt>
+                                <dd id="personal-phone" class="uk-visible-hover-inline">-</dd>
+                                
+                                
+                                <dt data-lang>Skype</dt>
+                                <dd id="personal-skype" class="uk-visible-hover-inline">-</dd>
+                                
+                                <dt data-lang>Facebook</dt>
+                                <dd id="personal-facebook" class="uk-visible-hover-inline">-</dd>
+                                
+                                <dt data-lang>Tweeter</dt>
+                                <dd id="personal-twitter" class="uk-visible-hover-inline">-</dd>
+                                
+                                <dt data-lang>Град</dt>
+                                <dd id="personal-city" class="uk-visible-hover-inline">-</dd>
+                                
+                                <dt data-lang>Адрес</dt>
+                                <dd id="personal-address" class="uk-visible-hover-inline">-</dd>
+                                
+                                <dt data-lang>Парола</dt>
+                                <dd id="personal-password" class="uk-visible-hover-inline">-</dd>
+                            </dl>
+                            <button id="submit-change-personal-data" type="submit" class="uk-button uk-button-primary uk-hidden" data-lang>Запиши</button>
+                            <button id="reset-change-personal-data" type="reset" class="uk-button uk-hidden" data-lang>Нулиране</button>
                         </form>
                         <script>
-                            $.getJSON("<?=URL_BASE?>ajax.php?f=getLogged").done(function(d){ 
-                                if(d.id){
-                                    var icon = ' <a class="uk-hidden uk-icon-pencil uk-float-right"></a>';
-                                    $("#personal-name").html(d.name + "&nbsp;" +icon);
-                                    $("#personal-family").html(d.family + "&nbsp;" +icon);
-                                    $("#personal-phone").html(d.phone + "&nbsp;" + icon);
-                                    $("#personal-skype").html(d.skype + "&nbsp;" + icon);
-                                    $("#personal-facebook").html(d.facebook + "&nbsp;" + icon);
-                                    $("#personal-twitter").html(d.twitter + "&nbsp;" + icon);
-                                    $("#personal-email").html(d.email + "&nbsp;");
-                                    $("#personal-city").html(d.city + "&nbsp;" +icon)
-                                    $("#personal-address").html(d.address + "&nbsp;" +icon);
-                                    $("#personal-password").html("*****" + "&nbsp;" +icon);
-                                }else{
-                                    window.location.href = "customer/";
-                                }     
+                            
+                            $(document).on("profile-changed",function(e,ret){
+                                $(this).find("input").remove();
+                                fillProfile();
+                                $("#submit-change-personal-data").addClass("uk-hidden");
+                                $("#reset-change-personal-data").addClass("uk-hidden");
                             });
+                        
+                            function fillProfile(){
+                                $.getJSON("<?=URL_BASE?>ajax.php?f=getLogged").done(function(d){ 
+                                    if(d.id){
+                                        var icon = ' <a class="uk-hidden uk-icon-pencil uk-float-right"></a>';
+                                        $("#personal-name").html(d.name + "&nbsp;" +icon);
+                                        $("#personal-family").html(d.family + "&nbsp;" +icon);
+                                        $("#personal-phone").html(d.phone + "&nbsp;" + icon);
+                                        $("#personal-skype").html(d.skype + "&nbsp;" + icon);
+                                        $("#personal-facebook").html(d.facebook + "&nbsp;" + icon);
+                                        $("#personal-twitter").html(d.twitter + "&nbsp;" + icon);
+                                        $("#personal-email").html(d.email + "&nbsp;");
+                                        $("#personal-city").html(d.city + "&nbsp;" +icon)
+                                        $("#personal-address").html(d.address + "&nbsp;" +icon);
+                                        $("#personal-password").html("*****" + "&nbsp;" +icon);
+                                    }else{
+                                        window.location.href = "<?=URL_BASE?>customer/";
+                                    }     
+                                });
+                            };
+                            fillProfile();
+                            
                             $("#personal-summary").on("click", ".uk-icon-pencil", function(e){
                                 e.preventDefault();
                                 var oldval = $.trim( $(this).parent().text() );
@@ -196,25 +193,45 @@
                 });
                 function toggleCartAfterOrder(r,d){
                     if( $(r).next().hasClass(d['id']+"_cart") ){
-                        $(r).next().remove();
+                        $(r).next().fadeOut(300,function(){$(this).remove()});
                     }else{
-                        var c = '<table class="cart" width="100%"><thead><tr>'
-                                +"<th>Product</th> <th>Qty</th> <th>ME</th> <th>Price</th> <th>Total</th>"
-                            +"</tr></thead><tbody>";
+                        var c = '<table class="cart uk-table uk-table-condensed" width="100%"><thead><tr>'
+                                +'<th>№</th><th>'+(lang['Продукт']||'Продукт')+'</th> <th class="uk-text-right">'+(lang['Кол.']||'Кол.')+'</th> <th class="uk-text-center">'+"МЕ"+'</th> <th class="uk-text-right">'+"Цена"+'</th> <th class="uk-text-right">'+"Всичко"+"</th>"
+                            +'</tr></thead><tbody>';
                         var sum = 0;
+                        var n = 1;
                         $.each(d.data, function(k,v){
                             c += "<tr>"
-                                +"<td>"+v['product']+"</td>"
-                                +"<td data-class='uk-text-right'>"+v['qty']+"</td>"
-                                +"<td data-class='uk-text-center'>"+v['unit']+"</td>"
-                                +"<td data-class='uk-text-right'>"+v['price']+"</td>"
-                                +"<td data-class='uk-text-right'>"+(v['qty']*v['price'])+"</td>"
+                                +'<td>'+(n++)+'</td>'
+                                +"<td>"+v['item']+(v.note.length > 0 ? ' <span class="uk-text-muted">('+v.note+")</span>":"")+"</td>"
+                                +"<td class='uk-text-right'>"+v['qty']+"</td>"
+                                +"<td class='uk-text-center'>"+v['unit']+"</td>"
+                                +"<td class='uk-text-right'>"+parseFloat(v['price']).toFixed(2,10)+"</td>"
+                                +"<td class='uk-text-right'>"+(v['qty']*v['price']).toFixed(2,10)+"</td>"
                             +"</tr>";
                             sum += v['qty']*v['price'];
                         });
-                        c += "</tbody><tfoot><tr><th></th> <th></th> <th></th>  <th class='uk-text-right'>Sum:</th> <th class='uk-text-left'>"+sum+"</th> </tr></tfoot></table>"
+                        c += "</tbody><tfoot>"
+                            +"<tr>"
+                                +'<td colspan="5" class="uk-text-right">Сума продукти:</td>'
+                                +'<td class="uk-text-right uk-text-primary">'+parseFloat(sum).toFixed(2,10)+"</td>"
+                            +"</tr>"
+                            +"<tr>"
+                                +'<td colspan="5" class="uk-text-right">'+d.order[0].tax+':</td>'
+                                +'<td class="uk-text-right uk-text-primary">'+(d.order[0].tax_price>0 ? parseFloat(d.order[0].tax_price).toFixed(2,10) : '-')+"</td>"
+                            +"</tr>"
+                            +"<tr>"
+                                +'<td colspan="5" class="uk-text-right">'+d.order[0].delivery_method+':</td>'
+                                +'<td class="uk-text-right uk-text-primary">'+(d.order[0].delivery_price >0 ? parseFloat(d.order[0].delivery_price).toFixed(2,10) : '-')+"</td>"
+                            +"</tr>"
+                            +"<tr>"
+                                +'<th colspan="5" class="uk-text-right uk-text-primary">Всичко:</th>'
+                                +'<th class="uk-text-right uk-text-primary">'+parseFloat(d.order[0].total).toFixed(2,10)+"</th>"
+                            +"</tr>"
+                        +"</tfoot></table>"
                         
-                        $(r).after('<tr class="'+d['id']+'_cart"><td colspan="5">'+c+'</td></tr>');
+                        $(r).after('<tr class="'+d['id']+'_cart" style="display:none"><td></td> <td colspan="8">'+c+'</td></tr>');
+                        $("."+d['id']+'_cart').fadeIn();
                     }
                 }
             </script>
