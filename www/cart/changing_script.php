@@ -4,7 +4,7 @@
                     $(".checkout").show();
                     $("table.shopping-cart-detailed").html('<thead clss="cart-header"><tr>'
                     +'  <th></th>'
-                    +'  <th class="uk-text-center" data-lang>Продукт</th>'
+                    +'  <th class="uk-text-left" data-lang>Продукт</th>'
                     +'  <th class="uk-text-center" data-lang>Цена</th>'
                     +'  <th class="uk-text-center" data-lang>МЕ</th>'
                     +'  <th class="uk-text-center" data-lang>Кол.</th>'
@@ -19,8 +19,8 @@
                     +'</tfoot>');
                     $.each(cart.data, function(k,v){
                         $("table.shopping-cart-detailed").find("tbody").append('<tr>'
-                        +'  <td class="uk-text-center uk-text-middle"><a href="<?=URL_BASE?>products/view/index.php/'+v.url_rewrite+'/"><img src="<?=URL_BASE?>image.php/'+v.id_image+'/small/'+v.date_add+'" style="min-width:80px"></a></td>'
-                        +'  <td class=" uk-text-middle" data-id="'+v.id+'">'+v.title+'</td>'
+                        +'  <td class="uk-text-center uk-text-middle" style="width:1em"><a href="<?=URL_BASE?>products/view/index.php/'+v.url_rewrite+'/"><img src="<?=URL_BASE?>image.php/'+v.id_image+'/small/'+v.date_add+'" style="min-width:80px"></a></td>'
+                        +'  <td class="uk-text-middle" data-id="'+v.id+'">'+v.title+'</td>'
                         +'  <td class="uk-text-right uk-text-middle">'+parseFloat(v.price).toFixed(2)+'</td>'
                         +'  <td class="uk-text-center uk-text-middle">'+v.unit+'</td>'
                         +'  <td class="uk-text-right uk-text-middle uk-form"><input type="number" class="quantity" style="width:5em" value="'+v.qty+'"></td>'

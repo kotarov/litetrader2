@@ -53,8 +53,8 @@
         <h2 name="cart-container" class="cart-depends"><b class="uk-badge uk-badge-notification">1</b> <span data-lang>Пазарска кошница</span></h2>
         <hr>
         <div class="uk-grid cart-depends">
-            <div class="uk-width-medium-1-6"></div>
-            <div class="uk-width-medium-2-3"><?php include __DIR__.'/../cart/content.php'; ?></div>
+            <div class="uk-width-medium-1-6">&nbsp;</div>
+            <div class="uk-width-medium-4-6"><?php include __DIR__.'/../cart/content.php'; ?></div>
         </div>
         
         <br>
