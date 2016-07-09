@@ -187,7 +187,7 @@ $me = parse_ini_file(INI_DIR.'www/menus.ini', true); $me = $me['public'];
         var active = "";
         if($("body").attr("id") == "page-profile") active = ' class="uk-active"'
         $(".customer-nav-menu").html(''
-            +'<li'+active+'><a href="<?=URL_BASE?>customer/profile.php"><i class="uk-icon-user"></i> '+ d.name+' '+ d.family +' </a></li>'
+            +'<li'+active+'><a href="<?=URL_BASE?>customer/profile.php" class="" style="font-style:italic;"><i class="uk-icon-user"></i> '+ (d.family.length>0? d.name+' '+ d.family:d.name) +'</a></li>'
             +'<li><a onclick="$.get(\'<?=URL_BASE?>ajax.php?f=login/postLogout\').done(window.location.replace(\'<?=URL_BASE?>home/\'))"><i class="uk-icon-sign-out"></i> Exit</a></li>'
         );
     }});
