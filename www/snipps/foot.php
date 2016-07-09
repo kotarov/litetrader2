@@ -24,7 +24,13 @@
                     </div>
                     <div class="uk-width-medium-1-3">
                         <div class="uk-panel">
-                            <br><h1><?=$_COMPANY['name']?></h1>
+                            <br><h1><?=$_COMPANY['name']?> &trade;</h1>
+                            <?php /*
+                            <h3>Адрес</h3>
+                            <p><a><?=$_COMPANY['country']?></a></p>
+                            <p><a><?=$_COMPANY['city']?></a></p>
+                            <p><a><?=$_COMPANY['address']?></a></p>
+                            */?>
                         </div>
                     </div>
                 </div>
