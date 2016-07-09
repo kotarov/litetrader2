@@ -43,6 +43,11 @@
         <script src="<?=$_ASSETS['uikit.search.js']?>"></script>
         
         <link href="<?=URL_BASE?>css/theme.css" rel="stylesheet">
+        <style>
+            .first-letter::first-letter {
+                font-size: 4.8em; float: left; line-height: 0.9em;margin-right:10px;font-family:Georgia;color:#903
+            }
+        </style>
     </head>
     <body id="page-articles"> 
     <?php include '../../snipps/head.php'; ?>
