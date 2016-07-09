@@ -36,7 +36,7 @@
             <br>
             <?php include '../snipps/featured.php';?>
             
-           <?php include 'well_message.php';?>
+           <?php //include 'well_message.php';?>
 
 
     <?php include '../snipps/foot.php';?>
