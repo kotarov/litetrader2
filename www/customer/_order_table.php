@@ -4,6 +4,7 @@
                             data-sort="false"
                         >
                             <thead><tr> 
+                                <th data-data="status" data-render="'<span title=\''+r.status_history.replace(/\,/g,'\n')+'\'>'+d+'</span>'">Статус</th>
                                 <th data-data="id" data-class="uk-text-center" data-width="1em">No</th>
                                 <th data-data="date" data-lang>Дата</th>
                                 <th data-data="phone" data-lang>Телефон</th>

@@ -20,6 +20,7 @@ if(isset($_SESSION['customer'])){
             o.country||', '||o.city||', '||o.address address, 
             (SELECT COUNT(id) FROM orders_items WHERE id_order = o.id) products, 
             (SELECT SUM(op.qty*op.price) FROM orders_items op WHERE op.id_order = o.id)+o.tax_price+o.delivery_price total,
+            (SELECT GROUP_CONCAT(strftime('%d.%m.%Y', date(os.date_add,'unixepoch'))||' - '||os.status||' - '||os.user) FROM orders_statuses os WHERE os.id_order = o.id) AS status_history,
             o.id id,
             o.partner,
             o.phone,
@@ -28,7 +29,8 @@ if(isset($_SESSION['customer'])){
             o.delivery_method,
             o.delivery_price,
             o.tax,
-            o.tax_price
+            o.tax_price,
+            s.name AS status 
         FROM orders o 
         LEFT JOIN statuses s ON (s.id = o.id_status)
         WHERE $where AND o.id_partner = ".$_SESSION['customer']['id']."
