@@ -1,41 +1,30 @@
         </div>
         <!-- footer -->
+        
         <div class="uk-block uk-block-secondary uk-contrast">
             <div class="uk-container uk-container-center ">
 
                 <div class="uk-grid uk-grid-match" data-uk-grid-margin="">
                     <div class="uk-width-medium-1-3 uk-row-first">
                         <div class="uk-panel">
-                            <h3>Contacts</h3>
-                            <p><a href="#">Mail</a></p>
-                            <p><a href="#">Facebook</a></p>
-                            <p><a href="#">Phone</a></p>
-                            <p><a href="#">Fax</a></p>
+                            <h3>Конткти</h3>
+                            <p><a href="mailto:<?=$_COMPANY['email']?>" target="email"><i class="uk-icon-envelope"></i> <?=$_COMPANY['email']?></a></p>
+                            <p><a href="https://skype.com/<?=$_COMPANY['skype']?>" target="skype"><i class="uk-icon-skype"></i> <?=$_COMPANY['skype']?></a></p>
+                            <p><a href="https://facebook.com/<?=$_COMPANY['facebook']?>" target="facebook"><i class="uk-icon-facebook"></i> <?=$_COMPANY['facebook']?></a></p>
                         </div>
                     </div>
                     <div class="uk-width-medium-1-3">
                         <div class="uk-panel">
-                            <h3>Information</h3>
-                            <p><a href="#">Contacts</a></p>
-                            <p><a href="#">About</a></p>
-                            <p><a href="#">Legals</a></p>
+                            <h3>Информация</h3>
+                            <p><a href="<?=URL_BASE?>contacts/">Contacts</a></p>
+                            <?php foreach( explode(";",$_COMPANY['phone']) AS $phone){ ?>
+                                <p><a href="call:<?=$phone?>" target="phone"><i class="uk-icon-phone"></i> <?=$phone?></a></p>
+                            <?php } ?>
                         </div>
                     </div>
                     <div class="uk-width-medium-1-3">
                         <div class="uk-panel">
-                            <h3>Contact us</h3>
-                            <form class="uk-form">
-                                <div class="uk-form-row">
-                                    <input type="text" placeholder=":focus">
-                                </div>
-                            </form>
-                            <h3>Icons</h3>
-                            <p>
-                                <a href="#" class="uk-icon-hover uk-icon-medium uk-icon-github"></a>
-                                <a href="#" class="uk-icon-hover uk-icon-medium uk-icon-twitter"></a>
-                                <a href="#" class="uk-icon-hover uk-icon-medium uk-icon-facebook"></a>
-                                <a href="#" class="uk-icon-hover uk-icon-medium uk-icon-html5"></a>
-                            </p>
+                            <br><h1><?=$_COMPANY['name']?></h1>
                         </div>
                     </div>
                 </div>
