@@ -71,10 +71,7 @@
             		        +(r[9]==1?' <small class="uk-icon-lock uk-text-small"></small> ':' ')+'</a><i class="uk-hidden">'+r.status_name+'</i>';
             		}},
             		{ data:"id", title:(lang["Id"]||"Id"), width:"2em","class":"uk-text-center uk-text-middle id" },
-            		{ data:"date_add", title:(lang["Date"]||"Date"), "class":"uk-text-center uk-text-middle", render:function(d,t,r){
-            		    var date = d;//d?(new Date(d * 1000).toLocaleDateString()):'-';
-            		    return date!='-'?date:'-';
-            		}},
+            		{ data:"date_add", title:(lang["Date"]||"Date"), "class":"uk-text-center uk-text-middle" },
             		{ data:"partner", title:(lang["Customers"]||"Customers"), render:function(d,t,r){return (r.id_partner>0?d:d+' <small class="uk-badge uk-badge-warning">Unregistered</small> ')} },
             		{ data:"company", title:(lang["Company"]||"Company"),render:function(d,t,r){
     var un = r.id_company > 0 ? '' : ' <small class="uk-badge uk-badge-warning">Unregistered</small> ';
@@ -99,7 +96,10 @@
             		} },
             		
             		
-            		{ data: "invoice", "class":"actions", title:(lang["Invoice"]||"Invoice")},
+            		{ data: "invoice", "class":"actions uk-text-center", title:(lang["Invoice"]||"Invoice"), render:function(d,t,r){
+            		    if(!d && r.is_closed) d = '<a href="#modal-create-invoice" data-uk-modal class="uk-icon-pencil" title="Създай"></a>';
+            		    return d;
+            		}},
             		
             	    { data:"actions", title:"", width:"1em", orderable:false, searchable:false, "class":"uk-text-center uk-text-middle uk-text-nowrap actions",
             		    render: function(d,t,r){ return ''
@@ -775,6 +775,25 @@
         </div>
     
     
+        <?php /*** Modal delete from cart */?>
+        <div id="modal-create-invoice" class="uk-modal" data-hide-on-submit>
+            <div class="uk-modal-dialog uk-modal-dialog-small"> <a class="uk-modal-close uk-close"></a>
+                <div class="uk-modal-header"> <h3 data-lang>Create Invoice</h3> </div>
+                <form action1="<?=URL_BASE?>ajax.php?f=sales/orders_items/postRemove" method="post" data-trigger="order-updated">
+                    <p class="uk-text-danger">
+                        <i class="uk-icon-ban"></i> 
+                        <span data-lang>Invoicing is not implemented</span> !
+                    </p>
+                    <input type="hidden" name="id"> 
+                    <div class="uk-text-right">
+                        <?php /*<button type="submit" class="uk-button uk-button-danger"><i class="uk-icon-times"></i> <span data-lang>Remove</span></button>*/?>
+                        <button class="uk-modal-close uk-button">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div> 
+    
+    
     </div> 
 
         <script>
@@ -788,6 +807,7 @@
         </script>
 
         
+    
         
         <?php include '../snipps/foot.php'; ?>
         
