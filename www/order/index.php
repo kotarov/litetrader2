@@ -63,7 +63,7 @@
         <h1 data-lang>Данни за поръчката</h1>
         
         <br>
-        <div class="cart-dependans-reverse">
+        <div class="cart-dependans-reverse" style="display:none">
             <p class="uk-alert"> <b data-lang>Кошницата Ви е празна!</b><br> <i>Зада направите поръчка, моля сложете поне един продукт в кошницата си.</i></p>
         </div>
         <div id="container">
