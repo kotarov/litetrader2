@@ -23,5 +23,3 @@ html, body, .uk-modal-dialog { background: #fafafa}
     border-style: dotted;
     border-width: 0 0 1px 1px;
 }
-
-.first-letter::first-letter { font-size: 4.8em; float: left; line-height: 0.9em;margin-right:10px;font-family:Georgia;color:#903 }

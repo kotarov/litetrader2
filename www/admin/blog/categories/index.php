@@ -70,7 +70,7 @@
             						+'<img src="image.php/'+d+'/thumb/'+r.date_image+'" width="40" ></a>';
             			}
             		},
-            		{ data:"title", title:(lang["Name"]||"Name"), class:"uk-nowrap" },
+            		{ data:"title", title:(lang["Name"]||"Name"), class:"uk-text-nowrap" },
             		
             		{ data:"position", title:(lang["Pos"]||"Pos"), width:"1em","class":"uk-text-center"},
             		{ data:"actions", title:"", width:"1em", orderable:false, searchable:false, "class":"uk-text-center uk-text-middle uk-text-nowrap actions",
@@ -185,7 +185,7 @@
                     $("option[disabled]", obj).prop("disabled",false);
                     var children = ret.data[0]['children'];
                     if(children){ $.each(children.split(","), function(k,v){
-                        $(obj).find("[value="+v+"]").prop("disabled",true);
+                        if(parseInt(v,10)) $(obj).find("[value="+v+"]").prop("disabled",true);
                     });}      
                 });
             </script>            
