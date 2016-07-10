@@ -78,10 +78,11 @@
                 <div class="uk-article-lead uk-width-1-1 uk-text-bold" name="description" >
                     <?=$article['description']?>
                 </div>
-                <br>
                 
-                <img src="<?=URL_BASE.'articles/image.php/'.$article['id_image'].'/'.$article['image_date']?>" class="uk-thumbnail uk-align-left uk-width-large-2-3 ">
-                
+                <?php if($article['id_image']) { ?>
+                    <br>
+                    <img src="<?=URL_BASE.'articles/image.php/'.$article['id_image'].'/'.$article['image_date']?>" class="uk-thumbnail uk-align-left uk-width-large-2-3 ">
+                <?php } ?>
                 
                 <div name="content" class="uk-width-1-1 edit uk-margin-top uk-margin-bottom" >
                     <?=$article['content']?>

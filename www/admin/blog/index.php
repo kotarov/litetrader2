@@ -244,18 +244,22 @@
             <div id="modal-edit-item-content-re" class="uk-modal" data-get="<?=URL_BASE?>ajax.php?f=blog/getItemContent" data-hide-on-submit>
                 <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-dialog-lightbox">
                     <a href="" class="uk-modal-close uk-close uk-close-alt" style="z-index:1"></a>
-                    <form class="uk-form" action="<?=URL_BASE?>ajax.php?f=blog/postItemContent" data-trigger="item-updated">
+                    <form id="form-editor-item-content" class="uk-form" action="<?=URL_BASE?>ajax.php?f=blog/postItemContent" data-trigger="item-updated">
                         <textarea id="editor-item-content" class="uk-width-1-1" name="content" 
                             data-tinymce
                             data-formats = '{"first-letter": {"block" : "p", "class" : "first-letter", "attributes":{"title":"My first letter"} }}'
                             data-style_formats_merge="true" 
                             data-style_formats='[ { "title": "First letter", "block": "p", "classes": "first-letter"} ]'
-                            data-height="500px" 
+                            data-height="450px" 
                             data-content_css = "<?=URL_BASE?>css/richedit.css"
                             data-body_class="mce-body"
-                            data-plugins='["advlist autolink lists link image charmap print preview anchor","searchreplace visualblocks code fullscreen","insertdatetime media table contextmenu paste code imagetools"]'
+                            data-plugins='["advlist autolink lists link image charmap print preview anchor","searchreplace visualblocks code fullscreen","insertdatetime media table contextmenu paste code imagetools image"]'
                             data-toolbar= 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image' 
-                            data-imagetools_cors_hosts='["www.tinymce.com","codepen.io"]'
+                            data-language_url="<?=URL_BASE?>js/tinymce/bg_BG.js"
+                            data-relative_urls="false"
+                            data-image_list_url_eval='"<?=URL_BASE?>ajax.php?f=blog/images/getMCEList&id="+$("#editor-item-content").closest("form").find("[name=id]").val()'
+                            data-image_advtab="true"
+                            data-image_dimensions= "false"
                         ></textarea>
                         <input type="hidden" name="id">
                         <div class="uk-text-right">

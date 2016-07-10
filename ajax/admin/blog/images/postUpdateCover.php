@@ -9,8 +9,9 @@ if(!$post['id']) exit;
 $dbh = new PDO('sqlite:'.DB_DIR.'blog');
 $_REQUEST['id'] = $dbh->query("SELECT id_item FROM images WHERE id =".$post['id'])->fetch(PDO::FETCH_COLUMN);
 
+$was_cover = $dbh->query("SELECT is_cover FROM images WHERE id = ".$post['id'])->fetch(PDO::FETCH_COLUMN);
 $sth = $dbh->query("UPDATE images SET is_cover = null WHERE id_item = ".$_REQUEST['id']);
-$sth = $dbh->query("UPDATE images SET is_cover = 1 WHERE id =".$post['id']);
+if(!$was_cover) $sth = $dbh->query("UPDATE images SET is_cover = 1 WHERE id =".$post['id']);
 
 include '../getItems.php';
 $ret['id']=$_REQUEST['id'];

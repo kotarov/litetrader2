@@ -91,6 +91,23 @@
                         <hr class="uk-width-1-1">
                     </div>
                 </template>
+                
+                
+                <template id="article-template_noimage" >
+                    <div class="template">
+                        <article class="uk-article uk-width-1-1 uk-grid">
+                            <div class="uk-width-1-1 uk-margin-bottom">
+                                <h1 name="title" class="uk-width-1-1 uk-article-title">
+                                    <a href="<?=URL_BASE?>articles/view/index.php/{{cat_url_rewrite}}{{url_rewrite}}">{{title}}</a>
+                                </h1>
+                                <div class="uk-article-meta">{{owner}}  |  {{category}}  |  {{date_add}}</div>
+                                <div class="uk-article-lead uk-width-1-1 editable" name="description" >{{description}}</div>
+                            </div>
+                        </article> 
+                        <hr class="uk-width-1-1">
+                    </div>
+                </template>
+                
                 <div class="template uk-text-center uk-margin-large-top">
                     <i class="uk-icon-circle-o-notch uk-icon-spin uk-text-large" style="color:#ccc;font-size:3em"></i>
                 </div>
@@ -143,13 +160,14 @@
                             
                             
                             var t =  $("#"+this.id_template);
+                            var t2 =  $("#"+this.id_template+"_noimage");
                             var start = p*this.perPage;
                             var end = start+this.perPage;
                             if(end > (this.data.length-1)) end = this.data.length;
 
                             var page_content = '';
                             for(i=start; i<end;i++){
-                                var cc = t.html();
+                                var cc = this.data[i]['id_image'] ? t.html() : t2.html();
                                 $.each(this.data[i], function(f,c){
                                     cc = cc.replace(new RegExp('{{'+f+'}}','g'), c);
                                 });
