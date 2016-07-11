@@ -78,7 +78,7 @@
                         <h3 class="uk-margin-bottom">Нямате все още профил ?</h3>
                         <p>Само попълнете тази проста форма.</p>
                         
-                        <form id="signup-form" class="uk-form" method="post" action="login/postSignup" data-redirect="activte.php">
+                        <form id="signup-form" class="uk-form" method="post" action="login/postSignup" data-redirect1="customer/activte.php">
                             
                             <div class="uk-grid uk-form-row" style="margin-left:0">
                                 <input class="uk-width-1-2 uk-form-large" type="text" placeholder="Име*" name="name">
@@ -164,7 +164,7 @@
                     }
                     if(ret.success){
                         $("body").prepend('<div class="uk-alert uk-alert-success"><b>'+(lang[ret.success]||ret.success)+'</b></div>');
-                        if($form.data("redirect") ) window.location.href = $form.data("redirect");
+                        if($form.data("redirect") ) window.location.href = "<?=URL_BASE?>"+$form.data("redirect");
                     }
                 });
             });
