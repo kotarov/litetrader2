@@ -45,12 +45,7 @@ if(!isset($ret['required'])){
         $mail = include MAIL_DIR.'customer_registered.php';
     
         include LIB_DIR.'SMTPMailer.php';
-        if(sendmail( $post['email'], 
-                'Activate your account',
-                'Your account was created successful. <br> Befor login You need to activate. <br>'
-                .'<a href="'.$urlActivate.$urlParams.'" target="_null"> Click this activation link</a>'.'<br>'
-                .' OR <br> Goto: "'.$urlActivate.'" and enter key = "'.$post['key_activate'].'"'
-        )) {
+        if(sendmail( $post['email'], $mail['title'],$mail['body'] )) {
             $ret['success'] = 'Profile created successful. Check your email for activation instructions.';
         }else{
             $ret['error'] = "Cannot send mail ! ".$sendmail_error;   

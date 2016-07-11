@@ -78,7 +78,7 @@
                         <h3 class="uk-margin-bottom">Нямате все още профил ?</h3>
                         <p>Само попълнете тази проста форма.</p>
                         
-                        <form id="signup-form" class="uk-form" method="post" action="login/postSignup" data-redirect1="customer/activte.php">
+                        <form id="signup-form" class="uk-form" method="post" action="login/postSignup" data-redirect="customer/activate.php">
                             
                             <div class="uk-grid uk-form-row" style="margin-left:0">
                                 <input class="uk-width-1-2 uk-form-large" type="text" placeholder="Име*" name="name">
