@@ -15,20 +15,21 @@ if(!isset($ret['required'])){
     $exists = $sth->fetch(PDO::FETCH_COLUMN) ;
     
     if($exists){
-        $data = array(
+        $db_data = array(
             'pass' => substr(str_shuffle(md5(time())),0,5),
-            'time' => time()
+            'time' => time(),
         );
-        
         $sth = $dbh->prepare("UPDATE partners SET onelogin_pass = :pass, onelogin_time = :time WHERE id = $exists");
-        $sth->execute( $data );
+        $sth->execute( $db_data );
      
+
         include LIB_DIR.'SMTPMailer.php';
         
-        $mail_title = include BASE_DIR.'templates/mails/customer_reseted_password_title.php';
-        $mail_body = include BASE_DIR.'templates/mails/customer_reseted_password_body.php';
+        $pass = $db_data['pass'];
+        $company = parse_ini_file(INI_DIR.'company.ini');
+        $mail = include MAIL_DIR.'customer_reseted_pwd.php';
         
-        if(sendmail( $post['email'], $mail_title, $mail_body )) {
+        if(sendmail( $post['email'], $mail['title'], $mail['body'] )) {
             $ret['success'] = 'Ok! Check your email for temporary password';
         }else{
             $ret['error'] = $sendmail_error;   

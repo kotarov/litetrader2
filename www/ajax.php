@@ -1,8 +1,11 @@
 <?php
-define('DIR_BASE',realpath('../').'/');
-define( 'DB_DIR', realpath('../sqlite/').'/' );
-define('LIB_DIR', realpath('../lib/'   ).'/' );
-define('INI_DIR', realpath('../ini/'   ).'/' );
+define('DIR_BASE', realpath('../').'/' );
+define('BASE_DIR', DIR_BASE            );
+
+define(  'DB_DIR', realpath('../sqlite/').'/'           );
+define( 'LIB_DIR', realpath('../lib/'   ).'/'           );
+define( 'INI_DIR', realpath('../ini/'   ).'/'           );
+define('MAIL_DIR', realpath('../templates/bulgaria/mails/').'/'  );
 
 if( isset($_GET['f']) 
     && file_exists('../ajax/www/'.$_GET['f'].'.php') 
