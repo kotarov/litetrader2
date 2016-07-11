@@ -25,7 +25,8 @@
                 'Wellcom':'Добре дошли',
                 'Wrong email or password':'Грешна поща или парола',
                 'This Email is not active or is not registered':'Тази поща не регистрирана или не е активна',
-                'Ok! Check your email for temporary password':'Ок! Проверете си пощата за веменната парола'
+                'Ok! Check your email for temporary password':'Ок! Проверете си пощата за веменната парола',
+                'This email is already registered':'С тази електронна поща вече има регистриран профил'
             }
         </script>
 
@@ -53,7 +54,7 @@
                         <br>
                         <i class="uk-icon-user uk-border-circle uk-margin-bottom" style="font-size:6em;padding:0.1em 0.2em;color:#f5f5f5;background:#fff"></i>
                         <br><br>
-                        <form id="login-form" class="uk-form" method="post" action="login/postLogin">
+                        <form id="login-form" class="uk-form" method="post" action="login/postLogin" data-redirect="profile.php">
                             <div class="uk-form-row">
                                 <input class="uk-width-1-1 uk-form-large" type="text" placeholder="Email" name="email">
                             </div>
@@ -77,7 +78,7 @@
                         <h3 class="uk-margin-bottom">Нямате все още профил ?</h3>
                         <p>Само попълнете тази проста форма.</p>
                         
-                        <form id="signup-form" class="uk-form" method="post" action="login/postSignup" data-redirect="profile.php">
+                        <form id="signup-form" class="uk-form" method="post" action="login/postSignup" data-redirect="activte.php">
                             
                             <div class="uk-grid uk-form-row" style="margin-left:0">
                                 <input class="uk-width-1-2 uk-form-large" type="text" placeholder="Име*" name="name">
@@ -114,16 +115,16 @@
                     <li id="reset">
                         <div class="uk-panel uk-panel-box ">
                             <h3>Забрвили сте паролата си ?</h3>
-                        
+                            <div class="uk-form-row uk-text-left" data-lang>Ще генерираме временна парола, която ще изпратим на Вашата електронна поща ! </div>
+                             <br>   
                             <form id="reset-password" class="uk-form" method="post" action="login/postReset" >
                                 <div class="uk-form-row">
                                     <input class="uk-width-1-1 uk-form-large" type="text" placeholder="Email" name="email">
                                 </div>
-                                
                                 <div class="uk-form-row">
                                     <button type="submit" class="uk-width-1-1 uk-button uk-button-danger uk-button-large" href="#" data-lang>Генерирай паролта</button>
                                 </div>
-                                <div class="uk-form-row uk-text-left" data-lang>Ще генерираме временна парола, която ще изпратим на Вашата електронна поща ! </div>
+                               
                                 
                                 <div class="uk-form-row uk-text-left uk-text-small">
                                     Временната парола не заменя, нито премахва официалната. Валидна е 30 мин. след което ще трябва да генерирате нова. 
@@ -156,10 +157,12 @@
                     ret = $.parseJSON(ret);
                     if(ret.required){
                         $.each(ret.required, function(i,field){ $("[name='"+field+"']", $form).addClass("uk-form-danger"); });
-                        $("body").prepend('<div class="uk-alert uk-alert-danger"><b>Попълнете задължителните полета !</b></div>');
-                    }else if(ret.error){
+                        if(!ret.error) $("body").prepend('<div class="uk-alert uk-alert-danger"><b>Попълнете задължителните полета !</b></div>');
+                    }
+                    if(ret.error){
                         $("body").prepend('<div class="uk-alert uk-alert-danger"><b>'+(lang[ret.error]||ret.error)+'</b></div>');
-                    }else if(ret.success){
+                    }
+                    if(ret.success){
                         $("body").prepend('<div class="uk-alert uk-alert-success"><b>'+(lang[ret.success]||ret.success)+'</b></div>');
                         if($form.data("redirect") ) window.location.href = $form.data("redirect");
                     }

@@ -20,36 +20,37 @@ if(!$post['city'])      $ret['required'][]='city';
 if(!$post['address'])   $ret['required'][]='address';
 
 if(!isset($ret['required'])){
-    $dbh = new PDO('sqlite:../../sqlite/customers');
-    $sth = $dbh->prepare("SELECT id FROM customers WHERE email LIKE :email");
+    $dbh = new PDO('sqlite:'.DB_DIR.'customers');
+    $sth = $dbh->prepare("SELECT id FROM partners WHERE email LIKE :email");
     $sth->execute( array('email'=>$post['email'] ));
     $exists = $sth->fetch(PDO::FETCH_COLUMN);
     
     if($exists){
-        $ret['error'] = 'This email is already registered';    
+        $ret['required'][] = 'email';
+        $ret['error'] = 'This email is already registered'; 
     }else{
         $post['password'] = md5($post['password']);
         $post['date_add'] = time();
-        $post['disabled'] = substr(str_shuffle(md5(time())),0,25);    
+        $post['key_activate'] = substr(str_shuffle(md5(time())),0,25);    
         
-        //print_r($post);exit;
-        
-        $urlActivate = rtrim($_SERVER['HTTP_ORIGIN'],'/').'/'.ltrim(dirname($_SERVER['REQUEST_URI']),'/').'/activate.php';
-        $urlParams = '?email='.$post['email'].'&key='.$post['disabled'];
-        
-        $sql = "INSERT INTO customers (".implode(',', array_keys($post) ).") VALUES (:".implode(', :', array_keys($post)).")";
+        $sql = "INSERT INTO partners (".implode(',', array_keys($post) ).") VALUES (:".implode(', :', array_keys($post)).")";
         $sth = $dbh->prepare( $sql );
         $sth->execute($post);
-        
+
+        $key_activate = $post['key_activate'];
+        $urlActivate = URL_BASE.'customer/activate.php';
+        $urlParams = '?email='.$post['email'].'&key='.$post['key_activate'];        
+        $company = parse_ini_file(INI_DIR.'company.ini');
+                
+        $mail = include MAIL_DIR.'customer_registered.php';
     
-        include '../../lib/SMTPMailer.php';
+        include LIB_DIR.'SMTPMailer.php';
         if(sendmail( $post['email'], 
                 'Activate your account',
                 'Your account was created successful. <br> Befor login You need to activate. <br>'
                 .'<a href="'.$urlActivate.$urlParams.'" target="_null"> Click this activation link</a>'.'<br>'
-                .' OR <br> Goto: "'.$urlActivate.'" and enter key = "'.$post['disabled'].'"'
+                .' OR <br> Goto: "'.$urlActivate.'" and enter key = "'.$post['key_activate'].'"'
         )) {
-            //$sth->execute($post);
             $ret['success'] = 'Profile created successful. Check your email for activation instructions.';
         }else{
             $ret['error'] = "Cannot send mail ! ".$sendmail_error;   
