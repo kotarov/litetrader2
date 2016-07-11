@@ -25,7 +25,10 @@ if(!isset($ret['required'])){
      
         include LIB_DIR.'SMTPMailer.php';
         
-        if(sendmail( $post['email'], 'Reset password',"Your temporary password is: ".$data['pass'] )) {
+        $mail_title = include BASE_DIR.'templates/mails/customer_reseted_password_title.php';
+        $mail_body = include BASE_DIR.'templates/mails/customer_reseted_password_body.php';
+        
+        if(sendmail( $post['email'], $mail_title, $mail_body )) {
             $ret['success'] = 'Ok! Check your email for temporary password';
         }else{
             $ret['error'] = $sendmail_error;   

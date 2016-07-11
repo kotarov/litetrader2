@@ -13,7 +13,7 @@
                                 <th data-data="address" data-lang>Адрес</th>
                                 <th data-data="payment_method" data-lang>Плащане</th>
                                 <th data-data="products" data-class="uk-text-center" data-render="'<a data-cart=\''+r['id']+'\' class=\'uk-icon-shopping-cart\'><span class=\'uk-badge\'>'+d+'</span></a>'" data-lang></th>
-                                <th data-data="total" data-class="uk-text-right uk-text-bold" data-render="parseFloat(d).toFixed(2,10)" data-lang>Ст-ст</th> 
+                                <th data-data="total" data-class="uk-text-right uk-text-bold" data-render="parseFloat(d).toFixed(2,10)" data-lang>Сума</th> 
                             </tr></thead>
                             <tbody><tr> <td colspan="4" class="uk-text-center uk-text-muted" data-lang>Нямате нови заявки</td> </tr></tbody>
                         </table>

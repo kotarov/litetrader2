@@ -45,7 +45,7 @@
         <?php include '../snipps/head.php'; ?>
         <div class="uk-grid uk-margin">
             
-            <div class="uk-width-medium-1-4">
+            <div class="uk-width-medium-2-10">
                 <div class="uk-text-center left-menu-hat">
                     <i class="uk-icon-user uk-border-circle uk-margin-bottom" style="font-size:6em;padding:0.1em 0.2em;background:#f5f5f5;color:#fff"></i>
                     <div id="personal-email" class="uk-text-muted" style="padding-bottom:1em"></div>
@@ -62,7 +62,7 @@
             </div>
             
             
-            <div class="uk-width-medium-3-4 uk-margin">
+            <div class="uk-width-medium-8-10 uk-margin">
                 <ul class="uk-switcher" id="tab-content">
                     
                     <li id="active-orders"> 
@@ -149,7 +149,7 @@
                                         $("#personal-skype").html(d.skype + "&nbsp;" + icon);
                                         $("#personal-facebook").html(d.facebook + "&nbsp;" + icon);
                                         $("#personal-twitter").html(d.twitter + "&nbsp;" + icon);
-                                        $("#personal-email").html(d.email + "&nbsp;");
+                                        $("#personal-email").html("<span class='uk-text-bold'>"+d.email.replace("@","</span> <span>@") + "</span>");
                                         $("#personal-city").html(d.city + "&nbsp;" +icon)
                                         $("#personal-address").html(d.address + "&nbsp;" +icon);
                                         $("#personal-password").html("*****" + "&nbsp;" +icon);

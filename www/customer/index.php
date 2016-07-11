@@ -123,7 +123,11 @@
                                 <div class="uk-form-row">
                                     <button type="submit" class="uk-width-1-1 uk-button uk-button-danger uk-button-large" href="#" data-lang>Генерирай паролта</button>
                                 </div>
-                                <div class="uk-form-row " data-lang>Ще генерираме временна парола, която ще изпратим на Вашата електронна поща !</div>
+                                <div class="uk-form-row uk-text-left" data-lang>Ще генерираме временна парола, която ще изпратим на Вашата електронна поща ! </div>
+                                
+                                <div class="uk-form-row uk-text-left uk-text-small">
+                                    Временната парола не заменя, нито премахва официалната. Валидна е 30 мин. след което ще трябва да генерирате нова. 
+                                </div>
                             </form>
                         </div>
 
