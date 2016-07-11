@@ -9,14 +9,14 @@ $post = filter_var_array($_POST, array(
 
 
 if( $post['key'] && $post['email']){
-    $dbh = new PDO("sqlite:../sqlite/customers");
-    $sth = $dbh->prepare("SELECT id FROM customers WHERE email LIKE :email AND `disabled` LIKE :key");
+    $dbh = new PDO("sqlite:".DB_DIR."customers");
+    $sth = $dbh->prepare("SELECT id FROM partners WHERE email LIKE :email AND `key_activate` LIKE :key");
     $sth->execute($post);
     
     $exists = $sth->fetch(PDO::FETCH_COLUMN) ;
     if($exists){
-        $dbh->query("UPDATE customers SET `disabled` = 0 WHERE id=$exists");
-        header("Location:login.php");
+        $dbh->query("UPDATE partners SET `key_activate` = 0, is_active = 1 WHERE id=$exists");
+        header("Location:".URL_BASE."customer/");
     }
 }
 return "Nothing to activate";

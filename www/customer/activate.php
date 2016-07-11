@@ -22,7 +22,7 @@
                 <div class="uk-width-1-1">
                     <i class="uk-icon-user-times uk-margin-bottom uk-text-primary" style="font-size:6em"></i>
                     <br>
-                    <form method="post" action="../ajax.php?f=postActivate">
+                    <form method="post" action="<?=URL_BASE?>ajax.php?f=login/postActivate">
                         <div class="uk-form-row">
                             <input class="uk-width-1-1 uk-form-large" type="text" placeholder="Email" name="email" value="<?=isset($_GET['email'])?$_GET['email']:''?>">
                         </div>
