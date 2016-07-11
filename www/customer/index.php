@@ -54,7 +54,7 @@
                         <br>
                         <i class="uk-icon-user uk-border-circle uk-margin-bottom" style="font-size:6em;padding:0.1em 0.2em;color:#f5f5f5;background:#fff"></i>
                         <br><br>
-                        <form id="login-form" class="uk-form" method="post" action="login/postLogin" data-redirect="profile.php">
+                        <form id="login-form" class="uk-form" method="post" action="login/postLogin" data-redirect="customer/profile.php">
                             <div class="uk-form-row">
                                 <input class="uk-width-1-1 uk-form-large" type="text" placeholder="Email" name="email">
                             </div>
