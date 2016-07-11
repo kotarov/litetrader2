@@ -77,7 +77,7 @@
                         <h3 class="uk-margin-bottom">Нямате все още профил ?</h3>
                         <p>Само попълнете тази проста форма.</p>
                         
-                        <form id="signup-form" class="uk-form" method="post" action="login/postSignup">
+                        <form id="signup-form" class="uk-form" method="post" action="login/postSignup" data-redirect="profile.php">
                             
                             <div class="uk-grid uk-form-row" style="margin-left:0">
                                 <input class="uk-width-1-2 uk-form-large" type="text" placeholder="Име*" name="name">
@@ -115,7 +115,7 @@
                         <div class="uk-panel uk-panel-box ">
                             <h3>Забрвили сте паролата си ?</h3>
                         
-                            <form id="reset-password" class="uk-form" method="post" action="login/postReset">
+                            <form id="reset-password" class="uk-form" method="post" action="login/postReset" data-click="#login">
                                 <div class="uk-form-row">
                                     <input class="uk-width-1-1 uk-form-large" type="text" placeholder="Email" name="email">
                                 </div>
@@ -160,7 +160,10 @@
                         $("body").prepend('<div class="uk-alert uk-alert-danger"><b>'+(lang[ret.error]||ret.error)+'</b></div>');
                     }else if(ret.success){
                         $("body").prepend('<div class="uk-alert uk-alert-success"><b>'+(lang[ret.success]||ret.success)+'</b></div>');
-                        window.location.href = "profile.php";
+                        if($form.data("redirect") ) 
+                            window.location.href = $form.data("redirect");
+                        else if($form.data("click"))
+                            $("#login-forms-tabs [data-click='"+$form.data("click")+"']").click();
                     }
                 });
             });
