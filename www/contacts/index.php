@@ -39,7 +39,8 @@
             <div class="uk-width-medium-2-3">
                 <div class="uk-panel uk-panel-header">
 
-                    <h3 class="uk-panel-title" data-lang>Свържете се</h3>
+                    <h2 data-lang>Свържете се</h2>
+                    <hr>
 
                     <form class="uk-form uk-form-stacked">
 
@@ -66,7 +67,7 @@
 
                         <div class="uk-form-row">
                             <div class="uk-form-controls">
-                                <button class="uk-button uk-button-primary" data-lang>Изпрати</button>
+                                <button class="uk-button uk-button-primary uk-button-large" data-lang>Изпрати</button>
                             </div>
                         </div>
 
@@ -77,7 +78,8 @@
 
             <div class="uk-width-medium-1-3">
                 <div class="uk-panel uk-panel-box uk-panel-box-secondary">
-                    <h3 class="uk-panel-title">Детайли за контакти</h3>
+                    <h2 data-lang>Детайли за контакти</h2>
+                    <hr>
                     <p>
                         <strong><?=$_COMPANY['name']?></strong>
                         <br><?=$_COMPANY['country']?>
@@ -98,10 +100,7 @@
                 </div>
             </div>
         </div>
-
-    </div>
-
-
+        <br><br>
 
     <?php include '../snipps/foot.php';?>
     </body>
