@@ -115,7 +115,7 @@
                         <div class="uk-panel uk-panel-box ">
                             <h3>Забрвили сте паролата си ?</h3>
                         
-                            <form id="reset-password" class="uk-form" method="post" action="login/postReset" data-click="#login">
+                            <form id="reset-password" class="uk-form" method="post" action="login/postReset" >
                                 <div class="uk-form-row">
                                     <input class="uk-width-1-1 uk-form-large" type="text" placeholder="Email" name="email">
                                 </div>
@@ -147,6 +147,7 @@
         <script>
             $("form").on("submit",function(e){ 
                 e.preventDefault();
+                $(".uk-alert").remove();
                 var $form = $(this);
                 $(".uk-form-danger", $form).removeClass('uk-form-danger');
                 
@@ -160,10 +161,7 @@
                         $("body").prepend('<div class="uk-alert uk-alert-danger"><b>'+(lang[ret.error]||ret.error)+'</b></div>');
                     }else if(ret.success){
                         $("body").prepend('<div class="uk-alert uk-alert-success"><b>'+(lang[ret.success]||ret.success)+'</b></div>');
-                        if($form.data("redirect") ) 
-                            window.location.href = $form.data("redirect");
-                        else if($form.data("click"))
-                            $("#login-forms-tabs [data-click='"+$form.data("click")+"']").click();
+                        if($form.data("redirect") ) window.location.href = $form.data("redirect");
                     }
                 });
             });
