@@ -16,7 +16,7 @@ function sendmail( $to_from, $subject, $htmlMessage, $recieveFromCustomer = fals
     if(!$recieveFromCustomer){
         $mailer->AddAddress($to_from);
     }else{
-        $mailer->setFrom(array($to_from));
+        $mailer->setFrom($to_from);
     }
     $mailer->Subject = $subject;
     $mailer->msgHTML($htmlMessage); //Evaluates the message and returns modifications for inline images and backgrounds.
@@ -72,7 +72,7 @@ class SMTPMailer extends PHPMailer {
 		    $row = "[ ".date('Y-m-d H:i:s')." ] ".$this->From." -> ".$to." [ ".$this->Subject." ] ".($this->logContent?$this->AltBody:'')."\r\n";
 		    file_put_contents ( DIR_BASE.$this->logFile, $row, FILE_APPEND );
 		}elseif( $this->logErrors){
-		    $to = implode(",", $this->to[0]);
+		    $to = is_array($this->to) ? implode(",", $this->to[0]) : $this->to;
 		    $row = "[ ".date('Y-m-d H:i:s')." ] ".$this->From." -> ".$to." [ ".$this->Subject." ] ".($this->logContent?$this->AltBody:'')."\r\n";
 		    file_put_contents ( DIR_BASE.$this->logFile, "*** Error *** ".$row, FILE_APPEND );
 		}
