@@ -16,7 +16,7 @@ function sendmail( $to_from, $subject, $htmlMessage, $recieveFromCustomer = fals
     if(!$recieveFromCustomer){
         $mailer->AddAddress($to_from);
     }else{
-        $mailer->setFrom($to_from,$to_from);
+        $mailer->setFrom($to_from);
     }
     $mailer->Subject = $subject;
     $mailer->msgHTML($htmlMessage); //Evaluates the message and returns modifications for inline images and backgrounds.
@@ -49,16 +49,17 @@ class SMTPMailer extends PHPMailer {
 		$this->Username = $settings['smtp']['user'];
 		$this->Password = $settings['smtp']['pass'];
 
-		if(!$recieveFromCustomer){
-		    $this->setFrom($settings['from']['mail'], $settings['from']['name']);
-		}else{
-		    $this->addAddress($settings['from']['mail']);  
-		}
 		$this->ClearAllRecipients();
 		$this->ClearCCs();
 		$this->ClearBCCs();
 		$this->ClearAttachments();
 		$this->ClearCustomHeaders();
+		
+		if(!$recieveFromCustomer){
+		    $this->setFrom($settings['from']['mail'], $settings['from']['name']);
+		}else{
+		    $this->addAddress($settings['from']['mail']);  
+		}
 		
 		$this->logErrors = $settings['log']['errors'];
 		$this->logSuccesses = $settings['log']['successes'];
