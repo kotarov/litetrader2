@@ -13,7 +13,7 @@ function sendmail( $to_from, $subject, $htmlMessage, $recieveFromCustomer = fals
     global $sendmail_error;
     
     $mailer = new SMTPMailer($recieveFromCustomer);
-    if(!$fromCutomer){
+    if(!$recieveFromCustomer){
         $mailer->AddAddress($to_from);
     }else{
         $mailer->setFrom($to_from);
