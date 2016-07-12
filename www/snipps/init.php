@@ -1,8 +1,9 @@
 <?php
-    define('DIR_BASE',realpath(__DIR__.'/../../'        ).'/' );
-    define( 'DB_DIR', realpath(__DIR__.'/../../sqlite/' ).'/' );
-    define('LIB_DIR', realpath(__DIR__.'/../../lib/'    ).'/' );
-    define('INI_DIR', realpath(__DIR__.'/../../ini/'    ).'/' );
+    define('DIR_BASE', realpath(__DIR__.'/../../'        ).'/' );
+    define(  'DB_DIR', realpath(__DIR__.'/../../sqlite/' ).'/' );
+    define( 'LIB_DIR', realpath(__DIR__.'/../../lib/'    ).'/' );
+    define( 'INI_DIR', realpath(__DIR__.'/../../ini/'    ).'/' );
+    define('MAIL_DIR', realpath(__DIR__.'/../../templates/bulgaria/mails/').'/' );
 
 
     if(!isset($exp)) $exp = 3600;  //1hour (60sec * 60min * 1hours * 0days)

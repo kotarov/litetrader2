@@ -1,4 +1,34 @@
-<?php include '../snipps/init.php'; ?>
+<?php $exp=0; include '../snipps/init.php'; ?>
+<?php
+    $required = array();
+    if(isset($_POST['submit-message'])){
+        $post = filter_var_array($_POST,array(
+            'name'=>FILTER_SANITIZE_STRING,
+            'email'=>FILTER_SANITIZE_EMAIL,
+            'message'=>FILTER_DEFAULT
+        ));
+        if(!$post['name'])      $required['name']    = true;
+        if(!$post['email'])     $required['email']   = true;
+        if(!$post['message'])   $required['message'] = true;
+        
+        if(!$required){
+            include LIB_DIR.'SMTPMailer.php';
+            $name = $post['name'];
+            $message = $post['message'];
+            $mail = include MAIL_DIR.'from_customer_post_message.php';
+            
+            //sendmail($post['email'], $mail['title'], $mail['body'], true);
+            /*
+            if(sendmail( $post['email'], $mail['title'], $mail['body'] )) {
+                $ret['success'] = 'Ok! Check your email for temporary password';
+            }else{
+                $ret['error'] = $sendmail_error;   
+            }*/
+            print_r($mail);exit;
+        }
+        
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,6 +54,26 @@
     <?php include '../snipps/head.php'; ?>
 
         <br>
+
+<?php if(isset($_POST['submit-message']) && !$required) { ?>
+
+    <div id="ready_form">  <?php /** ready-form */ ?>
+        <br>
+        <div class="uk-panel-box uk-text-large uk-alert-success">
+        <div class="uk-container">
+            <b><i class="uk-icon-check-circle uk-icon-medium"></i> &nbsp;&nbsp; Вашето запитване беше изпратено успешно.</b>
+        </div>
+        </div>
+        <div class="uk-block uk-text-large">
+            Блгодарим Ви, че изпозвахте нашите услуги ! <br> Ще получите отговор или ще се свържем с вас възможно най-скоро.
+        </div>
+        <br><br><br><br><br>
+    </div> <?php /** //ready-form */ ?>
+
+<?php }else{ ?>
+
+    <div id="contact_form" >  <?php /** contact-form */ ?>
+    
         <div class="uk-grid" data-uk-grid-margin>
             <div class="uk-width-1-1 uk-text-left">
                 <h1 data-lang>Контакти</h1>
@@ -33,7 +83,7 @@
         </div>
 
         
-<br><br><br>
+        <br><br><br>
         <div class="uk-grid" data-uk-grid-margin>
 
             <div class="uk-width-medium-2-3">
@@ -42,32 +92,40 @@
                     <h2 data-lang>Свържете се</h2>
                     <hr>
 
-                    <form class="uk-form uk-form-stacked">
+                    <form class="uk-form uk-form-stacked" method="post" action="?submit-message">
 
                         <div class="uk-form-row">
                             <label class="uk-form-label" data-lang>Вашето име</label>
                             <div class="uk-form-controls">
-                                <input type="text" placeholder="" class="uk-width-1-1">
+                                <input type="text" placeholder="" name="name" 
+                                    class="uk-width-1-1<?=isset($required['name'])?' uk-form-danger':''?>"
+                                    value="<?=isset($_POST['name'])?$_POST['name']:''?>"
+                                >
                             </div>
                         </div>
 
                         <div class="uk-form-row">
                             <label class="uk-form-label" data-lang>Вашат поща</label>
                             <div class="uk-form-controls">
-                                <input type="text" placeholder="" class="uk-width-1-1">
+                                <input type="email" placeholder="" name="email" 
+                                    class="uk-width-1-1 <?=isset($required['email'])?' uk-form-danger':''?>"
+                                    value="<?=isset($_POST['email'])?$_POST['email']:''?>"
+                                >
                             </div>
                         </div>
 
                         <div class="uk-form-row">
                             <label class="uk-form-label" data-lang>Вашето съобщение</label>
                             <div class="uk-form-controls">
-                                <textarea class="uk-width-1-1" id="form-h-t" cols="100" rows="9"></textarea>
+                                <textarea class="uk-width-1-1 <?=isset($required['message'])?' uk-form-danger':''?>" 
+                                    name="message" id="form-h-t" cols="100" rows="9"
+                                ><?=isset($_POST['message'])?$_POST['message']:''?></textarea>
                             </div>
                         </div>
 
                         <div class="uk-form-row">
                             <div class="uk-form-controls">
-                                <button class="uk-button uk-button-primary uk-button-large" data-lang>Изпрати</button>
+                                <button class="uk-button uk-button-primary uk-button-large" name="submit-message" data-lang>Изпрати</button>
                             </div>
                         </div>
 
@@ -101,7 +159,10 @@
             </div>
         </div>
         <br><br>
+    </div> <?php /** //contact-form */ ?>
 
+<?php } ?>
+    
     <?php include '../snipps/foot.php';?>
     </body>
 </html>

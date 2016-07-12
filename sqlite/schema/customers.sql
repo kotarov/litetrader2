@@ -27,7 +27,6 @@ CREATE TABLE `partners` (
     date_add integer,
     date_logged integer,
     is_active integer,
-    key_activate text,
     is_advertise integer,
     note text,
     photo_date integer,

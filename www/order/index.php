@@ -55,7 +55,7 @@
             </p>
             <p>
                 
-                <a href="<?=URL_BASE?>customer/"><i class="uk-icon-user"></i> Влез в профил</a>
+                <a href="<?=URL_BASE?>customer/"><i class="uk-icon-user"></i> Използвай профил</a>
             </p>
         </div>
         </div>

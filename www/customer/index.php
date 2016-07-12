@@ -24,8 +24,8 @@
             lang = {
                 'Wellcom':'Добре дошли',
                 'Wrong email or password':'Грешна поща или парола',
-                'This Email is not active or is not registered':'Тази поща не регистрирана или не е активна',
-                'Ok! Check your email for temporary password':'Ок! Проверете си пощата за веменната парола',
+                'This Email is not active or is not registered':'Тази поща не е регистрирана или не е активна',
+                'Ok! Check your email for temporary password':'Ок! Временната парола е изпратена на пощата Ви.',
                 'This email is already registered':'С тази електронна поща вече има регистриран профил'
             }
         </script>

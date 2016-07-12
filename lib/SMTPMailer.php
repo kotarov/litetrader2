@@ -9,11 +9,15 @@
 */
 
 
-function sendmail( $to, $subject, $htmlMessage){
+function sendmail( $to_from, $subject, $htmlMessage, $recieveFromCustomer = false){
     global $sendmail_error;
     
-    $mailer = new SMTPMailer;
-    $mailer->AddAddress($to);
+    $mailer = new SMTPMailer($recieveFromCustomer);
+    if(!$fromCutomer){
+        $mailer->AddAddress($to_from);
+    }else{
+        $mailer->setFrom($to_from);
+    }
     $mailer->Subject = $subject;
     $mailer->msgHTML($htmlMessage); //Evaluates the message and returns modifications for inline images and backgrounds.
 					    //Sets the IsHTML() method to true, initializes AltBody() to either a text version of the message or default text.
@@ -30,7 +34,7 @@ class SMTPMailer extends PHPMailer {
 	public $logFile;
 	public $logContent;
 
-	public function __construct($exceptions = false)
+	public function __construct($recieveFromCustomer=false, $exceptions = false)
 	{	
         $settings = parse_ini_file(INI_DIR.'mail.ini', true);
 	    
@@ -45,7 +49,11 @@ class SMTPMailer extends PHPMailer {
 		$this->Username = $settings['smtp']['user'];
 		$this->Password = $settings['smtp']['pass'];
 
-		$this->setFrom($settings['from']['mail'], $settings['from']['name']);
+		if(!$recieveFromCustomer){
+		    $this->setFrom($settings['from']['mail'], $settings['from']['name']);
+		}else{
+		    $this->addAddress($settings['from']['mail']);  
+		}
 		$this->ClearAllRecipients();
 		$this->ClearCCs();
 		$this->ClearBCCs();
