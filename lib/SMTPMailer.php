@@ -72,7 +72,7 @@ class SMTPMailer extends PHPMailer {
 		    $row = "[ ".date('Y-m-d H:i:s')." ] ".$this->From." -> ".$to." [ ".$this->Subject." ] ".($this->logContent?$this->AltBody:'')."\r\n";
 		    file_put_contents ( DIR_BASE.$this->logFile, $row, FILE_APPEND );
 		}elseif( $this->logErrors){
-		    $to = is_array($this->to) ? implode(",", $this->to[0]) : $this->to;
+		    $to = is_array($this->to) && $this->to ? implode(",", $this->to[0]) : $this->to;
 		    $row = "[ ".date('Y-m-d H:i:s')." ] ".$this->From." -> ".$to." [ ".$this->Subject." ] ".($this->logContent?$this->AltBody:'')."\r\n";
 		    file_put_contents ( DIR_BASE.$this->logFile, "*** Error *** ".$row, FILE_APPEND );
 		}
