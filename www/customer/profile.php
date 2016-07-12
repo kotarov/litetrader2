@@ -54,7 +54,7 @@
                     <li  class="uk-active"><a href="#active-orders" data-lang>Нови заявки</a></li>
                     <li><a href="#done-orders" data-lang>Приключили заявки</a></li>
                     <li><a href="#canceled-orders" data-lang>Отказани заявки</a></li>
-                    <li><a href="#profile">Данни на профила</a></li>
+                    <li><a href="#profile"><i class="uk-icon-cog"></i> Данни</a></li>
                 </ul>
                 <div class="uk-hidden-small" style="border-right:1px solid #ddd">
                     <br><br><br><br><br><br><br><br><br>
