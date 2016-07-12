@@ -17,14 +17,16 @@
             $message = $post['message'];
             $mail = include MAIL_DIR.'from_customer_post_message.php';
             
-            //sendmail($post['email'], $mail['title'], $mail['body'], true);
+            if(sendmail($post['email'], $mail['title'], $mail['body'], true)){
+                $ret['success'] = 'Mail was sended successful.';
+            }else{
+                $ret['error'] = $sendmail_error;   
+            }
             /*
             if(sendmail( $post['email'], $mail['title'], $mail['body'] )) {
                 $ret['success'] = 'Ok! Check your email for temporary password';
-            }else{
-                $ret['error'] = $sendmail_error;   
             }*/
-            print_r($mail);exit;
+            //print_r($mail);exit;
         }
         
     }
