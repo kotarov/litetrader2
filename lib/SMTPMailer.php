@@ -16,7 +16,7 @@ function sendmail( $to_from, $subject, $htmlMessage, $recieveFromCustomer = fals
     if(!$recieveFromCustomer){
         $mailer->AddAddress($to_from);
     }else{
-        $mailer->setFrom($to_from);
+        $mailer->setFrom(array($to_from));
     }
     $mailer->Subject = $subject;
     $mailer->msgHTML($htmlMessage); //Evaluates the message and returns modifications for inline images and backgrounds.
