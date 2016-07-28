@@ -23,4 +23,4 @@ foreach(glob('sqlite/schema/*.sql') AS $sql){
         shell_exec('sudo chmod 0777 sqlite/'.$db);
     }
 }
-
+shell_exec('sudo chmod 0777 sqlite');
