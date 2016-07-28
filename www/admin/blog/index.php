@@ -62,8 +62,17 @@
         <?php include '../snipps/head.php'; ?>
         
         <h2 class="page-header"><span data-lang>Blogs</span> <span class="uk-margin-left page-sparkline" data-table="blog"></span></h2>
-        <div class="uk-container">
         
+        <div class="uk-container">
+        <?php /*    
+             <div class="uk-float-right uk-form  uk-button-danger uk-margin-left">
+                <select class="uk-text-contrast" style="background:transparent!important;" name="owner">
+                        <option>Edno</option>
+                        <option>Dve</option>
+                        <option> Tri</option>
+                    </select>
+            </div>
+        */?>
         <table id="items" class="uk-table uk-table-hover uk-table-striped uk-table-condensed" cellspacing="0" width="100%"
             data-trigger-add="item-added"
             data-trigger-update="item-updated"
@@ -99,6 +108,7 @@
             		{ data:"category", title:(lang["Category"]||"Category"),render:function(d,t,r){
             		    return r.cat_is_visible == 1 ? (d?d:"") : '<strike class="uk-text-muted">'+(d?d:"")+'</strike>';
             		}},
+            		{ data:"owner", title:(lang["Owner"]||"Owner") },
             		
             		
             		
@@ -112,11 +122,30 @@
             			},
             		}
             	],
-            	buttons: [{	text:"New", className:"uk-button uk-button-primary",
-            		init: function(dt, node, config){ node.attr("data-uk-modal",true).attr("href","#modal-new-item"); }
-            	}],
+            	buttons: [
+            	    {	text:"New", className:"uk-button uk-button-primary",
+                		init: function(dt, node, config){ node.attr("data-uk-modal",true).attr("href","#modal-new-item"); }
+                	},
+                	{	text:'<select id="filterOwnerPerson" data-get="<?=URL_BASE?>ajax.php?f=blog/owners/getOwners&person" onChange="$(\'#items\').DataTable().draw()"></select>',
+            			className:"uk-float-left uk-margin-right"
+            		},
+                	
+                	
+        		],
                 fnDrawCallback:function(settings){ $("tbody",this[0]).unhighlight().highlight( this.api().search().split(" ") ); }
             });
+            
+            $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ) {
+            	if( $(settings.nTable).attr("id") !== "items" ) return true;
+            	var ret = true;
+            	
+            	if(!window['index_owner_person']) $.each(settings.oInit.columns,function(k,v){ if(v.data == 'owner') window['index_owner_person'] = k;})
+        		if($("#filterOwnerPerson option:selected").text() !== data[window['index_owner_person']] && $("#filterOwnerPerson").val() !== '0') ret = false;
+            	
+        		return ret;
+            });
+            
+
         </script>
             
         <div>
@@ -148,7 +177,7 @@
                     </div>
                             
                             
-                            
+                            <?php /**/?>
                              <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Category</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=blog/categories/getCategories&getforselect" name="id_category"></select></div>
@@ -157,6 +186,18 @@
                                     $.each(d.data, function(r,k){select.append('<option value="'+k.id+'" data-lang>'+k.name+'</option>');});
                                 });</script>
                             </div>  
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" data-lang>Owner</label>
+                                <div class="uk-form-controls uk-grid uk-grid-collapse">
+                                    
+                                    <div class="uk-width-1-1"><select class="uk-width-1-1 select2" style="width:100%"
+                                        name="id_owner"
+                                        data-get="<?=URL_BASE?>ajax.php?f=blog/owners/getOwners&person" 
+                                        data-templateSelection='{{text}}'
+                                        data-templateResult='{{text}}'
+                                    ></select></div>
+                                </div>
+                            </div>
                             
                             <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Tags</span>  <span class="uk-text-danger">*</span></label>
@@ -208,7 +249,7 @@
                     </div>
                             
                             
-                            
+                            <?php /**/?>
                              <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Category</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=blog/categories/getCategories&getforselect" name="id_category"></select></div>
@@ -216,6 +257,18 @@
                                     var select = $("#modal-new-item [name=id_category]").html('<option value="0">-</option>');
                                     $.each(d.data, function(r,k){select.append('<option value="'+k.id+'" data-lang>'+k.name+'</option>');});
                                 });</script>
+                            </div>
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" data-lang>Owner</label>
+                                <div class="uk-form-controls uk-grid uk-grid-collapse">
+                                    
+                                    <div class="uk-width-1-1"><select class="uk-width-1-1 select2" style="width:100%"
+                                        name="id_owner"
+                                        data-get="<?=URL_BASE?>ajax.php?f=blog/owners/getOwners&person" 
+                                        data-templateSelection='{{text}}'
+                                        data-templateResult='{{text}}'
+                                    ></select></div>
+                                </div>
                             </div>
                             
                             <div class="uk-form-row">

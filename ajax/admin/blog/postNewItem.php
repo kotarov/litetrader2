@@ -9,6 +9,7 @@ $post = filter_var_array($_POST,array(
     
     
     "id_category"=>FILTER_VALIDATE_INT,
+    "id_owner"=>FILTER_VALIDATE_INT,"owner"=>FILTER_SANITIZE_STRING,
     
     "description"=>FILTER_SANITIZE_STRING,
     'tags' => array(
@@ -25,6 +26,11 @@ if(!$post['tags']) $ret['required'][] = 'tags[]';
 if(!isset($ret['required'])){
     $post['tags'] = implode(',',$post['tags']);
     $post['date_add'] = time();
+    $dbh=new PDO("sqlite:".DB_DIR."suppliers");
+$post['owner'] = $dbh->query("SELECT name FROM partners WHERE id=".$post['id_owner'])->fetch(PDO::FETCH_COLUMN);
+
+
+    
     if(isset($_POST["date_add"]) && $_POST["date_add"] && isset($_POST["date_add_time"]) && $_POST["date_add_time"]) $post["date_add"] = strtotime($_POST["date_add"]." ".$_POST["date_add_time"]);
     
     $sets = array_keys($post);

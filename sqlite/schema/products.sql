@@ -9,6 +9,8 @@ CREATE TABLE items (
     tags text,
     id_owner integer,
     owner text,
+    id_owner_company integer,
+    owner_company text,
     
     date_avaible integer,
     date_add integer,

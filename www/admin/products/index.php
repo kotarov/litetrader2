@@ -38,8 +38,9 @@
         
         <link  href="<?=$_ASSETS['uikit.htmleditor.css']?>" rel="stylesheet">
         <script src="<?=$_ASSETS['uikit.htmleditor.js']?>"></script>
+        <link href="<?=URL_BASE?>css/richedit.css" rel="stylesheet">        
         
-         <script src="<?=$_ASSETS['tinymce.js']?>"></script>
+        <script src="<?=$_ASSETS['tinymce.js']?>"></script>
 
         <link href="<?=$_ASSETS['picedit.css']?>" rel="stylesheet">
         <script src="<?=$_ASSETS['picedit.js']?>"></script>
@@ -61,8 +62,17 @@
         <?php include '../snipps/head.php'; ?>
         
         <h2 class="page-header"><span data-lang>Products</span> <span class="uk-margin-left page-sparkline" data-table="products"></span></h2>
-        <div class="uk-container">
         
+        <div class="uk-container">
+        <?php /*    
+             <div class="uk-float-right uk-form  uk-button-danger uk-margin-left">
+                <select class="uk-text-contrast" style="background:transparent!important;" name="owner">
+                        <option>Edno</option>
+                        <option>Dve</option>
+                        <option> Tri</option>
+                    </select>
+            </div>
+        */?>
         <table id="items" class="uk-table uk-table-hover uk-table-striped uk-table-condensed" cellspacing="0" width="100%"
             data-trigger-add="item-added"
             data-trigger-update="item-updated"
@@ -107,6 +117,7 @@
             		    return r.cat_is_visible == 1 ? (d?d:"") : '<strike class="uk-text-muted">'+(d?d:"")+'</strike>';
             		}},
             		
+            		{ data:"owner_company", title:(lang["Office"]||"Office") },
             		{ data:"price", title:(lang["Price"]||"Price"), width:"3em", "class":"dt-right"},
             		{ data:"qty", title:(lang["Qty"]||"Qty"), width:"3em","class":"uk-text-right uk-text-nowrap",render:function(d,t,r){return d;}},
             		{ data:"unit", title:(lang["M.Unit"]||"M.Unit"), width:"3em","class":"uk-text-right uk-text-nowrap"},
@@ -119,11 +130,31 @@
             			},
             		}
             	],
-            	buttons: [{	text:"New", className:"uk-button uk-button-primary",
-            		init: function(dt, node, config){ node.attr("data-uk-modal",true).attr("href","#modal-new-item"); }
-            	}],
+            	buttons: [
+            	    {	text:"New", className:"uk-button uk-button-primary",
+                		init: function(dt, node, config){ node.attr("data-uk-modal",true).attr("href","#modal-new-item"); }
+                	},
+                	
+                	{	text:'<select id="filterOwnerCompany" data-get="<?=URL_BASE?>ajax.php?f=products/owners/getOwners&company" onChange="$(\'#items\').DataTable().draw()"></select>',
+            			className:"uk-float-left uk-margin-right "
+            		},
+                	
+        		],
                 fnDrawCallback:function(settings){ $("tbody",this[0]).unhighlight().highlight( this.api().search().split(" ") ); }
             });
+            
+            $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ) {
+            	if( $(settings.nTable).attr("id") !== "items" ) return true;
+            	var ret = true;
+            	if(!window['index_owner_company']) $.each(settings.oInit.columns,function(k,v){ if(v.data == 'owner_company') window['index_owner_company'] = k;})
+        		if($("#filterOwnerCompany option:selected").text() !== data[window['index_owner_company']] && $("#filterOwnerCompany").val() !== '0') ret = false;
+
+            	
+            	
+        		return ret;
+            });
+            
+
         </script>
             
         <div>
@@ -162,12 +193,16 @@
                             </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label" data-lang>Qty</label>
-                                <div class="uk-form-controls"><input class="uk-width-1-1" type="text" name="qty"></div>
+                                <div class="uk-form-controls uk-grid">
+                                    
+                                    <input class="uk-width-1-2" type="text" name="qty">
+                                    <select class="uk-width-1-2" data-get="<?=URL_BASE?>ajax.php?f=products/units/getUnits" type="text" name="id_unit"></select>
+                                </div>
                             </div>
-                            <div class="uk-form-row">
+                            <?php /*<div class="uk-form-row">
                                 <label class="uk-form-label" data-lang>M.Unit</label>
                                 <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=products/units/getUnits" type="text" name="id_unit"></select></div>
-                            </div>
+                            </div>*/?>
                              <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Category</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=products/categories/getCategories&getforselect" name="id_category"></select></div>
@@ -177,6 +212,18 @@
                                 });</script>
                             </div>  
                             
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" data-lang>Office</label>
+                                <div class="uk-form-controls uk-grid uk-grid-collapse">
+                                    <div class="uk-width-1-1"><select class="uk-width-1-1 select2" style="width:100%"
+                                        name="id_owner_company"
+                                        data-get="<?=URL_BASE?>ajax.php?f=products/owners/getOwners&company" 
+                                        data-templateSelection='{{text}}'
+                                        data-templateResult='{{text}}'
+                                    ></select></div>
+                                    
+                                </div>
+                            </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Tags</span>  <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls">
@@ -234,12 +281,16 @@
                             </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label" data-lang>Qty</label>
-                                <div class="uk-form-controls"><input class="uk-width-1-1" type="text" name="qty"></div>
+                                <div class="uk-form-controls uk-grid">
+                                    
+                                    <input class="uk-width-1-2" type="text" name="qty">
+                                    <select class="uk-width-1-2" data-get="<?=URL_BASE?>ajax.php?f=products/units/getUnits" type="text" name="id_unit"></select>
+                                </div>
                             </div>
-                            <div class="uk-form-row">
+                            <?php /*<div class="uk-form-row">
                                 <label class="uk-form-label" data-lang>M.Unit</label>
                                 <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=products/units/getUnits" type="text" name="id_unit"></select></div>
-                            </div>
+                            </div>*/?>
                              <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Category</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=products/categories/getCategories&getforselect" name="id_category"></select></div>
@@ -249,6 +300,18 @@
                                 });</script>
                             </div>
                             
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" data-lang>Office</label>
+                                <div class="uk-form-controls uk-grid uk-grid-collapse">
+                                    <div class="uk-width-1-1"><select class="uk-width-1-1 select2" style="width:100%"
+                                        name="id_owner_company"
+                                        data-get="<?=URL_BASE?>ajax.php?f=products/owners/getOwners&company" 
+                                        data-templateSelection='{{text}}'
+                                        data-templateResult='{{text}}'
+                                    ></select></div>
+                                    
+                                </div>
+                            </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Tags</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls">
@@ -275,13 +338,22 @@
             <div id="modal-edit-item-content-re" class="uk-modal" data-get="<?=URL_BASE?>ajax.php?f=products/getItemContent" data-hide-on-submit>
                 <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-dialog-lightbox">
                     <a href="" class="uk-modal-close uk-close uk-close-alt" style="z-index:1"></a>
-                    <form class="uk-form" action="<?=URL_BASE?>ajax.php?f=products/postItemContent" data-trigger="item-updated">
+                    <form id="form-editor-item-content" class="uk-form" action="<?=URL_BASE?>ajax.php?f=products/postItemContent" data-trigger="item-updated">
                         <textarea id="editor-item-content" class="uk-width-1-1" name="content" 
                             data-tinymce
-                            data-height="400px" 
-                            data-plugins='["advlist autolink lists link image charmap print preview anchor","searchreplace visualblocks code fullscreen","insertdatetime media table contextmenu paste code imagetools"]'
+                            data-formats = '{"first-letter": {"block" : "p", "class" : "first-letter", "attributes":{"title":"My first letter"} }}'
+                            data-style_formats_merge="true" 
+                            data-style_formats='[ { "title": "First letter", "block": "p", "classes": "first-letter"} ]'
+                            data-height="450px" 
+                            data-content_css = "<?=URL_BASE?>css/richedit.css"
+                            data-body_class="mce-body"
+                            data-plugins='["advlist autolink lists link image charmap print preview anchor","searchreplace visualblocks code fullscreen","insertdatetime media table contextmenu paste code imagetools image"]'
                             data-toolbar= 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image' 
-                            data-imagetools_cors_hosts='["www.tinymce.com","codepen.io"]'
+                            data-language_url="<?=URL_BASE?>js/tinymce/bg_BG.js"
+                            data-relative_urls="false"
+                            data-image_list_url_eval='"<?=URL_BASE?>ajax.php?f=blog/images/getMCEList&id="+$("#editor-item-content").closest("form").find("[name=id]").val()'
+                            data-image_advtab="true"
+                            data-image_dimensions= "false"
                         ></textarea>
                         <input type="hidden" name="id">
                         <div class="uk-text-right">
