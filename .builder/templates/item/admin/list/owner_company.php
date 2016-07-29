@@ -1,0 +1,1 @@
+{ data:"owner_company", title:(lang["__owner.company.title__"]||"__owner.company.title__") },

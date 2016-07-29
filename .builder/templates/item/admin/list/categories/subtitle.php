@@ -1,0 +1,1 @@
+{ data:"subtitle", title:(lang["Descrition"]||"Descrition")},

@@ -1,0 +1,2 @@
+if(!window['index_owner_person']) $.each(settings.oInit.columns,function(k,v){ if(v.data == 'owner') window['index_owner_person'] = k;})
+        		if($("#filterOwnerPerson option:selected").text() !== data[window['index_owner_person']] && $("#filterOwnerPerson").val() !== '0') ret = false;

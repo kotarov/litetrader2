@@ -1,0 +1,1 @@
+{ data:"price", title:(lang["__price.title__"]||"__price.title__"), width:"3em", "class":"dt-right"},

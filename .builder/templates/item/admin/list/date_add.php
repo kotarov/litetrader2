@@ -1,0 +1,1 @@
+{ data:"date_add", title:(lang["__date_add.title__"]||"__date_add.title__")},

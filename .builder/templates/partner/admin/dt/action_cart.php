@@ -1,0 +1,2 @@
+var badge_cart = r.cart_qty > 0 ? '<sup class="uk-badge uk-badge-warning" style="">'+r.cart_qty+'</sup> ' : '';
+        			    var btn_cart = '<a href="#modal-cart-partner" class="uk-icon-shopping-cart uk-icon-justify" data-uk-modal data-get="id='+r.id+'" data-populate=\'{"id":"'+r.id+'"}\' title="Cart">'+badge_cart+'</a>'; 

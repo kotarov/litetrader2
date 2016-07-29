@@ -1,0 +1,1 @@
+<image style='max-width:30px' src='companies/image.php/{{id}}/{{logo_date}}'> 
