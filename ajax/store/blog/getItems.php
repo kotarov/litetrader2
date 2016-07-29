@@ -1,10 +1,11 @@
 <?php
 
-$where = '';
-if(isset($_REQUEST['id'])) $where = " WHERE items.id = ".(int)$_REQUEST['id'];
+$where = 'WHERE 1';
+if(isset($_REQUEST['id'])) $where .= " AND items.id = ".(int)$_REQUEST['id'];
+if( isset($_SESSION['store']['access']['suppliers_companies']) ) $where .= " AND items.id_owner_company IN (".implode(',',array_keys($_SESSION['store']['access']['suppliers_companies'])).")";
 
 $dbh = new PDO('sqlite:'.DB_DIR.'blog');
-
+$dbh->query("ATTACH DATABASE '".DB_DIR."suppliers' as 'db_suppliers';");
 
 $sth = $dbh->prepare("SELECT 
     items.is_active, 
@@ -17,6 +18,7 @@ $sth = $dbh->prepare("SELECT
     c.title category, c.is_visible cat_is_visible,
     items.title,
     items.description,
+    owner.name||' '||owner.family owner,
     
     
     
@@ -28,6 +30,7 @@ FROM items items
 LEFT JOIN categories c ON (c.id = items.id_category) 
 LEFT JOIN images img ON (items.id = img.id_item AND img.is_cover = 1) 
 
+LEFT JOIN db_suppliers.partners owner ON (items.id_owner = owner.id) 
 
 $where");
 $sth->execute();

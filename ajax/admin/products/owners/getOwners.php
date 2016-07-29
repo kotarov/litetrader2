@@ -1,13 +1,22 @@
 <?php
-$dbh = new PDO('sqlite:'.DB_DIR.'suppliers');
+    
 if(isset($_GET['person'])){
-    $sql = "SELECT id, name||' '||family AS text FROM partners;";
+    $dbh = new PDO('sqlite:'.DB_DIR.'suppliers');
+    $sth = $dbh->prepare("SELECT id, name||' '||family AS text FROM partners;"); $sth->execute();
+    $ret['data'] = array_merge(array(array('id'=>0,'text'=>'-')), $sth->fetchAll(PDO::FETCH_ASSOC));
 }else{
-    $sql = "SELECT id, name AS text FROM companies;";
+    if(isset($_SESSION['admin']['access']['suppliers_companies'])){
+        if(isset($_GET['withdash'])){
+            $ret['data'] =  array_merge(array(array('id'=>0,'text'=>'-')), $_SESSION['admin']['access']['suppliers_companies']);
+        }else {
+            $ret['data'] =  $_SESSION['admin']['access']['suppliers_companies'];
+        }
+    }else{
+        $dbh = new PDO('sqlite:'.DB_DIR.'suppliers');
+        $sth = $dbh->prepare("SELECT id, name AS text FROM companies;"); $sth->execute();
+        $ret['data'] = array_merge(array(array('id'=>0,'text'=>'-')), $sth->fetchAll(PDO::FETCH_ASSOC));
+    }
 }
-
-$sth = $dbh->prepare($sql);
-$sth->execute();
-$ret['data'] = array_merge(array(array('id'=>0,'text'=>'-')),$sth->fetchAll(PDO::FETCH_ASSOC));
+    
 
 return json_encode($ret);

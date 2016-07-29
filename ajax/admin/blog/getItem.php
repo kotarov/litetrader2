@@ -12,7 +12,8 @@ $sth = $dbh->prepare("SELECT
     
     
     
-    items.id_owner,items.id_owner_company,
+    items.id_owner,
+    
     strftime('%d.%m.%Y',datetime(items.date_add,'unixepoch')) date_add,strftime('%H:%M',datetime(items.date_add,'unixepoch')) date_add_time,
     
     items.tags AS 'tags[]'

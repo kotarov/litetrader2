@@ -1,10 +1,11 @@
 <?php
 
-$where = '';
-if(isset($_REQUEST['id'])) $where = " WHERE items.id = ".(int)$_REQUEST['id'];
+$where = 'WHERE 1';
+if(isset($_REQUEST['id'])) $where .= " AND items.id = ".(int)$_REQUEST['id'];
+if( isset($_SESSION['store']['access']['suppliers_companies']) ) $where .= " AND items.id_owner_company IN (".implode(',',array_keys($_SESSION['store']['access']['suppliers_companies'])).")";
 
 $dbh = new PDO('sqlite:'.DB_DIR.'products');
-
+$dbh->query("ATTACH DATABASE '".DB_DIR."suppliers' as 'db_suppliers';");
 
 $sth = $dbh->prepare("SELECT 
      
@@ -18,6 +19,7 @@ $sth = $dbh->prepare("SELECT
     items.title,
     items.description,
     
+    owner_company.name owner_company,
     items.reference,
     unit.abbreviation unit,
     items.qty,
@@ -29,6 +31,7 @@ LEFT JOIN categories c ON (c.id = items.id_category)
 LEFT JOIN images img ON (items.id = img.id_item AND img.is_cover = 1) 
 LEFT JOIN units unit ON (items.id_unit = unit.id)
 
+LEFT JOIN db_suppliers.companies owner_company ON (owner_company.id = items.id_owner_company) 
 $where");
 $sth->execute();
 $ret['data'] = $sth->fetchAll(PDO::FETCH_ASSOC);

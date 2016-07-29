@@ -1,7 +1,8 @@
 <?php
 
-$where = '';
-if(isset($_REQUEST['id'])) $where = " WHERE items.id = ".(int)$_REQUEST['id'];
+$where = 'WHERE 1';
+if(isset($_REQUEST['id'])) $where .= " AND items.id = ".(int)$_REQUEST['id'];
+if( isset($_SESSION['admin']['access']['suppliers_companies']) ) $where .= " AND items.id_owner_company IN (".implode(',',array_keys($_SESSION['admin']['access']['suppliers_companies'])).")";
 
 $dbh = new PDO('sqlite:'.DB_DIR.'products');
 $dbh->query("ATTACH DATABASE '".DB_DIR."suppliers' as 'db_suppliers';");

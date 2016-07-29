@@ -61,9 +61,19 @@
     <body id="page-products"> 
         <?php include '../snipps/head.php'; ?>
         
+        <?php //session_start(); print_r($_SESSION);exit; ?>
         <h2 class="page-header"><span data-lang>Products</span> <span class="uk-margin-left page-sparkline" data-table="products"></span></h2>
-        <div class="uk-container">
         
+        <div class="uk-container">
+        <?php /*    
+             <div class="uk-float-right uk-form  uk-button-danger uk-margin-left">
+                <select class="uk-text-contrast" style="background:transparent!important;" name="owner">
+                        <option>Edno</option>
+                        <option>Dve</option>
+                        <option> Tri</option>
+                    </select>
+            </div>
+        */?>
         <table id="items" class="uk-table uk-table-hover uk-table-striped uk-table-condensed" cellspacing="0" width="100%"
             data-trigger-add="item-added"
             data-trigger-update="item-updated"
@@ -108,6 +118,7 @@
             		    return r.cat_is_visible == 1 ? (d?d:"") : '<strike class="uk-text-muted">'+(d?d:"")+'</strike>';
             		}},
             		
+            		{ data:"owner_company", title:(lang["Office"]||"Office") },
             		{ data:"price", title:(lang["Price"]||"Price"), width:"3em", "class":"dt-right"},
             		{ data:"qty", title:(lang["Qty"]||"Qty"), width:"3em","class":"uk-text-right uk-text-nowrap",render:function(d,t,r){return d;}},
             		{ data:"unit", title:(lang["M.Unit"]||"M.Unit"), width:"3em","class":"uk-text-right uk-text-nowrap"},
@@ -120,11 +131,31 @@
             			},
             		}
             	],
-            	buttons: [{	text:"New", className:"uk-button uk-button-primary",
-            		init: function(dt, node, config){ node.attr("data-uk-modal",true).attr("href","#modal-new-item"); }
-            	}],
+            	buttons: [
+            	    {	text:"New", className:"uk-button uk-button-primary",
+                		init: function(dt, node, config){ node.attr("data-uk-modal",true).attr("href","#modal-new-item"); }
+                	},
+                	
+                	{	text:'<select id="filterOwnerCompany" data-get="<?=URL_BASE?>ajax.php?f=products/owners/getOwners&company&withdash" onChange="$(\'#items\').DataTable().draw()"></select>',
+            			className:"uk-float-left uk-margin-right "
+            		},
+                	
+        		],
                 fnDrawCallback:function(settings){ $("tbody",this[0]).unhighlight().highlight( this.api().search().split(" ") ); }
             });
+            
+            $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ) {
+            	if( $(settings.nTable).attr("id") !== "items" ) return true;
+            	var ret = true;
+            	if(!window['index_owner_company']) $.each(settings.oInit.columns,function(k,v){ if(v.data == 'owner_company') window['index_owner_company'] = k;})
+        		if($("#filterOwnerCompany option:selected").text() !== data[window['index_owner_company']] && $("#filterOwnerCompany").val() !== '0') ret = false;
+
+            	
+            	
+        		return ret;
+            });
+            
+
         </script>
             
         <div>
@@ -163,12 +194,16 @@
                             </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label" data-lang>Qty</label>
-                                <div class="uk-form-controls"><input class="uk-width-1-1" type="text" name="qty"></div>
+                                <div class="uk-form-controls uk-grid">
+                                    
+                                    <input class="uk-width-1-2" type="text" name="qty">
+                                    <select class="uk-width-1-2" data-get="<?=URL_BASE?>ajax.php?f=products/units/getUnits" type="text" name="id_unit"></select>
+                                </div>
                             </div>
-                            <div class="uk-form-row">
+                            <?php /*<div class="uk-form-row">
                                 <label class="uk-form-label" data-lang>M.Unit</label>
                                 <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=products/units/getUnits" type="text" name="id_unit"></select></div>
-                            </div>
+                            </div>*/?>
                              <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Category</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=products/categories/getCategories&getforselect" name="id_category"></select></div>
@@ -178,6 +213,18 @@
                                 });</script>
                             </div>  
                             
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" data-lang>Office</label>
+                                <div class="uk-form-controls uk-grid uk-grid-collapse">
+                                    <div class="uk-width-1-1"><select class="uk-width-1-1 select2" style="width:100%"
+                                        name="id_owner_company"
+                                        data-get="<?=URL_BASE?>ajax.php?f=products/owners/getOwners&company" 
+                                        data-templateSelection='{{text}}'
+                                        data-templateResult='{{text}}'
+                                    ></select></div>
+                                    
+                                </div>
+                            </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Tags</span>  <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls">
@@ -235,12 +282,16 @@
                             </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label" data-lang>Qty</label>
-                                <div class="uk-form-controls"><input class="uk-width-1-1" type="text" name="qty"></div>
+                                <div class="uk-form-controls uk-grid">
+                                    
+                                    <input class="uk-width-1-2" type="text" name="qty">
+                                    <select class="uk-width-1-2" data-get="<?=URL_BASE?>ajax.php?f=products/units/getUnits" type="text" name="id_unit"></select>
+                                </div>
                             </div>
-                            <div class="uk-form-row">
+                            <?php /*<div class="uk-form-row">
                                 <label class="uk-form-label" data-lang>M.Unit</label>
                                 <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=products/units/getUnits" type="text" name="id_unit"></select></div>
-                            </div>
+                            </div>*/?>
                              <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Category</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls"><select class="uk-width-1-1" data-get="<?=URL_BASE?>ajax.php?f=products/categories/getCategories&getforselect" name="id_category"></select></div>
@@ -250,6 +301,18 @@
                                 });</script>
                             </div>
                             
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" data-lang>Office</label>
+                                <div class="uk-form-controls uk-grid uk-grid-collapse">
+                                    <div class="uk-width-1-1"><select class="uk-width-1-1 select2" style="width:100%"
+                                        name="id_owner_company"
+                                        data-get="<?=URL_BASE?>ajax.php?f=products/owners/getOwners&company" 
+                                        data-templateSelection='{{text}}'
+                                        data-templateResult='{{text}}'
+                                    ></select></div>
+                                    
+                                </div>
+                            </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label"><span data-lang>Tags</span> <span class="uk-text-danger">*</span></label>
                                 <div class="uk-form-controls">

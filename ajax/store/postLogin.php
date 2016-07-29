@@ -22,8 +22,17 @@ if(!isset($ret['required'])){
             id, name, family, 
             email, phone, 
             country, address, city
-        FROM partners WHERE id = $exists")
-            ->fetch(PDO::FETCH_ASSOC);
+        FROM partners WHERE id = $exists")->fetch(PDO::FETCH_ASSOC);
+        
+        /*** ACCESS */ 
+        $_SESSION['store']['access']['suppliers_companies'] = array();
+        $companies = $dbh->query("SELECT c.id, c.name,  c.name text 
+            FROM partners_companies pc 
+            LEFT JOIN companies c ON (c.id = pc.id_company)
+            WHERE pc.id_partner = $exists")->fetchAll(PDO::FETCH_ASSOC);
+        foreach($companies AS $company) $_SESSION['store']['access']['suppliers_companies'][$company['id']] = $company;
+        /*** //Access */
+        
         $dbh->query("UPDATE partners SET date_logged = ".time()." WHERE id = $exists");
         $ret['success'] = 'Welcome';
     }else{
