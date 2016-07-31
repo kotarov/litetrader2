@@ -2,7 +2,11 @@
 
 $where = 'WHERE 1';
 if(isset($_REQUEST['id'])) $where .= " AND items.id = ".(int)$_REQUEST['id'];
-if( isset($_SESSION['__PROJECT__']['access']['suppliers_companies']) ) $where .= " AND items.id_owner_company IN (".implode(',',array_keys($_SESSION['__PROJECT__']['access']['suppliers_companies'])).")";
+__WHERE_OWNER_COMPANIES__ 
+//if( isset($_SESSION['__PROJECT__']['access']['suppliers_companies']) ) $where .= " AND items.id_owner_company IN (".implode(',',array_keys($_SESSION['__PROJECT__']['access']['suppliers_companies'])).")";
+__WHERE_OWNERS__
+//if( isset($_SESSION['__PROJECT__']['access']['suppliers_persons']) ) $where .= " AND items.id_owner IN (".implode(',',array_keys($_SESSION['__PROJECT__']['access']['suppliers_persons'])).")";
+
 
 $dbh = new PDO('sqlite:'.DB_DIR.'__DB__');
 __ATTACH_DB__

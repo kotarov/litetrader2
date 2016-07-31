@@ -118,9 +118,7 @@
             	    {	text:"New", className:"uk-button uk-button-primary",
                 		init: function(dt, node, config){ node.attr("data-uk-modal",true).attr("href","#modal-new-item"); }
                 	},
-                	{	text:'<select id="filterOwnerPerson" data-get="<?=URL_BASE?>ajax.php?f=blog/owners/getOwners&person" onChange="$(\'#items\').DataTable().draw()"></select>',
-            			className:"uk-float-left uk-margin-right"
-            		},
+                	
                 	
                 	
         		],
@@ -131,8 +129,7 @@
             	if( $(settings.nTable).attr("id") !== "items" ) return true;
             	var ret = true;
             	
-            	if(!window['index_owner_person']) $.each(settings.oInit.columns,function(k,v){ if(v.data == 'owner') window['index_owner_person'] = k;})
-        		if($("#filterOwnerPerson option:selected").text() !== data[window['index_owner_person']] && $("#filterOwnerPerson").val() !== '0') ret = false;
+            	
             	
         		return ret;
             });

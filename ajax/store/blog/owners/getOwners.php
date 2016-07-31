@@ -1,9 +1,13 @@
 <?php
     
 if(isset($_GET['person'])){
-    $dbh = new PDO('sqlite:'.DB_DIR.'suppliers');
-    $sth = $dbh->prepare("SELECT id, name||' '||family AS text FROM partners;"); $sth->execute();
-    $ret['data'] = array_merge(array(array('id'=>0,'text'=>'-')), $sth->fetchAll(PDO::FETCH_ASSOC));
+    if(isset($_SESSION['store']['access']['suppliers_persons'])){
+        $ret['data'] = $_SESSION['store']['access']['suppliers_persons'];
+    }else{
+        $dbh = new PDO('sqlite:'.DB_DIR.'suppliers');
+        $sth = $dbh->prepare("SELECT id, name||' '||family AS text FROM partners;"); $sth->execute();
+        $ret['data'] = array_merge(array(array('id'=>0,'text'=>'-')), $sth->fetchAll(PDO::FETCH_ASSOC));
+    }        
 }else{
     if(isset($_SESSION['store']['access']['suppliers_companies'])){
         if(isset($_GET['withdash'])){

@@ -65,15 +65,6 @@
         <h2 class="page-header"><span data-lang>Products</span> <span class="uk-margin-left page-sparkline" data-table="products"></span></h2>
         
         <div class="uk-container">
-        <?php /*    
-             <div class="uk-float-right uk-form  uk-button-danger uk-margin-left">
-                <select class="uk-text-contrast" style="background:transparent!important;" name="owner">
-                        <option>Edno</option>
-                        <option>Dve</option>
-                        <option> Tri</option>
-                    </select>
-            </div>
-        */?>
         <table id="items" class="uk-table uk-table-hover uk-table-striped uk-table-condensed" cellspacing="0" width="100%"
             data-trigger-add="item-added"
             data-trigger-update="item-updated"

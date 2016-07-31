@@ -25,12 +25,21 @@ if(!isset($ret['required'])){
         FROM partners WHERE id = $exists")->fetch(PDO::FETCH_ASSOC);
         
         /*** ACCESS */ 
+        
         $_SESSION['store']['access']['suppliers_companies'] = array();
         $companies = $dbh->query("SELECT c.id, c.name,  c.name text 
             FROM partners_companies pc 
             LEFT JOIN companies c ON (c.id = pc.id_company)
             WHERE pc.id_partner = $exists")->fetchAll(PDO::FETCH_ASSOC);
         foreach($companies AS $company) $_SESSION['store']['access']['suppliers_companies'][$company['id']] = $company;
+        
+        $_SESSION['store']['access']['suppliers_persons'][$_SESSION['store']['id']] = array(
+                'id' => $_SESSION['store']['id'],
+                'name'=>$_SESSION['store']['name'].' '.$_SESSION['store']['family'],
+                'text'=>$_SESSION['store']['name'].' '.$_SESSION['store']['family']
+        );
+        
+        
         /*** //Access */
         
         $dbh->query("UPDATE partners SET date_logged = ".time()." WHERE id = $exists");

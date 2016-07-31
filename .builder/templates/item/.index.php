@@ -135,11 +135,12 @@ if(!file_exists($dest_dir.'../'.$post['MODULE'])) {
     '__ID_OWNER__'      => ($post['owner.person']   ? 'items.id_owner,'     :''), // for form
     '__OWNER__'         => ($post['owner.person']   ? "owner.name||' '||owner.family owner,"         :''),
     '__JOIN_OWNER__'    => ($post['owner.person']   ? 'LEFT JOIN db___owner.db__.partners owner ON (items.id_owner = owner.id) ':''),
+    '__WHERE_OWNERS__'      =>$post['owner.person'] ? 'if( isset($_SESSION[\'__PROJECT__\'][\'access\'][\'suppliers_persons\']) ) $where .= " AND items.id_owner IN (".implode(\',\',array_keys($_SESSION[\'__PROJECT__\'][\'access\'][\'suppliers_persons\'])).")";':'',
     
     '__ID_OWNER_COMPANY__'=>$post['owner.company']   ? 'items.id_owner_company,'    :'',
     '__OWNER_COMPANY__' => ($post['owner.company']   ? "owner_company.name owner_company,"         :''),
     '__JOIN_OWNER_COMPANY__'=>($post['owner.company']? 'LEFT JOIN db___owner.db__.companies owner_company ON (owner_company.id = items.id_owner_company) ':''),
-    
+    '__WHERE_OWNER_COMPANIES__'=>$post['owner.company']? 'if( isset($_SESSION[\'__PROJECT__\'][\'access\'][\'suppliers_companies\']) ) $where .= " AND items.id_owner_company IN (".implode(\',\',array_keys($_SESSION[\'__PROJECT__\'][\'access\'][\'suppliers_companies\'])).")";':'',
     
     '__DESCRIPTION__'   => ($post['description']? 'items.description,'  :''),
     '__ID_CATEGORY__'   => ($post['category']   ? 'items.id_category,' : ''),
