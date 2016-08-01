@@ -13,6 +13,7 @@ if(!isset($get['error'])){
     if(isset($sliders[$get['n']]) && isset($sliders[$get['n']]['title']) ){
         $all = count($sliders[$get['n']]['title']);
         foreach($sliders[$get['n']]['title'] AS $id=>$v){
+            $photo = INI_DIR.'../www/img/slide/'.$sliders[$get['n']]['src'][$id];
             $ret['data'][]= array(
                     'id'    => $id+1,
                     'src'   => $sliders[$get['n']]['src'][$id],
@@ -22,7 +23,7 @@ if(!isset($get['error'])){
                     'text'  => $sliders[$get['n']]['text'][$id],
                     'actions'=>$id+1,
                     'all'   => $all,
-                    'size'  => humanfilesize(filesize(INI_DIR.'../www/img/slide/'.$sliders[$get['n']]['src'][$id]))
+                    'size'  => file_exists($photo) ? humanfilesize(filesize($photo)) : 0
                 );
         }
     }
