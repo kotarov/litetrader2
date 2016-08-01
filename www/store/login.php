@@ -35,6 +35,13 @@
         <div class="uk-margin-top">
             <h1><i id="theIcon" class="uk-border-circle uk-icon-large uk-panel-box uk-icon-user"></i></h1>
         </div>
+    	<?php if(isset($_COMPANY['demo']) && $_COMPANY['demo'] == 1) {?>
+			<div class="uk-form-controls uk-text-left uk-clearfix">
+			    <h2 class="uk-float-left">Demo: &nbsp;</h2>
+			    <div>User: <b>admin@admin.admin</b> </div>
+			    <div>Pass: <b>123</b></div>
+			</div>
+		<?php } ?>
         <form id="FormLogin" action="<?=URL_BASE?>ajax.php?f=postLogin" class="uk-form" method="post">
 			<div class="uk-form-controls uk-form-row uk-grid">
 				<input name="email" type="text" placeholder="Email" title="Email" class="uk-width-1-1 uk-form-large">
